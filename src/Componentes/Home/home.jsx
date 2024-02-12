@@ -1,39 +1,76 @@
 import React, {useEffect, useState} from 'react';
-import Button from 'react-bootstrap/Button';
-import Generarpeticion from '../../peticiones/apipeticiones';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import Resumen from './Resumen/resumenv2';
+import DetalleEgreso from './DetalleEgresos/detalleegreso';
+import DetalleIngreso from './DetalleIngresos/detalleingreso';
+// const Tabs = ({ tabs }) => {
+//   const [activeTab, setActiveTab] = useState(0);
+
+//   const handleTabClick = (index) => {
+//     setActiveTab(index);
+//   };
+
+//   return (
+//     <div>
+//       <div style={{ display: 'flex' }}>
+//         {tabs.map((tab, index) => (
+//           <div
+//             key={index}
+//             onClick={() => handleTabClick(index)}
+//             style={{
+//               padding: '10px',
+//               cursor: 'pointer',
+//               borderBottom: activeTab === index ? '2px solid blue' : '2px solid transparent',
+//             }}
+//           >
+//             {tab.title}
+//           </div>
+//         ))}
+//       </div>
+//       <div>
+//         {tabs[activeTab].content}
+//       </div>
+//     </div>
+//   );
+// };
+
+
+
 function Home (){
 
     const[mes,Setmes]=useState(2)
     const[anno,Setanno]=useState(2024)
-    const[datos,steDatos]=useState(null)
-    const mostrardatos=(evente)=>{
-        console.log(datos)
-    }
-    useEffect(() => {
-        
-
-        const cargardatos = async () => {
-          const body = {};
-          const endpoint='Balance/' + anno +'/' + mes + '/'
-          const result = await Generarpeticion(endpoint, 'POST', body);
-          
-          const respuesta=result['resp']
-          if (respuesta === 200) {
-            
-            steDatos(result['data'])
-          } else {
-            
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            // navigate('/');
-          }
-        };
     
-        cargardatos();
-      }, []);
+    
+    // const tabs = [
+    //   { title: 'Resumen Movimientos', content: <Resumen anno={anno} mes={mes} ></Resumen> },
+    //   { title: 'Detalle de Ingresos', content: <div>Contenido de la pestaña 2</div> },
+    //   { title: 'Detalle de Egresos', content: <div>Contenido de la pestaña 3</div> },
+    // ];
+
+
+    
     return(
         <div>
             DATOS DEL HOME
-            <Button variant="primary" size="lg" onClick={mostrardatos}>Mostrar datos</Button>
+            {/* <Tabs tabs={tabs} /> */}
+            <Tabs
+                defaultActiveKey="profile"
+                id="uncontrolled-tab-example"
+                className="mb-3"
+              >
+                <Tab eventKey="home" title="Resumen Movimientos">
+                  <Resumen anno={anno} mes={mes} ></Resumen>
+                </Tab>
+                <Tab eventKey="profile" title="Detalle de Ingresos">
+                  <DetalleIngreso anno={anno} mes={mes} ></DetalleIngreso>
+                </Tab>
+                <Tab eventKey="contact" title="Detalle de Egresos" >
+                  <DetalleEgreso anno={anno} mes={mes} ></DetalleEgreso>
+                </Tab>
+              </Tabs>
+            
         </div>
     )
 
