@@ -53,8 +53,8 @@ function Home (){
 
     
     return(
-        <div>
-            DATOS DEL HOME
+        <div style={{ width:'100%'}}>
+            
             
             <Tabs
                 defaultActiveKey="profile"

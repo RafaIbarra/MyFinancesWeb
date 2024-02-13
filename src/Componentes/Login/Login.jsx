@@ -1,25 +1,33 @@
 import React,{useState,useEffect} from "react";
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+
 
 import Iniciarsesion from '../../peticiones/apiiniciosesion'
 import Handelstorage from '../../Storage/handelstorage'
+
 import { Navigate, useNavigate } from "react-router-dom"
 
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input } from 'antd';
+
+import './login.css'
 
 
+function Login({activarsesion,desactivarsesion}){
+    
+    const onFinish = (values) => {
+        console.log('Received values of form: ', values);
+      };
 
-function Login(){
+
     const [procesando,setProcesando]=useState(false)
     const[username,setUsername]=useState('')
     const[password,setPassword]=useState('')
     const navigate=useNavigate()
     const [existecookie,setexistecookie]=useState()
     const [datosinicio,setDatosinicio]=useState('')
+    
     const navegar=()=>{
-        
+        activarsesion()
         console.log("desde aca envia en el home")
         navigate('/Home')
 
@@ -51,32 +59,69 @@ function Login(){
         
     }
     return(
-        <Form>
-            <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                <Form.Label column sm={2}>
-                Usuario
-                </Form.Label>
-                <Col sm={10}>
-                <Form.Control type="text" placeholder="Usuario" onChange={cargarusuario}/>
-                </Col>
-            </Form.Group>
+        
+        <div className="d-flex justify-content-center align-items-center login-container">
+            <div className="login-box">
 
-            <Form.Group as={Row} className="mb-3" controlId="formHorizontalPassword">
-                <Form.Label column sm={2}>
-                Password
-                </Form.Label>
-                <Col sm={10}>
-                <Form.Control type="password" placeholder="Password" onChange={cargarcontrasena}/>
-                </Col>
-            </Form.Group>
-            
-            
+                <Form name="normal_login" className="login-form"
+                    initialValues={{
+                        remember: true,
+                    }}
+                    onFinish={onFinish}
+                    >
+                    <Form.Item>
+                    <div className="d-flex justify-content-center">
+                                    <img className="estiloimg"
+                                        
+                                        src= "/icono.svg"
+                                        alt="login-icon"
+                                        // style="height: 7rem"
+                                    />
+                                </div>
+                    </Form.Item>
+                    <Form.Item name="username"
+                        rules={[{
+                            required: true,
+                            message: 'Please input your Username!',
+                                },]}
+                    >
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" onChange={cargarusuario} />
+                    </Form.Item>
+                    <Form.Item name="password"
+                        rules={[{
+                            required: true,
+                            message: 'Please input your Password!',
+                                },]}
+                    >
+                        <Input prefix={<LockOutlined className="site-form-item-icon" />}
+                                type="password"
+                                placeholder="Password"
+                                onChange={cargarcontrasena}
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Form.Item name="remember" valuePropName="checked" noStyle>
+                        <Checkbox>Recordarme</Checkbox>
+                        </Form.Item>
 
-            <div className="mb-2">
-                <Button variant="primary" size="lg" onClick={ingresar}>Ingresar</Button>
-                <Button variant="warning" size="lg">Registrarse</Button>
+                        <a className="login-form-forgot" href="">
+                        Olvide mi contraseña
+                        </a>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type="primary"  className="login-form-button" onClick={ingresar}>
+                        Iniciar Sesion
+                        </Button>
+                        O <a href="">Registrarse!</a>
+                    </Form.Item>
+                </Form>
+
+
             </div>
-        </Form>
+        </div>
+
+        
     )
 
 }
