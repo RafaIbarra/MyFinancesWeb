@@ -33,10 +33,11 @@ async function Generarpeticion(endpoint,metodo,bodyoptions){
     
 
     const response = await fetch(`${APIBASE}/${endpoint}`, requestOptions);  
+    
     data= await response.json();
     
     resp= response.status;
-    console.log(response)
+    
     datos={data,resp}
     return datos
 }

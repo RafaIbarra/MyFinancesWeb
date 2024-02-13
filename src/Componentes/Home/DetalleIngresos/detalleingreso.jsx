@@ -27,9 +27,7 @@ function DetalleIngreso({mes,anno}){
 
     
     useEffect(() => {
-        console.log(anno)   
-        console.log(mes)   
-
+     
         const cargardatos = async () => {
           const body = {};
           const endpoint='MisIngresos/' + anno +'/' + mes + '/'
@@ -38,7 +36,7 @@ function DetalleIngreso({mes,anno}){
           const respuesta=result['resp']
           if (respuesta === 200) {
             
-            console.log(result['data'])
+            
             setDetalle(result['data'])
             
           } else {

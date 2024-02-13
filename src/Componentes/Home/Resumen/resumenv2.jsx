@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Generarpeticion from '../../../peticiones/apipeticiones';
-
+import Resumengrafico from './resumengrafico';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -54,9 +54,7 @@ function Resumen({mes,anno}){
 
       
     useEffect(() => {
-        console.log(anno)   
-        console.log(mes)   
-
+    
         const cargardatos = async () => {
           const body = {};
           const endpoint='Balance/' + anno +'/' + mes + '/'
@@ -67,7 +65,7 @@ function Resumen({mes,anno}){
             const registros=result['data']
             const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
             const registroresumen=registros.filter((item) => item.Codigo === 3)
-            console.log(registrosdetalle)
+            
             setDetalle(registrosdetalle)
             setTotalingreso(registroresumen[0]['MontoIngreso'])
             setTotalegreso(registroresumen[0]['MontoEgreso'])
@@ -130,9 +128,9 @@ function Resumen({mes,anno}){
                 />
 
                 
+                <Resumengrafico></Resumengrafico>
 
-
-
+                
 
 
         </div>

@@ -29,9 +29,7 @@ function DetalleEgreso({mes,anno}){
 
     
     useEffect(() => {
-        console.log(anno)   
-        console.log(mes)   
-
+       
         const cargardatos = async () => {
           const body = {};
           const endpoint='MisEgresos/' + anno +'/' + mes + '/'
@@ -40,7 +38,7 @@ function DetalleEgreso({mes,anno}){
           const respuesta=result['resp']
           if (respuesta === 200) {
             
-            console.log(result['data'])
+           
             setDetalle(result['data'])
             
           } else {

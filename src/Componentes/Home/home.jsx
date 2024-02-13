@@ -4,6 +4,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Resumen from './Resumen/resumenv2';
 import DetalleEgreso from './DetalleEgresos/detalleegreso';
 import DetalleIngreso from './DetalleIngresos/detalleingreso';
+import Resumengrafico from './Resumen/resumengrafico';
 // const Tabs = ({ tabs }) => {
 //   const [activeTab, setActiveTab] = useState(0);
 
@@ -54,7 +55,7 @@ function Home (){
     return(
         <div>
             DATOS DEL HOME
-            {/* <Tabs tabs={tabs} /> */}
+            
             <Tabs
                 defaultActiveKey="profile"
                 id="uncontrolled-tab-example"
@@ -70,7 +71,7 @@ function Home (){
                   <DetalleEgreso anno={anno} mes={mes} ></DetalleEgreso>
                 </Tab>
               </Tabs>
-            
+            {/* <Resumengrafico anno={anno} mes={mes}></Resumengrafico> */}
         </div>
     )
 
