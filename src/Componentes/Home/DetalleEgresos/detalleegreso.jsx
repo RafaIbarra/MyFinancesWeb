@@ -31,14 +31,18 @@ function DetalleEgreso({mes,anno}){
     useEffect(() => {
        
         const cargardatos = async () => {
+          
+
           const body = {};
           const endpoint='MisEgresos/' + anno +'/' + mes + '/'
           const result = await Generarpeticion(endpoint, 'POST', body);
           
+          
           const respuesta=result['resp']
           if (respuesta === 200) {
             
-           
+            console.log('en egreso')
+            console.log(result['data'])
             setDetalle(result['data'])
             
           } else {
@@ -49,7 +53,7 @@ function DetalleEgreso({mes,anno}){
         };
     
         cargardatos();
-      }, []);
+      }, [mes,anno]);
 
 
       return(

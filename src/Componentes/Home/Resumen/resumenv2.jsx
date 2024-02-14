@@ -1,18 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Generarpeticion from '../../../peticiones/apipeticiones';
 import Resumengrafico from './resumengrafico';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
+
 import { Table, Typography } from 'antd';
 const { Text } = Typography;
 
 // import './resumen.css'
 function Resumen({mes,anno}){
-    console.log('en resumen')
-    console.log(mes)
-    console.log(anno)
+    
     const[datos,setDatos]=useState(null)
     const[detalle,setDetalle]=useState(null)
     const[totalingreso,setTotalingreso]=useState(null)
@@ -61,18 +56,29 @@ function Resumen({mes,anno}){
         const cargardatos = async () => {
           const body = {};
           const endpoint='Balance/' + anno +'/' + mes + '/'
+          
           const result = await Generarpeticion(endpoint, 'POST', body);
           
           const respuesta=result['resp']
           if (respuesta === 200) {
-            const registros=result['data']
-            const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
-            const registroresumen=registros.filter((item) => item.Codigo === 3)
             
-            setDetalle(registrosdetalle)
-            setTotalingreso(registroresumen[0]['MontoIngreso'])
-            setTotalegreso(registroresumen[0]['MontoEgreso'])
-            setSaldo(registroresumen[0]['Saldo'])
+            const registros=result['data']
+            if(registros.length>0){
+
+              const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+              const registroresumen=registros.filter((item) => item.Codigo === 3)
+              
+              setDetalle(registrosdetalle)
+              setTotalingreso(registroresumen[0]['MontoIngreso'])
+              setTotalegreso(registroresumen[0]['MontoEgreso'])
+              setSaldo(registroresumen[0]['Saldo'])
+            }
+            else{
+              setDetalle(null)
+              setTotalingreso(0)
+              setTotalegreso(0)
+              setSaldo(0)
+            }
           } else {
             
             await new Promise(resolve => setTimeout(resolve, 2000));
@@ -81,7 +87,7 @@ function Resumen({mes,anno}){
         };
     
         cargardatos();
-      }, []);
+      }, [mes,anno]);
 
 
       return(
