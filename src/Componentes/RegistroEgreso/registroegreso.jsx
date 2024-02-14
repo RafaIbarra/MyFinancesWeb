@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Button,DatePicker,Form,Input,InputNumber,Select } from 'antd';
+import {Button,DatePicker,Form,Input,InputNumber,Select,Radio } from 'antd';
 import Generarpeticion from '../../peticiones/apipeticiones';
-import { FormatoFecha } from '../../Config/condfig';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-dayjs.extend(customParseFormat);
-const dateFormat = 'YYYY-MM-DD';
+import { Navigate, useNavigate } from "react-router-dom";
 
-const { RangePicker } = DatePicker;
+
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -30,12 +28,33 @@ const formItemLayout = {
 
 
 function RegistroEgreso (){
+    const navigate=useNavigate()
+    const { RangePicker } = DatePicker;
+    dayjs.extend(customParseFormat);
+    const dateFormat = 'YYYY-MM-DD';
     const [fechaegreso, setFechaegreso] = useState(null);
     const[datosgastos,setDatosgastos]=useState(null)
+    const[gastosproductos,setGastosproductos]=useState(null)
+    const[gastosservicios,setGastosservicios]=useState(null)
     const[gasttosel,setGastosel]=useState(0)
     const[monto,setMonto]=useState(0)
     const[anotacion,setAnotacion]=useState('')
+    
 
+    const tipocategoria=(event)=>{
+      setDatosgastos(null)
+      setGastosel(0)
+      
+      const valor=parseInt(event.target.value)
+      if (valor===1){
+        
+        setDatosgastos(gastosproductos)
+      }else if(valor===2){
+        
+        setDatosgastos(gastosservicios)
+      }
+      
+    }
     const seleccionargasto=(value)=>{
         const valor= value;
         
@@ -54,10 +73,13 @@ function RegistroEgreso (){
         setAnotacion(valor)
 
     }
+    const seleccionarfecha=( dateString)=>{
+      
+      setFechaegreso(dateString);
+
+    }
     const registrar_egreso = async () => {
-        console.log(fechaegreso)
-        // const formattedDesde = fechaegreso ? FormatoFecha(fechaegreso) : '';
-        // console.log(formattedDesde)
+      
         const datosregistrar = {
             gasto:gasttosel,
             monto:monto,
@@ -66,17 +88,18 @@ function RegistroEgreso (){
             a:'d'
 
         };
-        const endpoint='MisGastos/'
-        const result = await Generarpeticion(endpoint, 'POST', body);
+        const endpoint='RegistroEgreso/'
+        const result = await Generarpeticion(endpoint, 'POST', datosregistrar);
         
         const respuesta=result['resp']
         if (respuesta === 200) {
-          setDatosgastos(result['data'])
-          console.log(result['data'])
+          await new Promise(resolve => setTimeout(resolve, 2000))
+          
+          navigate('/Home')
           
         } else {
           
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          ;
           // navigate('/');
         }
       };
@@ -89,8 +112,13 @@ function RegistroEgreso (){
           
           const respuesta=result['resp']
           if (respuesta === 200) {
-            setDatosgastos(result['data'])
-            console.log(result['data'])
+            // setDatosgastos(result['data'])
+            const lista=result['data']
+            const listaproductos = lista.filter((pro) => pro.categoria === 1);
+            const listaservicios = lista.filter((ser) => ser.categoria === 2);
+            setGastosproductos(listaproductos)
+            setGastosservicios(listaservicios)
+            
             
           } else {
             
@@ -112,6 +140,14 @@ function RegistroEgreso (){
                 maxWidth: 600,
                 }}
             >   
+                <Form.Item label="Categoria">
+                  <Radio.Group onChange={tipocategoria}>
+                    <Radio value="1"> Productos </Radio>
+                    <Radio value="2"> Servicios </Radio>
+                  </Radio.Group>
+                </Form.Item>
+
+                
                 <Form.Item label="Gasto"name="Gasto"
                             rules={[
                                 {
@@ -136,25 +172,26 @@ function RegistroEgreso (){
                 
                 
 
-                    <Form.Item
-                        label="Fecha Gasto"
-                        name="DatePicker"
-                        rules={[
-                            {
-                            required: true,
-                            message: 'Please input!',
-                            },
-                        ]}
+                <Form.Item
+                    label="Fecha Gasto"
+                    name="DatePicker"
+                    rules={[
+                        {
+                        required: true,
+                        message: 'Please input!',
+                        },
+                    ]}
+                    >
+                    <DatePicker 
+                        placeholder='Fecha Egreso'
+                        dateFormat="yyyy-MM-dd"
+                        onChange={seleccionarfecha}
+                        // onChange={onChange}
+                        
                         >
-                        <DatePicker 
-                            placeholder='Fecha Egreso'
-                            dateFormat="yyyy-MM-dd"
-                            onChange={(date) => setFechaegreso(dayjs(date, dateFormat))}
-                            
-                            >
 
-                        </DatePicker>
-                    </Form.Item>
+                    </DatePicker>
+                </Form.Item>
                 
             
                 
@@ -176,6 +213,7 @@ function RegistroEgreso (){
                         }}
                     />
                 </Form.Item>
+
                 <Form.Item
                     label="Anotacion"
                     name="Anotacion"
@@ -198,6 +236,8 @@ function RegistroEgreso (){
                     >
                    <Button type="primary" onClick={registrar_egreso}>Registrar</Button>
                 </Form.Item>
+
+
             </Form>
           
         </div>

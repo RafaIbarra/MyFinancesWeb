@@ -5,9 +5,10 @@ import Iniciarsesion from '../../peticiones/apiiniciosesion'
 import Handelstorage from '../../Storage/handelstorage'
 
 import { Navigate, useNavigate } from "react-router-dom"
-
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
+
+import ComprobarStorage from "../../App/verificarstorage";
 
 import './login.css'
 
@@ -50,7 +51,7 @@ function Login({activarsesion,desactivarsesion}){
                 sesion:datos['data']['sesion'],
                 refresh:datos['data']['refresh'],
             }
-            console.log(userdata)
+            
             Handelstorage('agregar',userdata)
             navegar()
         }else{
@@ -58,6 +59,20 @@ function Login({activarsesion,desactivarsesion}){
         }
         
     }
+
+    useEffect(() => {
+        const datosstarage = ComprobarStorage();
+        
+    
+        if (datosstarage) {
+          
+         navegar()
+          
+        
+        } else {
+          desactivarsesion();
+        }
+      }, []);
     return(
         
         <div className="d-flex justify-content-center align-items-center login-container">

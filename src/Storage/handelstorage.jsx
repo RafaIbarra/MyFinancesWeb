@@ -7,12 +7,22 @@ const Handelstorage=(opcion,data)=>{
     const obtener=()=>{
         
         const userLocalStorageData = JSON.parse(localStorage.getItem('userData'));
-        return {
+        if (userLocalStorageData !== null){
+          return {
             token: userLocalStorageData.token,
             refreshToken: userLocalStorageData.refreshToken,
             sesion: userLocalStorageData.sesion,
             
           };
+        }else{
+          return {
+            token: false,
+            refreshToken: false,
+            sesion: false,
+            
+          };
+        }
+        
 
     }
     if (opcion === 'agregar') {

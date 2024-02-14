@@ -10,6 +10,9 @@ const { Text } = Typography;
 
 // import './resumen.css'
 function Resumen({mes,anno}){
+    console.log('en resumen')
+    console.log(mes)
+    console.log(anno)
     const[datos,setDatos]=useState(null)
     const[detalle,setDetalle]=useState(null)
     const[totalingreso,setTotalingreso]=useState(null)
