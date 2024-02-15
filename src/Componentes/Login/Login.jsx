@@ -43,16 +43,18 @@ function Login({activarsesion,desactivarsesion}){
     const ingresar =async (event)=>{
         
         const datos =await Iniciarsesion(username, password)
-        console.log(datos)
-        console.log(datos['resp'])
+        
         if(datos['resp']===200){
+            
+            
             const userdata={
                 token:datos['data']['token'],
                 sesion:datos['data']['sesion'],
                 refresh:datos['data']['refresh'],
             }
             
-            Handelstorage('agregar',userdata)
+            
+            Handelstorage('agregar',userdata,'')
             navegar()
         }else{
             console.log(datos['data']['error'])

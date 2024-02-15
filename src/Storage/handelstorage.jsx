@@ -1,6 +1,6 @@
 const Handelstorage=(opcion,item,valor)=>{
 
-    const agregar=()=>{
+    const agregar=(data)=>{
         localStorage.setItem('userData', JSON.stringify(data))
 
         const fechaActual = new Date();
@@ -61,7 +61,7 @@ const Handelstorage=(opcion,item,valor)=>{
     }
     
     if (opcion === 'agregar') {
-        agregar();
+        agregar(item);
       }
     else if(opcion === 'obtener') {
         let resultado=obtener()
