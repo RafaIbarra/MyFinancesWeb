@@ -52,6 +52,7 @@ return(
                     <Route path="/Home" element={<Home />} />
                     <Route path="/RegistroGasto" element={<RegistroGasto />} />
                     <Route path="/RegistroEgreso" element={<RegistroEgreso />} />
+                    
                 </Routes>
             </div>
         </div>

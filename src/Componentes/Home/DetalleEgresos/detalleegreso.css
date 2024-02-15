@@ -1,4 +1,4 @@
-.custom-table {
+/* .custom-table {
     border-collapse: collapse;
     width: 100%;
   }
@@ -11,4 +11,14 @@
   
   .custom-table tfoot td {
     border-top: 2px solid #dddddd;
+  } */
+
+
+  .contenedor-flex {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+    justify-content: center;
+    /* align-items: center;  */
+    width: '100%';
   }

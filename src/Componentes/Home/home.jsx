@@ -12,6 +12,7 @@ import Handelstorage from '../../Storage/handelstorage';
 
 
 function Home (){
+    const [recargadatos,setRecargadatos]=useState(false)
     const[meses,Setmeses]=useState(null)
     const[mes,Setmes]=useState(0)
     const[anno,Setanno]=useState(0)
@@ -20,9 +21,9 @@ function Home (){
     const[mes_seleccion,setMes_selecion]=useState(0)
     const[anno_seleccion,setAnno_selecion]=useState(0)
 
-    const[datosresumen,setDatosresumen]=useState('')
-    const[datosingreso,setDatosingreso]=useState('')
-    const[datosegresos,setDatosegresos]=useState('')
+    const[cargarresumen,setCargarresumen]=useState(false)
+    const[cargaringresos,setCargaringresos]=useState(false)
+    const[cargaregresos,setCargarEgresos]=useState(false)
 
 
     const seleccionarmes=(value)=>{
@@ -80,16 +81,17 @@ function Home (){
         
         if(Object.keys(registros).length>0){
           
-          setDatosresumen(registros['Resumen'])
-          setDatosingreso(registros['Ingresos'])
-          setDatosegresos(registros['Egresos'])
-        
+          // setDatosresumen(registros['Resumen'])
+          // setDatosingreso(registros['Ingresos'])
+          // setDatosegresos(registros['Egresos'])
+          setCargaconfirmada(true)
           
         }
         else{
-          setDatosresumen([])
-          setDatosingreso([])
-          setDatosegresos([])
+          // setDatosresumen([])
+          // setDatosingreso([])
+          // setDatosegresos([])
+          setCargaconfirmada(false)
         }
 
         if (datames>0){
@@ -122,7 +124,7 @@ function Home (){
       
       cargardatos(mes_inicio);
       procesar()
-    }, []);
+    }, [recargadatos]);
 
     
     const cargardatos = async (mes_iniciar) => {
@@ -134,7 +136,7 @@ function Home (){
       const respuesta=result['resp']
       if (respuesta === 200) {
           const registros=result['data']
-          setCargaconfirmada(true)
+          
           Setmeses(registros)
           
           
@@ -189,13 +191,13 @@ function Home (){
                 className="mb-3"
               >
                 <Tab eventKey="home" title="Resumen Movimientos">
-                  {cargaconfirmada &&(<Resumen datosresumen={datosresumen}  ></Resumen>)}
+                  {/* {cargaconfirmada &&(<Resumen datosresumen={datosresumen}  ></Resumen>)} */}
                 </Tab>
                 <Tab eventKey="profile" title="Detalle de Ingresos">
-                  {cargaconfirmada &&(<DetalleIngreso datosingreso={datosingreso} ></DetalleIngreso>)}
+                  {cargaconfirmada &&(<DetalleIngreso cargaringresos={cargaringresos} setCargaringresos={setCargaringresos}></DetalleIngreso>)}
                 </Tab>
                 <Tab eventKey="contact" title="Detalle de Egresos" >
-                  {cargaconfirmada &&( <DetalleEgreso datosegresos={datosegresos}  ></DetalleEgreso>)}
+                  {cargaconfirmada &&( <DetalleEgreso cargaregresos={cargaregresos} setCargarEgresos={setCargarEgresos}  ></DetalleEgreso>)}
                 </Tab>
             </Tabs>
             

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Generarpeticion from '../../../peticiones/apipeticiones';
-
+import Handelstorage from '../../../Storage/handelstorage';
 import { Space, Table, Tag } from 'antd';
 
 
 // import './detalleingreso.css'
-function DetalleIngreso({datosingreso}){
+function DetalleIngreso({cargaringresos,setCargaringresos}){
     
     const[detalle,setDetalle]=useState(null)
     const columns=[
@@ -24,59 +24,58 @@ function DetalleIngreso({datosingreso}){
       { title: 'Fecha Registro',dataIndex: 'fecha_registro',key: 'FechaRegistro_i'},
       { title: 'Anotacion',dataIndex: 'anotacion',key: 'Anotacion_i'},
     ]
-
+   
     
     useEffect(() => {
      
-        const cargardatos =  () => {
-          setDetalle(datosingreso)
+        const cargardatos = async  () => {
+
+          
+          
+          const datestorage=Handelstorage('obtenerdate');
+          const mes_storage=datestorage['datames']
+          const anno_storage=datestorage['dataanno']
+
+          
+        
+          const body = {};
+          const endpoint='MisIngresos/' + anno_storage +'/' + mes_storage + '/'
+          
+          const result = await Generarpeticion(endpoint, 'POST', body);
+          
+          const respuesta=result['resp']
+          if (respuesta === 200) {
+            
+            const registros=result['data']
+            
+            if(Object.keys(registros).length>0){
+              
+              setDetalle(registros)
+              
+            }
+            else{
+              setDetalle([])
+              
+            }
+
+            
+
+          } else {
+            
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            // navigate('/');
+          }
+          
         };
     
         cargardatos();
-      }, [datosingreso]);
+      }, [cargaringresos]);
 
 
       return(
         <div>
             
-            {/* <table className="bg-slate-50 min-w-full border-b px-4 py-2 rounded-lg border-collapse">
-            
-            <thead>
-            <tr>
-                <th className="border-b py-2 TitulosTamanho">Descripcion</th>
-                <th className="border-b py-2 TitulosTamanho">Tipo</th>
-                <th className="border-b py-2 TitulosTamanho">Ingreso</th>
-                <th className="border-b py-2 TitulosTamanho">Fecha Ingreso</th>
-                <th className="border-b py-2 TitulosTamanho">Fecha Registro</th>
-                <th className="border-b py-2 TitulosTamanho">Anotacion</th>
-                <th className="border-b py-2"> </th>
-            </tr>
-            </thead>
-            <tbody>
-            {detalle && detalle.map((item, index) => (
-                <tr key={index}>
-                <td className="border-b px-2 py-2">{item.NombreIngreso}</td>
-                <td className="border-b px-2 py-2">{item.TipoIngreso}</td>
-                <td className="border-b px-2 py-2">GS. {Number(item.monto_ingreso).toLocaleString('es-ES')}</td>
-                <td className="border-b px-2 py-2">{item.fecha_ingreso}</td>
-                <td className="border-b px-2 py-2">{item.fecha_registro}</td>
-                <td className="border-b px-2 py-2">{item.anotacion}</td>
-                
-
-                
-                </tr>
-            ))}
-            </tbody>
-            
-            </table> */}
-
-
             <Table columns={columns} dataSource={detalle} pagination={false}/>
-
-
-
-
-
 
         </div>
     )
