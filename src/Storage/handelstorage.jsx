@@ -1,4 +1,4 @@
-const Handelstorage=(opcion,data)=>{
+const Handelstorage=(opcion,item,valor)=>{
 
     const agregar=()=>{
         localStorage.setItem('userData', JSON.stringify(data))
@@ -10,7 +10,7 @@ const Handelstorage=(opcion,data)=>{
           datames:mesactual,
           dataanno:añoActual
         }
-        console.log(datadate)
+        
         localStorage.setItem('userdate', JSON.stringify(datadate))
 
     }
@@ -53,7 +53,12 @@ const Handelstorage=(opcion,data)=>{
       }
   }
 
-
+    const actualizardate =(item,valor)=>{
+      const datosActuales = JSON.parse(localStorage.getItem('userdate'))
+      datosActuales[item]=valor
+      
+      localStorage.setItem('userdate', JSON.stringify(datosActuales));
+    }
     
     if (opcion === 'agregar') {
         agregar();
@@ -65,6 +70,9 @@ const Handelstorage=(opcion,data)=>{
     else if(opcion === 'obtenerdate') {
         let resultado=obtenerdate()
         return resultado
+      }
+    else if(opcion === 'actualizardate') {
+          actualizardate(item,valor)
       }
 }
 export default Handelstorage

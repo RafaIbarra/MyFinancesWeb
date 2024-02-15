@@ -12,6 +12,7 @@ async function Generarpeticion(endpoint,metodo,bodyoptions){
     const sesionstorage=datosstarage['sesion']
     
     bodyoptions.SESION=sesionstorage;
+    
     if (metodo.toUpperCase()==='GET'){
         requestOptions = {
             method: metodo.toUpperCase(),

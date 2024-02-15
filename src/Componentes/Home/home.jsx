@@ -10,6 +10,7 @@ import {Button,InputNumber,Select } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import Handelstorage from '../../Storage/handelstorage';
 
+
 function Home (){
     const[meses,Setmeses]=useState(null)
     const[mes,Setmes]=useState(0)
@@ -18,6 +19,10 @@ function Home (){
     const[cargaconfirmada,setCargaconfirmada]=useState(false)
     const[mes_seleccion,setMes_selecion]=useState(0)
     const[anno_seleccion,setAnno_selecion]=useState(0)
+
+    const[datosresumen,setDatosresumen]=useState('')
+    const[datosingreso,setDatosingreso]=useState('')
+    const[datosegresos,setDatosegresos]=useState('')
 
 
     const seleccionarmes=(value)=>{
@@ -32,36 +37,91 @@ function Home (){
       setAnno_selecion(value)
 
     }
-    const procesar=()=>{
-      Setmes(mes_seleccion)
-      Setanno(anno_seleccion)
+    const procesar = async ()=>{
+      let mes_tomar=0
+      let anno_tomar=0
+      let datames=0
+      let dataanno=0
+      
+      const datestorage=Handelstorage('obtenerdate');
+      const mes_storage=datestorage['datames']
+      const anno_storage=datestorage['dataanno']
+
+      if (mes_seleccion>0){
+        mes_tomar=mes_seleccion
+        if (mes_seleccion !==mes_storage){
+          datames=mes_seleccion
+        }
+
+
+      }else{
+        mes_tomar=mes_storage
+      }
+
+      if(anno_seleccion >0){
+        anno_tomar=anno_seleccion
+
+        if(anno_seleccion !==anno_storage){
+          dataanno=anno_seleccion
+        }
+      }else{
+        anno_tomar=anno_storage
+      }
+    
+      const body = {};
+      const endpoint='Resumen/' + anno_tomar +'/' + mes_tomar + '/'
+      
+      const result = await Generarpeticion(endpoint, 'POST', body);
+      
+      const respuesta=result['resp']
+      if (respuesta === 200) {
+        
+        const registros=result['data']
+        
+        if(Object.keys(registros).length>0){
+          
+          setDatosresumen(registros['Resumen'])
+          setDatosingreso(registros['Ingresos'])
+          setDatosegresos(registros['Egresos'])
+        
+          
+        }
+        else{
+          setDatosresumen([])
+          setDatosingreso([])
+          setDatosegresos([])
+        }
+
+        if (datames>0){
+          Handelstorage('actualizardate','datames',datames)
+        }
+        if (dataanno>0){
+          Handelstorage('actualizardate','dataanno',dataanno)
+        }
+
+      } else {
+        
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        // navigate('/');
+      }
       
     }
+
+
+
     useEffect(() => {
 
       const datestorage=Handelstorage('obtenerdate');
-      let fechaActual = new Date();
-      let mes_inicio=0
       
-      const mes_storage=datestorage['datames']
-      if(mes_storage > 0){
-        
-        const mes_control=datestorage['datames']
-        const anno_control=datestorage['dataanno']
-        mes_inicio=mes_control
-        Setmes(mes_control)
-        Setanno(anno_control)
-      }else{
-        
-        const mesactual = parseInt(fechaActual.getMonth() + 1);
-        mes_inicio=mesactual
-        Setmes(mesactual);
-        const añoActual = parseInt(fechaActual.getFullYear());
-        Setanno(añoActual);
-      };
+      let mes_inicio=datestorage['datames']
+      const anno_control=datestorage['dataanno']
+      Setanno(anno_control)
+
+      
 
       
       cargardatos(mes_inicio);
+      procesar()
     }, []);
 
     
@@ -129,13 +189,13 @@ function Home (){
                 className="mb-3"
               >
                 <Tab eventKey="home" title="Resumen Movimientos">
-                  {cargaconfirmada &&(<Resumen anno={anno} mes={mes} ></Resumen>)}
+                  {cargaconfirmada &&(<Resumen datosresumen={datosresumen}  ></Resumen>)}
                 </Tab>
                 <Tab eventKey="profile" title="Detalle de Ingresos">
-                  {cargaconfirmada &&(<DetalleIngreso anno={anno} mes={mes} ></DetalleIngreso>)}
+                  {cargaconfirmada &&(<DetalleIngreso datosingreso={datosingreso} ></DetalleIngreso>)}
                 </Tab>
                 <Tab eventKey="contact" title="Detalle de Egresos" >
-                  {cargaconfirmada &&( <DetalleEgreso anno={anno} mes={mes} ></DetalleEgreso>)}
+                  {cargaconfirmada &&( <DetalleEgreso datosegresos={datosegresos}  ></DetalleEgreso>)}
                 </Tab>
             </Tabs>
             

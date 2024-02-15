@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Button,DatePicker,Form,Input,InputNumber,Select,Radio } from 'antd';
+import {Button,Form,Input,InputNumber,Select,Radio } from 'antd';
+import {DatePicker } from 'antd';
 import Generarpeticion from '../../peticiones/apipeticiones';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -29,7 +30,7 @@ const formItemLayout = {
 
 function RegistroEgreso (){
     const navigate=useNavigate()
-    const { RangePicker } = DatePicker;
+    const { MonthPicker, RangePicker } = DatePicker;
     dayjs.extend(customParseFormat);
     const dateFormat = 'YYYY-MM-DD';
     const [fechaegreso, setFechaegreso] = useState(null);
@@ -73,10 +74,9 @@ function RegistroEgreso (){
         setAnotacion(valor)
 
     }
-    const seleccionarfecha=( dateString)=>{
+    const seleccionfecha=(date, dateString)=> {
       
-      setFechaegreso(dateString);
-
+      setFechaegreso(dateString)
     }
     const registrar_egreso = async () => {
       
@@ -85,7 +85,7 @@ function RegistroEgreso (){
             monto:monto,
             fecha:fechaegreso,
             anotacion:anotacion,
-            a:'d'
+            
 
         };
         const endpoint='RegistroEgreso/'
@@ -185,7 +185,7 @@ function RegistroEgreso (){
                     <DatePicker 
                         placeholder='Fecha Egreso'
                         dateFormat="yyyy-MM-dd"
-                        onChange={seleccionarfecha}
+                        onChange={seleccionfecha}
                         // onChange={onChange}
                         
                         >

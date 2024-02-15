@@ -6,16 +6,14 @@ import { Table, Typography } from 'antd';
 const { Text } = Typography;
 
 // import './resumen.css'
-function Resumen({mes,anno}){
+function Resumen({datosresumen}){
     
-    const[datos,setDatos]=useState(null)
+    // const[datos,setDatos]=useState(null)
     const[detalle,setDetalle]=useState(null)
     const[totalingreso,setTotalingreso]=useState(null)
     const[totalegreso,setTotalegreso]=useState(null)
     const[saldo,setSaldo]=useState(null)
-    const mostrardatos=(evente)=>{
-        console.log(datos)
-    }
+    
     const columns=[
         { title: 'Descripcion',dataIndex: 'Descripcion',key: 'Descripcion'},
         { title: 'Tipo',dataIndex: 'Tipo',key: 'Tipo'},
@@ -53,20 +51,12 @@ function Resumen({mes,anno}){
       
     useEffect(() => {
     
-        const cargardatos = async () => {
-          const body = {};
-          const endpoint='Balance/' + anno +'/' + mes + '/'
+        const cargardatos =  () => {
           
-          const result = await Generarpeticion(endpoint, 'POST', body);
-          
-          const respuesta=result['resp']
-          if (respuesta === 200) {
-            
-            const registros=result['data']
-            if(registros.length>0){
+            if(Object.keys(datosresumen).length>0){
 
-              const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
-              const registroresumen=registros.filter((item) => item.Codigo === 3)
+              const registrosdetalle=datosresumen.filter((item) => item.Codigo !== 3)
+              const registroresumen=datosresumen.filter((item) => item.Codigo === 3)
               
               setDetalle(registrosdetalle)
               setTotalingreso(registroresumen[0]['MontoIngreso'])
@@ -79,15 +69,11 @@ function Resumen({mes,anno}){
               setTotalegreso(0)
               setSaldo(0)
             }
-          } else {
-            
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            // navigate('/');
-          }
+           
         };
     
         cargardatos();
-      }, [mes,anno]);
+      }, [datosresumen]);
 
 
       return(

@@ -5,7 +5,7 @@ import { Space, Table, Tag } from 'antd';
 
 
 // import './detalleingreso.css'
-function DetalleIngreso({mes,anno}){
+function DetalleIngreso({datosingreso}){
     
     const[detalle,setDetalle]=useState(null)
     const columns=[
@@ -28,26 +28,12 @@ function DetalleIngreso({mes,anno}){
     
     useEffect(() => {
      
-        const cargardatos = async () => {
-          const body = {};
-          const endpoint='MisIngresos/' + anno +'/' + mes + '/'
-          const result = await Generarpeticion(endpoint, 'POST', body);
-          
-          const respuesta=result['resp']
-          if (respuesta === 200) {
-            
-            
-            setDetalle(result['data'])
-            
-          } else {
-            
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            // navigate('/');
-          }
+        const cargardatos =  () => {
+          setDetalle(datosingreso)
         };
     
         cargardatos();
-      }, []);
+      }, [datosingreso]);
 
 
       return(
