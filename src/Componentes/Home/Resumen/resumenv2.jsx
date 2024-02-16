@@ -57,7 +57,16 @@ function Resumen({dataresumen}){
          
             const registros=dataresumen
             if(Object.keys(registros).length>0){
+              
                 
+
+                registros.forEach((elemento) => {
+                  
+                  elemento.key = elemento.Descripcion;
+                })
+
+                
+
                 const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
                 const registroresumen=registros.filter((item) => item.Codigo === 3)
                 
@@ -128,7 +137,7 @@ function Resumen({dataresumen}){
                 />
 
                 
-                <Resumengrafico></Resumengrafico>
+              <Resumengrafico></Resumengrafico>
 
                 
 

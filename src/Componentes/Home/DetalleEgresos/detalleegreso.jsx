@@ -1,22 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Table  } from 'antd';
+import { Button, Table,Typography  } from 'antd';
 import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone  } from '@ant-design/icons';
-import Modalconfirm from './confirmmodal';
-import Modalnew from './newmodal';
+import ModalEliminarEgreso from './modal_eliminar_egreso';
+import ModalRegistroEgreso from './modal_registro_egreso';
 import './detalleegreso.css'
 import { Navigate, useNavigate } from "react-router-dom";
 import Handelstorage from '../../../Storage/handelstorage';
 import Generarpeticion from '../../../peticiones/apipeticiones';
-
+const { Text } = Typography;
 function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
     const navigate=useNavigate()
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const [loading, setLoading] = useState(false);
+    
     const [detalle,setDetalle]=useState(null)
+    
+    const [openeliminaregreso, setOpeneliminaregreso] = useState(false);
+    const [openregistroegreso, setOpenregistroegreso] = useState(false);
+    
+    const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
-    const [openmodalconfirm, setOpenmodalconfirm] = useState(false);
-    const [openmodalnew, setOpenmodalnew] = useState(false);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     
     const columns=[
       
@@ -85,13 +88,13 @@ function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
 
 
 
-      const start = () => {
+    const start = () => {
         setLoading(true);
         
         setTimeout(() => {setSelectedRowKeys([]);setLoading(false);}, 1000);
       };
 
-      const onSelectChange = (newSelectedRowKeys) => {
+    const onSelectChange = (newSelectedRowKeys) => {
         
         
         setSelectedRowKeys(newSelectedRowKeys);
@@ -104,7 +107,7 @@ function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
 
     const eliminar=()=>{
         // console.log(selectedRowKeys)
-        setOpenmodalconfirm(true)
+        setOpeneliminaregreso(true)
         
       }
 
@@ -114,9 +117,9 @@ function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
 
       }
 
-      const nuevo=()=>{
-        console.log('nuevo')
-        setOpenmodalnew(true)
+    const nuevo=()=>{
+        
+      setOpenregistroegreso(true)
       }
 
     const showPopconfirm = () => {
@@ -141,7 +144,43 @@ function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
     return(
         <div>
             
-            <div> <Table rowSelection={rowSelection} columns={columns} dataSource={detalle} pagination={false}/></div>
+            <div> 
+              <Table 
+                rowSelection={rowSelection} 
+                columns={columns} 
+                dataSource={detalle} 
+                pagination={false}
+                bordered
+                summary={(pageData) => {
+                  let totalBorrow = 0;
+                  let totalRepayment = 0;
+                  pageData.forEach(({ monto_gasto }) => {
+                  totalBorrow += monto_gasto;
+                  totalRepayment +=1
+                  
+                  });
+                  return (
+                  <>
+                      <Table.Summary.Row>
+                          <Table.Summary.Cell index={0} colSpan={4} >
+                              <Text type="danger" strong> CANT. REG : {totalRepayment} -  TOTAL EGRESOS {'>>>>>>>>>>>'}  </Text>
+                          </Table.Summary.Cell>
+
+                          <Table.Summary.Cell index={1} colSpan={1}>
+                              <Text strong>GS. {Number(totalBorrow).toLocaleString('es-ES')}</Text>
+                          </Table.Summary.Cell>
+
+                          
+
+                      </Table.Summary.Row>
+
+                      
+                  </>
+                  );
+              }}
+              
+              />
+              </div>
               
 
             <div className='contenedor-flex'>
@@ -155,20 +194,20 @@ function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
                 <Button type="primary" icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
 
                 
-                {openmodalconfirm &&( <Modalconfirm openmodalconfirm={openmodalconfirm} 
-                                                    setOpenmodalconfirm={setOpenmodalconfirm} 
+                {openeliminaregreso &&( <ModalEliminarEgreso openeliminaregreso={openeliminaregreso} 
+                                                    setOpeneliminaregreso={setOpeneliminaregreso} 
                                                     cargaregresos={cargaregresos}
                                                     setCargarEgresos={setCargarEgresos} 
-                                                    
-                                                    selectedRowKeys={selectedRowKeys}  
-                                      ></Modalconfirm>)}
+                                                    selectedRowKeys={selectedRowKeys} 
+                                                    setDataresumen={setDataresumen} 
+                                      ></ModalEliminarEgreso>)}
 
-                {openmodalnew &&( <Modalnew openmodalnew={openmodalnew} 
-                                            setOpenmodalnew={setOpenmodalnew} 
+                {openregistroegreso &&( <ModalRegistroEgreso openregistroegreso={openregistroegreso} 
+                                            setOpenregistroegreso={setOpenregistroegreso} 
                                             cargaregresos={cargaregresos} 
                                             setCargarEgresos={setCargarEgresos}  
                                             setDataresumen={setDataresumen}
-                                            ></Modalnew>)}
+                                            ></ModalRegistroEgreso>)}
                 
             </div>
            

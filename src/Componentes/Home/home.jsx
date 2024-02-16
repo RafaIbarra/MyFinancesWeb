@@ -11,7 +11,7 @@ import Handelstorage from '../../Storage/handelstorage';
 
 
 function Home (){
-    console.log("Home")
+    
     const[recargadatos,setRecargadatos]=useState(false)
     const[cargaconfirmada,setCargaconfirmada]=useState(false)
     const[dataresumen,setDataresumen]=useState(null)
@@ -75,7 +75,7 @@ function Home (){
                   {cargaconfirmada &&(<Resumen dataresumen={dataresumen}   ></Resumen>)}
                 </Tab>
                 <Tab eventKey="profile" title="Detalle de Ingresos">
-                  {cargaconfirmada &&(<DetalleIngreso cargaringresos={cargaringresos} setCargaringresos={setCargaringresos}></DetalleIngreso>)}
+                  {cargaconfirmada &&(<DetalleIngreso cargaringresos={cargaringresos} setCargaringresos={setCargaringresos} setDataresumen={setDataresumen}></DetalleIngreso>)}
                 </Tab>
                 <Tab eventKey="contact" title="Detalle de Egresos" >
                   {cargaconfirmada &&( <DetalleEgreso cargaregresos={cargaregresos} setCargarEgresos={setCargarEgresos} setDataresumen={setDataresumen} ></DetalleEgreso>)}

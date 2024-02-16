@@ -1,14 +1,8 @@
-.custom-table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  .custom-table th, .custom-table td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  .custom-table tfoot td {
-    border-top: 2px solid #dddddd;
-  }
+.contenedor-flex {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+  justify-content: center;
+  /* align-items: center;  */
+  width: '100%';
+}

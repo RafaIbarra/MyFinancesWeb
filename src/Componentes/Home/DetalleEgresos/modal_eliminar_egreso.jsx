@@ -4,26 +4,27 @@ import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone  } from '@ant-de
 import Generarpeticion from '../../../peticiones/apipeticiones';
 
 
-function Modalconfirm({openmodalconfirm,setOpenmodalconfirm,cargaregresos,setCargarEgresos,selectedRowKeys}){
+function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,cargaregresos,setCargarEgresos,
+  selectedRowKeys,setDataresumen}){
   const [titulo,setTitulo]=useState('')
   const [mensaje,setMensaje]=useState('')
-  const [open, setOpen] = useState(openmodalconfirm);
+  const [open, setOpen] = useState(openeliminaregreso);
 
   const showModal = () => {
     setOpen(true);
-    setOpenmodalconfirm(false)
+    setOpeneliminaregreso(false)
   };
   const handleOk = () => {
     setOpen(false);
-    setOpenmodalconfirm(false)
+    setOpeneliminaregreso(false)
   };
   const handleCancel = () => {
     setOpen(false);
-    setOpenmodalconfirm(false)
+    setOpeneliminaregreso(false)
   };
     
   const closemodal=()=>{
-        setOpenmodalconfirm(false)
+    setOpeneliminaregreso(false)
         
     }
 
@@ -38,9 +39,9 @@ function Modalconfirm({openmodalconfirm,setOpenmodalconfirm,cargaregresos,setCar
     const respuesta=result['resp']
     if (respuesta === 200) {
         await new Promise(resolve => setTimeout(resolve, 2000))
-        
+        setDataresumen(result['data'])
         setCargarEgresos(!cargaregresos)
-        setOpenmodalconfirm(false)
+        setOpeneliminaregreso(false)
         
     } else {
         
@@ -94,4 +95,4 @@ function Modalconfirm({openmodalconfirm,setOpenmodalconfirm,cargaregresos,setCar
 
 }
 
-export default Modalconfirm
+export default ModalEliminarEgreso

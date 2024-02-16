@@ -7,7 +7,7 @@ import './cabecera.css'
 
 function HomeCabecera ({cargarresumen,setCargarresumen,cargaringresos,setCargaringresos,cargaregresos,setCargarEgresos}){
 
-    console.log("Cabecera")
+    
 
     const[meses,Setmeses]=useState(null)
     const[mesdefault,setMesdefault]=useState('')
@@ -126,17 +126,17 @@ function HomeCabecera ({cargarresumen,setCargarresumen,cargaringresos,setCargari
     
                       <FormItem label="Mes">
     
-                        <Select
+                        <Select name='listameses'
                           style={{ width: 200 }}
                           defaultValue={mesdefault}
                           
                           onChange={seleccionarmes}
                         >
-                            
+                              
                               {meses &&  meses.map((g) => (
-                                  <option key={g.numero_mes} value={g.numero_mes}>
+                                  <Select.Option key={g.numero_mes} value={g.numero_mes}>
                                       {g.nombre_mes}
-                                  </option>
+                                  </Select.Option>
                               ))}
                         </Select>
                       </FormItem>

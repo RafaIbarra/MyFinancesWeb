@@ -28,56 +28,60 @@ const formItemLayout = {
  
   
 
-function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,setDataresumen}){
+function ModalRegistroIngreso({
+  openregistroingreso,setOpenregistroingreso,cargaringresos,
+  setCargaringresos,setDataresumen
 
-  const [open, setOpen] = useState(openmodalnew);
+}){
+
+  const [open, setOpen] = useState(openregistroingreso);
 
   
     const { MonthPicker, RangePicker } = DatePicker;
     dayjs.extend(customParseFormat);
     const dateFormat = 'YYYY-MM-DD';
     const [fechaegreso, setFechaegreso] = useState(null);
-    const[datosgastos,setDatosgastos]=useState(null)
-    const[gastosproductos,setGastosproductos]=useState(null)
-    const[gastosservicios,setGastosservicios]=useState(null)
-    const[gasttosel,setGastosel]=useState(0)
+    const[datosproductos,setDatosproductos]=useState(null)
+    const[productosfijos,setProductosfijos]=useState(null)
+    const[productosocacionales,setProductosocacionales]=useState(null)
+    const[productosel,setProductosel]=useState(0)
     const[monto,setMonto]=useState(0)
     const[anotacion,setAnotacion]=useState('')
 
-  const showModal = () => {
-    setOpen(true);
-    setOpenmodalnew(false)
-  };
-  const handleOk = () => {
-    setOpen(false);
-    setOpenmodalnew(false)
-  };
-  const handleCancel = () => {
-    setOpen(false);
-    setOpenmodalnew(false)
-  };
-    
+    const showModal = () => {
+      setOpen(true);
+      setOpenregistroingreso(false)
+    };
+    const handleOk = () => {
+      setOpen(false);
+      setOpenregistroingreso(false)
+    };
+    const handleCancel = () => {
+      setOpen(false);
+      setOpenregistroingreso(false)
+    };
+      
     const closemodal=()=>{
-      setOpenmodalnew(false)
-        setOpenmodalnew(false)
-    }
+      setOpenregistroingreso(false)
+      setOpenregistroingreso(false)
+      }
 
 
     useEffect(() => {
     
         const cargardatos = async () => {
           const body = {};
-          const endpoint='MisGastos/'
+          const endpoint='MisProductosFinancieros/'
           const result = await Generarpeticion(endpoint, 'POST', body);
           
           const respuesta=result['resp']
           if (respuesta === 200) {
             // setDatosgastos(result['data'])
             const lista=result['data']
-            const listaproductos = lista.filter((pro) => pro.categoria === 1);
-            const listaservicios = lista.filter((ser) => ser.categoria === 2);
-            setGastosproductos(listaproductos)
-            setGastosservicios(listaservicios)
+            const listafijos = lista.filter((fij) => fij.tipoproducto === 1);
+            const listasocacionales = lista.filter((oca) => oca.tipoproducto === 2);
+            setProductosfijos(listafijos)
+            setProductosocacionales(listasocacionales)
             
             
           } else {
@@ -94,61 +98,61 @@ function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,s
 
 
 
-      const tipocategoria=(event)=>{
-        setDatosgastos(null)
-        setGastosel(0)
+    const tipoproducto=(event)=>{
+        setProductosel(null)
+        setProductosel(0)
         
         const valor=parseInt(event.target.value)
         if (valor===1){
           
-          setDatosgastos(gastosproductos)
+          setDatosproductos(productosfijos)
         }else if(valor===2){
           
-          setDatosgastos(gastosservicios)
+          setDatosproductos(productosocacionales)
         }
         
       }
-      const seleccionargasto=(value)=>{
+    const seleccionproducto=(value)=>{
           const valor= value;
           
-          setGastosel(valor)
+          setProductosel(valor)
   
       }
-      const seleccionarmonto=(value)=>{
+    const seleccionarmonto=(value)=>{
           const valor= value;
           
           setMonto(valor)
   
       }
-      const seleccionaranotacion=(event)=>{
+    const seleccionaranotacion=(event)=>{
           const valor= event.target.value;
           
           setAnotacion(valor)
   
       }
-      const seleccionfecha=(date, dateString)=> {
+    const seleccionfecha=(date, dateString)=> {
         
         setFechaegreso(dateString)
       }
-      const registrar_egreso = async () => {
+    const registrar_ingreso = async () => {
         
           const datosregistrar = {
-              gasto:gasttosel,
+              producto:productosel,
               monto:monto,
               fecha:fechaegreso,
               anotacion:anotacion,
               
   
           };
-          const endpoint='RegistroEgreso/'
+          const endpoint='RegistroIngreso/'
           const result = await Generarpeticion(endpoint, 'POST', datosregistrar);
           
           const respuesta=result['resp']
           if (respuesta === 200) {
             await new Promise(resolve => setTimeout(resolve, 2000))
             setDataresumen(result['data'])
-            setCargarEgresos(!cargaregresos)
-            setOpenmodalnew(false)
+            setCargaringresos(!cargaringresos)
+            setOpenregistroingreso(false)
             
           } else {
             
@@ -165,7 +169,7 @@ function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,s
             <Modal
             
             open={open}
-            title="AGREGAR REGISTRO EGRESO"
+            title="AGREGAR REGISTRO INGRESO"
             onOk={handleOk}
             onCancel={handleCancel}
             footer={(_, { OkBtn, CancelBtn }) => (
@@ -186,14 +190,14 @@ function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,s
                 }}
             >   
                 <Form.Item label="Categoria">
-                  <Radio.Group onChange={tipocategoria}>
-                    <Radio value="1"> Productos </Radio>
-                    <Radio value="2"> Servicios </Radio>
+                  <Radio.Group onChange={tipoproducto}>
+                    <Radio value="1"> Fijo </Radio>
+                    <Radio value="2"> Ocacionales </Radio>
                   </Radio.Group>
                 </Form.Item>
 
                 
-                <Form.Item label="Gasto"name="Gasto"
+                <Form.Item label="Ingreso"name="Ingreso"
                             rules={[
                                 {
                                 required: true,
@@ -201,15 +205,15 @@ function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,s
                                 },
                             ]}
                 >
-                    <Select name="listagasto"
-                            value={gasttosel}
-                            onChange={seleccionargasto}
+                    <Select name="listaproductos"
+                            value={productosel}
+                            onChange={seleccionproducto }
                     >
-                         <option value="">Seleccionar gasto</option>
-                         {datosgastos &&  datosgastos.map((g) => (
-                             <option key={g.id} value={g.id}>
-                                 {g.nombre_gasto}
-                             </option>
+                         <Select.Option value="">Seleccionar </Select.Option>
+                         {datosproductos &&  datosproductos.map((g) => (
+                             <Select.Option key={g.id} value={g.id}>
+                                 {g.nombre_producto}
+                             </Select.Option>
                          ))}
                     </Select>
                     
@@ -218,7 +222,7 @@ function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,s
                 
 
                 <Form.Item
-                    label="Fecha Gasto"
+                    label="Fecha Ingreso"
                     name="DatePicker"
                     rules={[
                         {
@@ -228,7 +232,7 @@ function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,s
                     ]}
                     >
                     <DatePicker 
-                        placeholder='Fecha Egreso'
+                        placeholder='Fecha Ingreso'
                         dateFormat="yyyy-MM-dd"
                         onChange={seleccionfecha}
                         // onChange={onChange}
@@ -242,8 +246,8 @@ function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,s
                 
 
                 <Form.Item
-                    label="Monto Egreso"
-                    name="MontoEgreso"
+                    label="Monto Ingreso"
+                    name="MontoIngreso"
                     rules={[
                         {
                         required: true,
@@ -279,7 +283,7 @@ function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,s
                         span: 16,
                     }}
                     >
-                   <Button type="primary" onClick={registrar_egreso}>Registrar</Button>
+                   <Button type="primary" onClick={registrar_ingreso}>Registrar</Button>
                 </Form.Item>
 
 
@@ -290,4 +294,4 @@ function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,s
 
 }
 
-export default Modalnew
+export default ModalRegistroIngreso
