@@ -28,7 +28,7 @@ const formItemLayout = {
  
   
 
-function Modalnew({openmodalnew,setOpenmodalnew,setCargarEgresos}){
+function Modalnew({openmodalnew,setOpenmodalnew,cargaregresos,setCargarEgresos,setDataresumen}){
 
   const [open, setOpen] = useState(openmodalnew);
 
@@ -146,13 +146,13 @@ function Modalnew({openmodalnew,setOpenmodalnew,setCargarEgresos}){
           const respuesta=result['resp']
           if (respuesta === 200) {
             await new Promise(resolve => setTimeout(resolve, 2000))
-            
-            setCargarEgresos(true)
+            setDataresumen(result['data'])
+            setCargarEgresos(!cargaregresos)
             setOpenmodalnew(false)
             
           } else {
             
-            ;
+            
             // navigate('/');
           }
         };

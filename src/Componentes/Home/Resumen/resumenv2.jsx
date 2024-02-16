@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Generarpeticion from '../../../peticiones/apipeticiones';
+import Handelstorage from '../../../Storage/handelstorage';
 import Resumengrafico from './resumengrafico';
 
 import { Table, Typography } from 'antd';
 const { Text } = Typography;
 
 // import './resumen.css'
-function Resumen({datosresumen}){
+function Resumen({dataresumen}){
     
     // const[datos,setDatos]=useState(null)
     const[detalle,setDetalle]=useState(null)
@@ -53,15 +54,17 @@ function Resumen({datosresumen}){
     
         const cargardatos =  () => {
           
-            if(Object.keys(datosresumen).length>0){
-
-              const registrosdetalle=datosresumen.filter((item) => item.Codigo !== 3)
-              const registroresumen=datosresumen.filter((item) => item.Codigo === 3)
-              
-              setDetalle(registrosdetalle)
-              setTotalingreso(registroresumen[0]['MontoIngreso'])
-              setTotalegreso(registroresumen[0]['MontoEgreso'])
-              setSaldo(registroresumen[0]['Saldo'])
+         
+            const registros=dataresumen
+            if(Object.keys(registros).length>0){
+                
+                const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+                const registroresumen=registros.filter((item) => item.Codigo === 3)
+                
+                setDetalle(registrosdetalle)
+                setTotalingreso(registroresumen[0]['MontoIngreso'])
+                setTotalegreso(registroresumen[0]['MontoEgreso'])
+                setSaldo(registroresumen[0]['Saldo'])
             }
             else{
               setDetalle(null)
@@ -69,11 +72,13 @@ function Resumen({datosresumen}){
               setTotalegreso(0)
               setSaldo(0)
             }
+          }
+          
            
-        };
+        
     
         cargardatos();
-      }, [datosresumen]);
+      }, [dataresumen]);
 
 
       return(

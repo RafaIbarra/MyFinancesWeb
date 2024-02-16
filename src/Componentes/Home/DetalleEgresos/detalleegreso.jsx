@@ -8,7 +8,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import Handelstorage from '../../../Storage/handelstorage';
 import Generarpeticion from '../../../peticiones/apipeticiones';
 
-function DetalleEgreso({cargaregresos,setCargarEgresos}){
+function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
     const navigate=useNavigate()
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -40,7 +40,7 @@ function DetalleEgreso({cargaregresos,setCargarEgresos}){
 
     
     useEffect(() => {
-       console.log(openmodalconfirm)
+       
         const cargardatos =  async() => {
 
           
@@ -55,7 +55,7 @@ function DetalleEgreso({cargaregresos,setCargarEgresos}){
           const respuesta=result['resp']
 
           if (respuesta === 200) {
-            let registros=result['data']
+            const registros=result['data']
 
             if(Object.keys(registros).length>0){
 
@@ -92,8 +92,10 @@ function DetalleEgreso({cargaregresos,setCargarEgresos}){
       };
 
       const onSelectChange = (newSelectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        
+        
         setSelectedRowKeys(newSelectedRowKeys);
+        
       };
 
     const rowSelection = { selectedRowKeys, onChange: onSelectChange,};
@@ -108,7 +110,7 @@ function DetalleEgreso({cargaregresos,setCargarEgresos}){
 
     const actualizar=()=>{
         const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
-        console.log(ultimoElemento)
+        
 
       }
 
@@ -153,8 +155,20 @@ function DetalleEgreso({cargaregresos,setCargarEgresos}){
                 <Button type="primary" icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
 
                 
-                {openmodalconfirm &&( <Modalconfirm openmodalconfirm={openmodalconfirm} setOpenmodalconfirm={setOpenmodalconfirm} setCargarEgresos={setCargarEgresos}  ></Modalconfirm>)}
-                {openmodalnew &&( <Modalnew openmodalnew={openmodalnew} setOpenmodalnew={setOpenmodalnew} setCargarEgresos={setCargarEgresos}  ></Modalnew>)}
+                {openmodalconfirm &&( <Modalconfirm openmodalconfirm={openmodalconfirm} 
+                                                    setOpenmodalconfirm={setOpenmodalconfirm} 
+                                                    cargaregresos={cargaregresos}
+                                                    setCargarEgresos={setCargarEgresos} 
+                                                    
+                                                    selectedRowKeys={selectedRowKeys}  
+                                      ></Modalconfirm>)}
+
+                {openmodalnew &&( <Modalnew openmodalnew={openmodalnew} 
+                                            setOpenmodalnew={setOpenmodalnew} 
+                                            cargaregresos={cargaregresos} 
+                                            setCargarEgresos={setCargarEgresos}  
+                                            setDataresumen={setDataresumen}
+                                            ></Modalnew>)}
                 
             </div>
            

@@ -1,8 +1,0 @@
-.contenedor-flex {
-    display: flex;
-    gap: 20px;
-    margin-top: 5px;
-    justify-content: center;
-    /* align-items: center;  */
-    width: '100%';
-  }

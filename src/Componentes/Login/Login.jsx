@@ -29,7 +29,7 @@ function Login({activarsesion,desactivarsesion}){
     
     const navegar=()=>{
         activarsesion()
-        console.log("desde aca envia en el home")
+        
         navigate('/Home')
 
     }
