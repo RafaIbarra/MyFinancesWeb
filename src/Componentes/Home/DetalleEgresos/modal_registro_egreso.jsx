@@ -166,127 +166,105 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
 
             <Modal
             
-            open={open}
-            title="AGREGAR REGISTRO EGRESO"
-            onOk={handleOk}
-            onCancel={handleCancel}
-            footer={(_, { OkBtn, CancelBtn }) => (
-            <>
-                <Button onClick={closemodal}> Cancelar</Button>
-                <Button onClick={closemodal}> Eliminar</Button>
-                {/* <CancelBtn />
-                <OkBtn /> */}
-            </>
-            )}
-        >
-            
-            <Form
-                {...formItemLayout}
-                variant="filled"
-                style={{
-                maxWidth: 600,
-                }}
-            >   
-                <Form.Item label="Categoria">
-                  <Radio.Group onChange={tipocategoria}>
-                    <Radio value="1"> Productos </Radio>
-                    <Radio value="2"> Servicios </Radio>
-                  </Radio.Group>
-                </Form.Item>
-
-                
-                <Form.Item label="Gasto"name="Gasto"
-                            rules={[
-                                {
-                                required: true,
-                                message: 'Please input!',
-                                },
-                            ]}
-                >
-                    <Select name="listagasto"
-                            value={gasttosel}
-                            onChange={seleccionargasto}
-                    >
-                         <Select.Option value="">Seleccionar gasto</Select.Option>
-                         {datosgastos &&  datosgastos.map((g) => (
-                             <Select.Option key={g.id} value={g.id}>
-                                 {g.nombre_gasto}
-                             </Select.Option>
-                         ))}
-                    </Select>
+                open={open}
+                title="AGREGAR REGISTRO EGRESO"
+                onOk={handleOk}
+                onCancel={handleCancel}
+                footer={(_, { OkBtn, CancelBtn }) => (
+                <>
+                    <Button onClick={closemodal}> Cancelar</Button>
                     
-                </Form.Item>
-                
-                
-
-                <Form.Item
-                    label="Fecha Gasto"
-                    name="DatePicker"
-                    rules={[
-                        {
-                        required: true,
-                        message: 'Please input!',
-                        },
-                    ]}
-                    >
-                    <DatePicker 
-                        placeholder='Fecha Egreso'
-                        dateFormat="yyyy-MM-dd"
-                        onChange={seleccionfecha}
-                        // onChange={onChange}
-                        
-                        >
-
-                    </DatePicker>
-                </Form.Item>
-                
+                    <Button type="primary" onClick={registrar_egreso}>Registrar</Button>
+                    
+                </>
+                )}
+              >
             
-                
+                  <Form
+                      {...formItemLayout}
+                      variant="filled"
+                      style={{
+                      maxWidth: 600,
+                      }}
+                  >   
+                      <Form.Item label="Categoria">
+                        <Radio.Group onChange={tipocategoria}>
+                          <Radio value="1"> Productos </Radio>
+                          <Radio value="2"> Servicios </Radio>
+                        </Radio.Group>
+                      </Form.Item>
 
-                <Form.Item
-                    label="Monto Egreso"
-                    name="MontoEgreso"
-                    rules={[
-                        {
-                        required: true,
-                        message: 'Please input!',
-                        },
-                    ]}
-                    >
-                    <InputNumber
-                        onChange={seleccionarmonto}
-                        style={{
-                        width: '100%',
-                        }}
-                    />
-                </Form.Item>
+                      
+                      <Form.Item label="Gasto"name="Gasto"
+                                  rules={[
+                                      {
+                                      required: true,
+                                      message: 'Please input!',
+                                      },
+                                  ]}
+                      >
+                          <Select name="listagasto" value={gasttosel} onChange={seleccionargasto}>
+                              <Select.Option value="">Seleccionar gasto</Select.Option>
+                              {datosgastos &&  datosgastos.map((g) => (
+                                  <Select.Option key={g.id} value={g.id}>
+                                      {g.nombre_gasto}
+                                  </Select.Option>
+                              ))}
+                          </Select>
+                          
+                      </Form.Item>
+                      
+                      
 
-                <Form.Item
-                    label="Anotacion"
-                    name="Anotacion"
-                    rules={[
-                        {
-                        required: false,
-                        message: '',
-                        },
-                    ]}
-                    >
-                    <Input.TextArea onChange={seleccionaranotacion}/>
-                </Form.Item>
+                      <Form.Item
+                          label="Fecha Gasto"
+                          name="DatePicker"
+                          rules={[
+                              {
+                              required: true,
+                              message: 'Please input!',
+                              },
+                          ]}
+                          >
+                          <DatePicker placeholder='Fecha Egreso' dateFormat="yyyy-MM-dd"onChange={seleccionfecha}>
 
+                          </DatePicker>
+                      </Form.Item>
+                      
+                  
+              
+                      <Form.Item
+                          label="Monto Egreso"
+                          name="MontoEgreso"
+                          rules={[
+                              {
+                              required: true,
+                              message: 'Please input!',
+                              },
+                          ]}
+                          >
+                          <InputNumber onChange={seleccionarmonto}
+                              style={{
+                              width: '100%',
+                              }}
+                          />
+                      </Form.Item>
 
-                <Form.Item
-                    wrapperCol={{
-                        offset: 6,
-                        span: 16,
-                    }}
-                    >
-                   <Button type="primary" onClick={registrar_egreso}>Registrar</Button>
-                </Form.Item>
+                      <Form.Item
+                          label="Anotacion"
+                          name="Anotacion"
+                          rules={[
+                              {
+                              required: false,
+                              message: '',
+                              },
+                          ]}
+                          >
+                          <Input.TextArea onChange={seleccionaranotacion}/>
+                      </Form.Item>
 
-
-            </Form>
-            </Modal>
+                  </Form>
+             </Modal>
         </div>
     )
 

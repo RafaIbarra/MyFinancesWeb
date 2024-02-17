@@ -84,7 +84,7 @@ function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,
             footer={(_, { OkBtn, CancelBtn }) => (
             <>
                 <Button onClick={closemodal}> Cancelar</Button>
-                <Button onClick={eliminar}> Eliminar</Button>
+                <Button type="primary" onClick={eliminar}> Eliminar</Button>
                 {/* <CancelBtn />
                 <OkBtn /> */}
             </>

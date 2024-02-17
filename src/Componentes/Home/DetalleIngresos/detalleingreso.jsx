@@ -22,7 +22,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
   }
   const eliminar=()=>{
     console.log(selectedRowKeys)
-    setOpeneliminaringreso(true)
+    // setOpeneliminaringreso(true)
     
   }
 
@@ -45,7 +45,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
    
     
   useEffect(() => {
-     
+        setSelectedRowKeys([])
         const cargardatos =   () => {
 
                 
@@ -65,7 +65,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
             setDetalle([])
             
           }
-
+          
           
           
         };
