@@ -7,8 +7,7 @@ import Generarpeticion from '../../../peticiones/apipeticiones';
 function ModalEliminarIngreso({
   openeliminaringreso,
   setOpeneliminaringreso,
-  cargaringresos,
-  setCargaringresos,
+  setDataingresos,
   selectedRowKeys,
   setDataresumen
 
@@ -47,8 +46,9 @@ function ModalEliminarIngreso({
     const respuesta=result['resp']
     if (respuesta === 200) {
         await new Promise(resolve => setTimeout(resolve, 2000))
-        setDataresumen(result['data'])
-        setCargaringresos(!cargaringresos)
+        const registros=result['data']
+        setDataresumen(registros['Resumen'])
+        setDataingresos(registros['Ingresos'])
         setOpeneliminaringreso(false)
         
     } else {

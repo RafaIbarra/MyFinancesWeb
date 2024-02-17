@@ -69,8 +69,8 @@ function Resumen({dataresumen}){
 
                 const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
                 const registroresumen=registros.filter((item) => item.Codigo === 3)
-                
-                setDetalle(registrosdetalle)
+                const datosFiltrados = registrosdetalle.filter(item => item.MontoIngreso + item.MontoEgreso > 0);
+                setDetalle(datosFiltrados)
                 setTotalingreso(registroresumen[0]['MontoIngreso'])
                 setTotalegreso(registroresumen[0]['MontoEgreso'])
                 setSaldo(registroresumen[0]['Saldo'])

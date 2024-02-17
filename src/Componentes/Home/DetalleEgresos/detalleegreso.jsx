@@ -5,10 +5,9 @@ import ModalEliminarEgreso from './modal_eliminar_egreso';
 import ModalRegistroEgreso from './modal_registro_egreso';
 import './detalleegreso.css'
 import { Navigate, useNavigate } from "react-router-dom";
-import Handelstorage from '../../../Storage/handelstorage';
-import Generarpeticion from '../../../peticiones/apipeticiones';
+
 const { Text } = Typography;
-function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
+function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
     const navigate=useNavigate()
     
     const [detalle,setDetalle]=useState(null)
@@ -44,21 +43,11 @@ function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
     
     useEffect(() => {
        
-        const cargardatos =  async() => {
+        const cargardatos =  () => {
 
-          
-          const datestorage=Handelstorage('obtenerdate');
-          const mes_storage=datestorage['datames']
-          const anno_storage=datestorage['dataanno']
-          const body = {};
-          const endpoint='MisEgresos/' + anno_storage +'/' + mes_storage + '/'
-          
-          const result = await Generarpeticion(endpoint, 'POST', body);
-
-          const respuesta=result['resp']
-
-          if (respuesta === 200) {
-            const registros=result['data']
+            
+        
+            const registros=dataegresos
 
             if(Object.keys(registros).length>0){
 
@@ -74,17 +63,13 @@ function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
               
             }
 
-          } else {
-            
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            // navigate('/');
-          }
+          
 
           
         };
     
         cargardatos();
-      }, [cargaregresos]);
+      }, [dataegresos]);
 
 
 
@@ -145,8 +130,7 @@ function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
         <div>
             
             <div> 
-              <Table 
-                rowSelection={rowSelection} 
+              <Table rowSelection={rowSelection} 
                 columns={columns} 
                 dataSource={detalle} 
                 pagination={false}
@@ -196,16 +180,14 @@ function DetalleEgreso({cargaregresos,setCargarEgresos,setDataresumen}){
                 
                 {openeliminaregreso &&( <ModalEliminarEgreso openeliminaregreso={openeliminaregreso} 
                                                     setOpeneliminaregreso={setOpeneliminaregreso} 
-                                                    cargaregresos={cargaregresos}
-                                                    setCargarEgresos={setCargarEgresos} 
-                                                    selectedRowKeys={selectedRowKeys} 
+                                                    setDataegresos={setDataegresos} 
                                                     setDataresumen={setDataresumen} 
+                                                    selectedRowKeys={selectedRowKeys} 
                                       ></ModalEliminarEgreso>)}
 
                 {openregistroegreso &&( <ModalRegistroEgreso openregistroegreso={openregistroegreso} 
                                             setOpenregistroegreso={setOpenregistroegreso} 
-                                            cargaregresos={cargaregresos} 
-                                            setCargarEgresos={setCargarEgresos}  
+                                            setDataegresos={setDataegresos} 
                                             setDataresumen={setDataresumen}
                                             ></ModalRegistroEgreso>)}
                 

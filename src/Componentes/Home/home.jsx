@@ -14,12 +14,14 @@ function Home (){
     
     const[recargadatos,setRecargadatos]=useState(false)
     const[cargaconfirmada,setCargaconfirmada]=useState(false)
+
     const[dataresumen,setDataresumen]=useState(null)
+    const[dataingresos,setDataingresos]=useState(null)
+    const[dataegresos,setDataegresos]=useState(null)
     
 
     const[cargarresumen,setCargarresumen]=useState(false)
-    const[cargaringresos,setCargaringresos]=useState(false)
-    const[cargaregresos,setCargarEgresos]=useState(false)
+
 
     useEffect(() => {
 
@@ -31,13 +33,17 @@ function Home (){
       const cargardatos = async () => {
         
         const body = {};
-        const endpoint='Balance/' + anno_storage +'/' + mes_storage + '/'
+        const endpoint='Resumen/' + anno_storage +'/' + mes_storage + '/'
         const result = await Generarpeticion(endpoint, 'POST', body);
         
         const respuesta=result['resp']
         if (respuesta === 200) {
             const registros=result['data']
-            setDataresumen(registros)
+           
+
+            setDataresumen(registros['Resumen'])
+            setDataingresos(registros['Ingresos'])
+            setDataegresos(registros['Egresos'])
             
             
             
@@ -56,10 +62,7 @@ function Home (){
               <HomeCabecera 
                 cargarresumen={cargarresumen}
                 setCargarresumen={setCargarresumen}
-                cargaringresos={cargaringresos}
-                setCargaringresos={setCargaringresos}
-                cargaregresos={cargaregresos}
-                setCargarEgresos={setCargarEgresos}
+                
                 
               ></HomeCabecera>
               
@@ -75,10 +78,10 @@ function Home (){
                   {cargaconfirmada &&(<Resumen dataresumen={dataresumen}   ></Resumen>)}
                 </Tab>
                 <Tab eventKey="profile" title="Detalle de Ingresos">
-                  {cargaconfirmada &&(<DetalleIngreso cargaringresos={cargaringresos} setCargaringresos={setCargaringresos} setDataresumen={setDataresumen}></DetalleIngreso>)}
+                  {cargaconfirmada &&(<DetalleIngreso dataingresos={dataingresos} setDataingresos={setDataingresos} setDataresumen={setDataresumen}></DetalleIngreso>)}
                 </Tab>
                 <Tab eventKey="contact" title="Detalle de Egresos" >
-                  {cargaconfirmada &&( <DetalleEgreso cargaregresos={cargaregresos} setCargarEgresos={setCargarEgresos} setDataresumen={setDataresumen} ></DetalleEgreso>)}
+                  {cargaconfirmada &&( <DetalleEgreso dataegresos={dataegresos} setDataegresos={setDataegresos} setDataresumen={setDataresumen} ></DetalleEgreso>)}
                 </Tab>
             </Tabs>
             

@@ -5,7 +5,7 @@ import {Button,InputNumber,Select } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import './cabecera.css'
 
-function HomeCabecera ({cargarresumen,setCargarresumen,cargaringresos,setCargaringresos,cargaregresos,setCargarEgresos}){
+function HomeCabecera ({cargarresumen,setCargarresumen}){
 
     
 

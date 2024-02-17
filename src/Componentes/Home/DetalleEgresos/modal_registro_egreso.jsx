@@ -28,21 +28,22 @@ const formItemLayout = {
  
   
 
-function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,cargaregresos,setCargarEgresos,setDataresumen}){
+function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataegresos,
+  setDataresumen}){
 
   const [open, setOpen] = useState(openregistroegreso);
 
   
-    const { MonthPicker, RangePicker } = DatePicker;
-    dayjs.extend(customParseFormat);
-    const dateFormat = 'YYYY-MM-DD';
-    const [fechaegreso, setFechaegreso] = useState(null);
-    const[datosgastos,setDatosgastos]=useState(null)
-    const[gastosproductos,setGastosproductos]=useState(null)
-    const[gastosservicios,setGastosservicios]=useState(null)
-    const[gasttosel,setGastosel]=useState(0)
-    const[monto,setMonto]=useState(0)
-    const[anotacion,setAnotacion]=useState('')
+  const { MonthPicker, RangePicker } = DatePicker;
+  dayjs.extend(customParseFormat);
+  const dateFormat = 'YYYY-MM-DD';
+  const [fechaegreso, setFechaegreso] = useState(null);
+  const[datosgastos,setDatosgastos]=useState(null)
+  const[gastosproductos,setGastosproductos]=useState(null)
+  const[gastosservicios,setGastosservicios]=useState(null)
+  const[gasttosel,setGastosel]=useState(0)
+  const[monto,setMonto]=useState(0)
+  const[anotacion,setAnotacion]=useState('')
 
   const showModal = () => {
     setOpen(true);
@@ -63,7 +64,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,cargaregr
     }
 
 
-    useEffect(() => {
+  useEffect(() => {
     
         const cargardatos = async () => {
           const body = {};
@@ -94,7 +95,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,cargaregr
 
 
 
-    const tipocategoria=(event)=>{
+  const tipocategoria=(event)=>{
         setDatosgastos(null)
         setGastosel(0)
         
@@ -108,29 +109,29 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,cargaregr
         }
         
       }
-    const seleccionargasto=(value)=>{
+  const seleccionargasto=(value)=>{
           const valor= value;
           
           setGastosel(valor)
   
       }
-    const seleccionarmonto=(value)=>{
+  const seleccionarmonto=(value)=>{
           const valor= value;
           
           setMonto(valor)
   
       }
-    const seleccionaranotacion=(event)=>{
+  const seleccionaranotacion=(event)=>{
           const valor= event.target.value;
           
           setAnotacion(valor)
   
       }
-    const seleccionfecha=(date, dateString)=> {
+  const seleccionfecha=(date, dateString)=> {
         
         setFechaegreso(dateString)
       }
-    const registrar_egreso = async () => {
+  const registrar_egreso = async () => {
         
           const datosregistrar = {
               gasto:gasttosel,
@@ -146,8 +147,9 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,cargaregr
           const respuesta=result['resp']
           if (respuesta === 200) {
             await new Promise(resolve => setTimeout(resolve, 2000))
-            setDataresumen(result['data'])
-            setCargarEgresos(!cargaregresos)
+            const registros=result['data']
+            setDataresumen(registros['Resumen'])
+            setDataegresos(registros['Egresos'])
             setOpenregistroegreso(false)
             
           } else {
@@ -159,7 +161,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,cargaregr
 
 
 
-    return(
+   return(
         <div >
 
             <Modal

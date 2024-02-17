@@ -1,26 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import Generarpeticion from '../../../peticiones/apipeticiones';
-import Handelstorage from '../../../Storage/handelstorage';
-import { Button, Table, Tag,Typography } from 'antd';
-import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone  } from '@ant-design/icons';
+import { Button, Table, Typography } from 'antd';
+import { DeleteOutlined,RetweetOutlined,PlusCircleTwoTone} from '@ant-design/icons';
 import ModalEliminarIngreso from './modal_eliminar_ingreso';
 import ModalRegistroIngreso from './modal_registro_ingreso';
 
 import './detalleingreso.css'
 const { Text } = Typography;
-function DetalleIngreso({cargaringresos,setCargaringresos,setDataresumen}){
+function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
     
   const [openeliminaringreso, setOpeneliminaringreso] = useState(false);
   const [openregistroingreso, setOpenregistroingreso] = useState(false);
 
-  const[detalle,setDetalle]=useState(null)
+  const [detalle,setDetalle]=useState(null)
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const nuevo=()=>{
-    console.log('nuevo')
     setOpenregistroingreso(true)
   }
   const eliminar=()=>{
@@ -47,70 +44,51 @@ function DetalleIngreso({cargaringresos,setCargaringresos,setDataresumen}){
     ]
    
     
-    useEffect(() => {
+  useEffect(() => {
      
-        const cargardatos = async  () => {
+        const cargardatos =   () => {
 
-          
-          
-          const datestorage=Handelstorage('obtenerdate');
-          const mes_storage=datestorage['datames']
-          const anno_storage=datestorage['dataanno']
-
-          
-        
-          const body = {};
-          const endpoint='MisIngresos/' + anno_storage +'/' + mes_storage + '/'
-          
-          const result = await Generarpeticion(endpoint, 'POST', body);
-          
-          const respuesta=result['resp']
-          if (respuesta === 200) {
-            
-            const registros=result['data']
-            
-            if(Object.keys(registros).length>0){
-              registros.forEach((elemento) => {
                 
-                elemento.key = elemento.id;
-              })
-              setDetalle(registros)
+  
+        
+          const registros=dataingresos
+          
+          if(Object.keys(registros).length>0){
+            registros.forEach((elemento) => {
               
-            }
-            else{
-              setDetalle([])
-              
-            }
-
+              elemento.key = elemento.id;
+            })
+            setDetalle(registros)
             
-
-          } else {
-            
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            // navigate('/');
           }
+          else{
+            setDetalle([])
+            
+          }
+
+          
           
         };
     
         cargardatos();
-      }, [cargaringresos]);
+      }, [dataingresos]);
     
 
 
-    const start = () => {
+  const start = () => {
         setLoading(true);
         
         setTimeout(() => {setSelectedRowKeys([]);setLoading(false);}, 1000);
       };
 
-      const onSelectChange = (newSelectedRowKeys) => {
+  const onSelectChange = (newSelectedRowKeys) => {
         
         
         setSelectedRowKeys(newSelectedRowKeys);
         
       };
-    const rowSelection = { selectedRowKeys, onChange: onSelectChange,};
-    const handleOk = () => {
+  const rowSelection = { selectedRowKeys, onChange: onSelectChange,};
+  const handleOk = () => {
       setConfirmLoading(true);
       setTimeout(() => {
         setOpen(false);
@@ -120,8 +98,7 @@ function DetalleIngreso({cargaringresos,setCargaringresos,setDataresumen}){
     return(
         <div>
             
-            <Table 
-              rowSelection={rowSelection} 
+            <Table rowSelection={rowSelection} 
               columns={columns} 
               dataSource={detalle} 
               pagination={false}
@@ -169,8 +146,7 @@ function DetalleIngreso({cargaringresos,setCargaringresos,setDataresumen}){
                 {openeliminaringreso &&( <ModalEliminarIngreso 
                                         openeliminaringreso={openeliminaringreso}
                                         setOpeneliminaringreso={setOpeneliminaringreso}
-                                        cargaringresos={cargaringresos} 
-                                        setCargaringresos={setCargaringresos} 
+                                        setDataingresos={setDataingresos}
                                         selectedRowKeys={selectedRowKeys}
                                         setDataresumen={setDataresumen} 
                                       ></ModalEliminarIngreso>)}
@@ -178,8 +154,7 @@ function DetalleIngreso({cargaringresos,setCargaringresos,setDataresumen}){
                 {openregistroingreso &&( <ModalRegistroIngreso 
                                           openregistroingreso={openregistroingreso} 
                                           setOpenregistroingreso={setOpenregistroingreso} 
-                                          cargaringresos={cargaringresos} 
-                                          setCargaringresos={setCargaringresos}  
+                                          setDataingresos={setDataingresos}
                                           setDataresumen={setDataresumen}
                                           ></ModalRegistroIngreso>)}
                 

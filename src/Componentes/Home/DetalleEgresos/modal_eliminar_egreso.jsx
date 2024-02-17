@@ -4,8 +4,10 @@ import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone  } from '@ant-de
 import Generarpeticion from '../../../peticiones/apipeticiones';
 
 
-function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,cargaregresos,setCargarEgresos,
-  selectedRowKeys,setDataresumen}){
+function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,
+  setDataegresos,
+  setDataresumen,selectedRowKeys})
+  {
   const [titulo,setTitulo]=useState('')
   const [mensaje,setMensaje]=useState('')
   const [open, setOpen] = useState(openeliminaregreso);
@@ -39,8 +41,9 @@ function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,cargaregr
     const respuesta=result['resp']
     if (respuesta === 200) {
         await new Promise(resolve => setTimeout(resolve, 2000))
-        setDataresumen(result['data'])
-        setCargarEgresos(!cargaregresos)
+        const registros=result['data']
+        setDataresumen(registros['Resumen'])
+        setDataegresos(registros['Egresos'])
         setOpeneliminaregreso(false)
         
     } else {
@@ -52,7 +55,7 @@ function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,cargaregr
   }
 
 
-    useEffect(() => {
+  useEffect(() => {
       const titulos=()=>{
         if(selectedRowKeys.length>1){
           setTitulo('ELIMINAR REGISTROS')

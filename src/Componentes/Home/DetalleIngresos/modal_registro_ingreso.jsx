@@ -29,8 +29,7 @@ const formItemLayout = {
   
 
 function ModalRegistroIngreso({
-  openregistroingreso,setOpenregistroingreso,cargaringresos,
-  setCargaringresos,setDataresumen
+  openregistroingreso,setOpenregistroingreso,setDataingresos,setDataresumen
 
 }){
 
@@ -150,8 +149,9 @@ function ModalRegistroIngreso({
           const respuesta=result['resp']
           if (respuesta === 200) {
             await new Promise(resolve => setTimeout(resolve, 2000))
-            setDataresumen(result['data'])
-            setCargaringresos(!cargaringresos)
+            const registros=result['data']
+            setDataresumen(registros['Resumen'])
+            setDataingresos(registros['Ingresos'])
             setOpenregistroingreso(false)
             
           } else {
