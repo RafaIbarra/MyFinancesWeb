@@ -1,48 +1,48 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Table, Typography,notification } from 'antd';
 import { DeleteOutlined,RetweetOutlined,PlusCircleTwoTone,CheckOutlined,WarningOutlined} from '@ant-design/icons';
-import ModalRegistroProducto from './modal_registro_productos';
-import ModalEliminarProducto from './modal_eliminar_producto';
+import ModalRegistroGasto from './modal_registro_gastos';
 import Generarpeticion from '../../peticiones/apipeticiones';
-import './productos.css'
+import './gastos.css'
 import FormItem from 'antd/es/form/FormItem';
+
 const { Text } = Typography;
-function Productosfinancieros(){
+
+function Gastos(){
     const [api, contextHolder] = notification.useNotification();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
 
-    const [productos,setProductos]=useState([])
-    const [totalproductos,setTotalproductos]=useState(0)
-    const [cantidadproductos,setCantidadproductos]=useState(0)
-    // const [cargaconfirmada,setCargaconfirmada]=useState(false)
+    const [gastos,setGastos]=useState([])
+    const [totalgastos,setTotalgastos]=useState(0)
+    const [cantidadgastos,setCantidadgastos]=useState(0)
+    
 
-    const [detalleseleccionproducto,setDetalleseleccionproducto]=useState([])
+    const [detalleselecciongasto,setDetalleselecciongasto]=useState([])
 
-    const [openeliminarproducto, setOpeneliminarproducto] = useState(false);
-    const [openregistroproducto, setOpenregistroproducto] = useState(false);
+    const [openeliminargasto, setOpeneliminargasto] = useState(false);
+    const [openregistrogasto, setOpenregistrogasto] = useState(false);
 
     const [erroreliminarcion, setErroreliminacion]=useState(false)
     const [errorcantidadunica, setErrorcantidadunica]=useState(true)
     const [mesajecantidadunica, setMesajecantidadunica]=useState('')
-    const [modoedicionproducto,setModoedicionproducto]=useState(false)
+    const [modoediciongasto,setModoediciongasto]=useState(false)
 
-    const [cargarcomponentesproductos,setCargarcomponentesproductos]=useState(false)
-
-    
+    const [cargarcomponentesgasto,setCargarcomponentesgasto]=useState(false)
 
     const columns=[
-        { title: 'Codigo',dataIndex: 'id',key: 'id_prod',width:'100px'},
-        { title: 'Nombre Producto',dataIndex: 'nombre_producto',key: 'nombre_producto'},
-        { title: 'Tipo',dataIndex: 'DescripcionTipoProducto',key: 'DescripcionTipoProducto'},
+        { title: 'Codigo',dataIndex: 'id',key: 'id_gast',width:'100px'},
+        { title: 'Nombre Gasto',dataIndex: 'nombre_gasto',key: 'nombre_gasto'},
+        { title: 'Tipo',dataIndex: 'DescripcionTipoGasto',key: 'DescripcionTipoGasto'},
+        { title: 'Categoria',dataIndex: 'DescripcionCategoriaGasto',key: 'DescripcionCategoriaGasto'},
         { title: 'Monto Total Registrado',
-          dataIndex: 'TotalIngresos',
-          key: 'TotalIngresos',
-          render: (TotalIngresos) => (
+          dataIndex: 'TotalEgresos',
+          key: 'TotalEgresos',
+          render: (TotalEgresos) => (
             <span>
-              Gs. {Number(TotalIngresos).toLocaleString('es-ES')}
+              Gs. {Number(TotalEgresos).toLocaleString('es-ES')}
             </span>
           ),
         },
@@ -51,15 +51,16 @@ function Productosfinancieros(){
         
       ]
 
+
     const nuevo=()=>{
-        setDetalleseleccionproducto([])
-        setOpenregistroproducto(true)
-        setModoedicionproducto(false)
+        setDetalleselecciongasto([])
+        setOpenregistrogasto(true)
+        setModoediciongasto(false)
       }
 
     const eliminar=()=>{
     
-      setOpeneliminarproducto(true)
+        setOpeneliminargasto(true)
         
       }
 
@@ -67,10 +68,10 @@ function Productosfinancieros(){
         
         const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
         
-        const detallesel=productos.filter((item) => item.id ===ultimoElemento)
-        setDetalleseleccionproducto(detallesel)
-        setOpenregistroproducto(true)
-        setModoedicionproducto(true)
+        const detallesel=gastos.filter((item) => item.id ===ultimoElemento)
+        setDetalleselecciongasto(detallesel)
+        setOpenregistrogasto(true)
+        setModoediciongasto(true)
   
         // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
   
@@ -79,10 +80,10 @@ function Productosfinancieros(){
           
         const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
         
-        const detallesel=productos.filter((item) => item.id ===ultimoElemento)
-        setDetalleseleccionproducto(detallesel)
-        setOpenregistroproducto(true)
-        setModoedicionproducto(false)
+        const detallesel=gastos.filter((item) => item.id ===ultimoElemento)
+        setDetalleselecciongasto(detallesel)
+        setOpenregistrogasto(true)
+        setModoediciongasto(false)
   
         // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
   
@@ -112,14 +113,13 @@ function Productosfinancieros(){
             ),
           });
         };
-    
 
     useEffect(() => {
         
         const cargardatos = async () => {
         
             const body = {};
-            const endpoint='MisProductosFinancieros/'
+            const endpoint='MisGastos/'
             const result = await Generarpeticion(endpoint, 'POST', body);
             
             const respuesta=result['resp']
@@ -129,97 +129,98 @@ function Productosfinancieros(){
                 
                 if(Object.keys(registros).length>0){
                     registros.forEach((elemento) => {
-                      
-                      elemento.key = elemento.id;
+                        
+                        elemento.key = elemento.id;
                     })
                     let totalprod=0
                     let cantprod=0
-                    registros.forEach(({ TotalIngresos }) => {totalprod += TotalIngresos,cantprod+=1})
-                    setTotalproductos(totalprod)
-                    setCantidadproductos(cantprod)
+                    registros.forEach(({ TotalEgresos }) => {totalprod += TotalEgresos,cantprod+=1})
+                    setTotalgastos(totalprod)
+                    setCantidadgastos(cantprod)
                     
-                    setProductos(registros)
+                    setGastos(registros)
                     
                     
-                  }
-                  else{
+                    }
+                    else{
                     
                     setDetalle([])
                     
-                  }
+                    }
                 
                 
             }
             setErroreliminacion(true)
             setErrorcantidadunica(true)
             setMesajecantidadunica('seleccione el registro')
-            setModoedicionproducto(false)
-            setCargarcomponentesproductos(true)
+            setModoediciongasto(false)
+            setCargarcomponentesgasto(true)
             
-          };
-          
-    
-        cargardatos();
-      }, [cargarcomponentesproductos]);
+            };
+              
+        
+            cargardatos();
+        }, [cargarcomponentesgasto]);
     const start = () => {
         setLoading(true);
         
         setTimeout(() => {setSelectedRowKeys([]);setLoading(false);}, 1000);
-      };
+        };
 
     const onSelectChange = (newSelectedRowKeys) => {
         if(newSelectedRowKeys.length>0){
             setErroreliminacion(false)
-          }else{
+            }else{
             setErroreliminacion(true)
-          }
+            }
 
         if(newSelectedRowKeys.length ===1){
         
             setErrorcantidadunica(false)
-          }else{
+            }else{
             
-              setErrorcantidadunica(true)
-              if(newSelectedRowKeys.length > 1){
+                setErrorcantidadunica(true)
+                if(newSelectedRowKeys.length > 1){
                 setMesajecantidadunica('solo debe seleccionar un registro.')
-              }
-              else{
+                }
+                else{
                 setMesajecantidadunica('seleccionar el registro')
-              }
+                }
             }
 
 
 
         setSelectedRowKeys(newSelectedRowKeys);
-          
-      };
+            
+        }
 
     const rowSelection = { selectedRowKeys, onChange: onSelectChange,};
-    if (cargarcomponentesproductos){
+
+    if (cargarcomponentesgasto){
 
         return(
             <div>
                   {contextHolder}
-                  <h4 className='tituloform' > Datos Productos Financieros </h4>
+                  <h4 className='tituloform' > Datos Gastos </h4>
                   <Table 
                     rowSelection={rowSelection} 
                     scroll={{x: 300,y: 400,}}
                     size="small"
                     columns={columns} 
-                    dataSource={productos} 
+                    dataSource={gastos} 
                     pagination={false}
                     bordered
                   />
                   <div className='contenedor-resumen'>
                       <FormItem >
-                        <Text strong>CANTIDAD REGISTROS: </Text>
-                        <Text strong>   {Number(cantidadproductos).toLocaleString('es-ES')}</Text>
+                        <Text strong>CANTIDAD GASTOS: </Text>
+                        <Text strong>   {Number(cantidadgastos).toLocaleString('es-ES')}</Text>
                           
                       </FormItem>
     
                       <FormItem >
-                          <Text strong>TOTAL INGRESOS: </Text>
-                          <Text strong>GS. {Number(totalproductos).toLocaleString('es-ES')}</Text>
+                          <Text strong>TOTAL EGRESOS: </Text>
+                          <Text strong>GS. {Number(totalgastos).toLocaleString('es-ES')}</Text>
                           
                       </FormItem>
     
@@ -254,24 +255,23 @@ function Productosfinancieros(){
                                   onClick={nuevo} 
                                   >Agregar
                           </Button>
-                          {openeliminarproducto &&( <ModalEliminarProducto 
+                          {/* {openeliminarproducto &&( <ModalEliminarProducto 
                                         openeliminarproducto={openeliminarproducto}
                                         setOpeneliminarproducto={setOpeneliminarproducto}
                                         selectedRowKeys={selectedRowKeys}
                                         cargarcomponentesproductos={cargarcomponentesproductos}
                                         setCargarcomponentesproductos={setCargarcomponentesproductos} 
-                                      ></ModalEliminarProducto>)}
+                                      ></ModalEliminarProducto>)} */}
 
     
-                          {openregistroproducto &&( <ModalRegistroProducto 
-                                              openregistroproducto={openregistroproducto} 
-                                              setOpenregistroproducto={setOpenregistroproducto} 
-                                              setProductos={setProductos}
-                                              detalleseleccionproducto={detalleseleccionproducto}
-                                              modoedicionproducto={modoedicionproducto}
-                                              cargarcomponentesproductos={cargarcomponentesproductos}
-                                              setCargarcomponentesproductos={setCargarcomponentesproductos}
-                                              ></ModalRegistroProducto>
+                          {openregistrogasto &&( <ModalRegistroGasto 
+                                              openregistrogasto={openregistrogasto} 
+                                              setOpenregistrogasto={setOpenregistrogasto} 
+                                              detalleselecciongasto={detalleselecciongasto}
+                                              modoediciongasto={modoediciongasto}
+                                              cargarcomponentesgasto={cargarcomponentesgasto}
+                                              setCargarcomponentesgasto={setCargarcomponentesgasto}
+                                              ></ModalRegistroGasto>
                                               )}
     
     
@@ -281,6 +281,7 @@ function Productosfinancieros(){
             </div>
         )
     }
+
 }
 
-export default Productosfinancieros
+export default Gastos

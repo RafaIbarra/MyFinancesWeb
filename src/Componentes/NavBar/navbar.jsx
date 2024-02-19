@@ -16,7 +16,7 @@ const navegaciones={
   'Inicio':'/Home',
   'Egresos':'/RegistroEgreso',
   'Productos':'/Productos',
-  'Solidaridad':'/my-pagoSolidaridad',
+  'Gastos':'/Gastos',
   'SedeSocial':'/my-pagoSedeSocial',
   'Prestamo':'/my-pagosPrestamos',
   'TarjetaCredito':'/my-pagoTarjetas',
@@ -119,8 +119,8 @@ const items = [
          
         },
         {
-          label: 'Solicitar Préstamos',
-          key: 'SolcitarPrestamos',
+          label: 'Registros Gastos',
+          key: 'Gastos',
           icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
          
         },

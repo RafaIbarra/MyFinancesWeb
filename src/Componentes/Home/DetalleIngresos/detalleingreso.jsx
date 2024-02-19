@@ -196,6 +196,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
             <Table 
               rowSelection={rowSelection} 
               scroll={{y: 400,}}
+              size="small"
               columns={columns} 
               dataSource={detalle} 
               pagination={false}

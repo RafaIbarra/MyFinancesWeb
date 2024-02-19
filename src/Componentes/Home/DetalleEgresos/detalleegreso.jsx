@@ -238,6 +238,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
                 rowSelection={rowSelection} 
                 scroll={{y: 400,}}
                 columns={columns} 
+                size="small"
                 dataSource={detalle} 
                 pagination={false}
                 bordered

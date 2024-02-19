@@ -28,3 +28,10 @@
   padding-right: 10px;
   height: 40px;
   }
+
+  .tituloform {
+    text-decoration: underline;
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+  }

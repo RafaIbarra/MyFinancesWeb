@@ -11,6 +11,7 @@ import RegistroGasto from "../Componentes/RegistroGasto/registrogasto";
 import RegistroEgreso from "../Componentes/RegistroEgreso/registroegreso";
 import ComprobarStorage from "./verificarstorage";
 import Productosfinancieros from "../Componentes/ProductosFinancieros/productosfinanciores";
+import Gastos from "../Componentes/Gastos/gastos";
 
 function App (){
     
@@ -54,6 +55,7 @@ return(
                     <Route path="/RegistroGasto" element={<RegistroGasto />} />
                     <Route path="/RegistroEgreso" element={<RegistroEgreso />} />
                     <Route path="/Productos" element={<Productosfinancieros />} />
+                    <Route path="/Gastos" element={<Gastos />} />
                     
                 </Routes>
             </div>

@@ -98,6 +98,7 @@ function Resumen({dataresumen}){
                 columns={columns}
                 dataSource={detalle}
                 pagination={false}
+                size="small"
                 bordered
                 summary={(pageData) => {
                     let totalBorrow = 0;
