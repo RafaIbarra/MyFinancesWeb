@@ -10,6 +10,7 @@ import { Routes, Route, Navigate,useNavigate,HashRouter  } from 'react-router-do
 import RegistroGasto from "../Componentes/RegistroGasto/registrogasto";
 import RegistroEgreso from "../Componentes/RegistroEgreso/registroegreso";
 import ComprobarStorage from "./verificarstorage";
+import Productosfinancieros from "../Componentes/ProductosFinancieros/productosfinanciores";
 
 function App (){
     
@@ -52,6 +53,7 @@ return(
                     <Route path="/Home" element={<Home />} />
                     <Route path="/RegistroGasto" element={<RegistroGasto />} />
                     <Route path="/RegistroEgreso" element={<RegistroEgreso />} />
+                    <Route path="/Productos" element={<Productosfinancieros />} />
                     
                 </Routes>
             </div>

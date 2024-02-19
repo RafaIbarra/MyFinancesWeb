@@ -68,19 +68,19 @@ function Home (){
               
             
             <Tabs
-                defaultActiveKey="profile"
+                defaultActiveKey="homeresumen"
                 id="uncontrolled-tab-example"
                 className="mb-3"
                 // onClick={tab_resumen}
               >
-                <Tab eventKey="home" title="Resumen Movimientos" >
+                <Tab eventKey="homeresumen" title="Resumen Movimientos" >
 
                   {cargaconfirmada &&(<Resumen dataresumen={dataresumen}   ></Resumen>)}
                 </Tab>
-                <Tab eventKey="profile" title="Detalle de Ingresos">
+                <Tab eventKey="homeingresos" title="Detalle de Ingresos">
                   {cargaconfirmada &&(<DetalleIngreso dataingresos={dataingresos} setDataingresos={setDataingresos} setDataresumen={setDataresumen}></DetalleIngreso>)}
                 </Tab>
-                <Tab eventKey="contact" title="Detalle de Egresos" >
+                <Tab eventKey="homeegresos" title="Detalle de Egresos" >
                   {cargaconfirmada &&( <DetalleEgreso dataegresos={dataegresos} setDataegresos={setDataegresos} setDataresumen={setDataresumen} ></DetalleEgreso>)}
                 </Tab>
             </Tabs>

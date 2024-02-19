@@ -1,30 +1,97 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Table, Typography } from 'antd';
-import { DeleteOutlined,RetweetOutlined,PlusCircleTwoTone} from '@ant-design/icons';
+import { Button, Table, Typography,notification } from 'antd';
+import { DeleteOutlined,RetweetOutlined,PlusCircleTwoTone,CheckOutlined,WarningOutlined} from '@ant-design/icons';
 import ModalEliminarIngreso from './modal_eliminar_ingreso';
 import ModalRegistroIngreso from './modal_registro_ingreso';
 
 import './detalleingreso.css'
+import FormItem from 'antd/es/form/FormItem';
 const { Text } = Typography;
 function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
+
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
     
   const [openeliminaringreso, setOpeneliminaringreso] = useState(false);
   const [openregistroingreso, setOpenregistroingreso] = useState(false);
 
   const [detalle,setDetalle]=useState(null)
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [detalleseleccioningreso,setDetalleseleccioningreso]=useState([])
+ 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
+  const [montototalingreso,setMontototalingreso]=useState(0)
+  const [canttotalingreso,setCanttotalingreso]=useState(0)
+
+  const [erroreliminarcion, setErroreliminacion]=useState(false)
+  const [errorcantidadunica, setErrorcantidadunica]=useState(true)
+  const [mesajecantidadunica, setMesajecantidadunica]=useState('')
+  const [modoedicioningreso,setModoedicioningreso]=useState(false)
+
   const nuevo=()=>{
+    setDetalleseleccioningreso([])
     setOpenregistroingreso(true)
-  }
+    setModoedicioningreso(false)
+    }
+
+
+  const mensajeControlEliminacion = (placement) => {
+    api.open({
+        message: 'ERROR',
+        
+        description:
+          'Debe seleccionar uno o mas registros de ingresos para eliminar!!.',
+          placement,
+        icon: (<WarningOutlined style={{color: 'red',}}/>
+        ),
+      });
+    };
   const eliminar=()=>{
-    console.log(selectedRowKeys)
-    // setOpeneliminaringreso(true)
     
-  }
+    setOpeneliminaringreso(true)
+    
+    } 
+
+  const detalleregistro=()=>{
+        
+      const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
+      
+      const detallesel=detalle.filter((item) => item.id ===ultimoElemento)
+      setDetalleseleccioningreso(detallesel)
+      setOpenregistroingreso(true)
+      setModoedicioningreso(true)
+
+      // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+
+    }
+  const actualizar=()=>{
+        
+      const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
+      
+      const detallesel=detalle.filter((item) => item.id ===ultimoElemento)
+      setDetalleseleccioningreso(detallesel)
+      setOpenregistroingreso(true)
+      setModoedicioningreso(false)
+
+      // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+
+    }
+
+
+  const mensajeregistrounico = (placement,accion) => {
+      
+      api.open({
+          message: 'ERROR',
+          
+          description:
+          `Para la ${accion}  ${mesajecantidadunica}`,
+          placement,
+          icon: (<WarningOutlined style={{color: 'red',}}/>
+          ),
+        });
+      };
 
   const columns=[
       { title: 'Descripcion',dataIndex: 'NombreIngreso',key: 'Descripcion_i'},
@@ -50,7 +117,10 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
 
                 
   
-        
+          setErroreliminacion(true)
+          setErrorcantidadunica(true)
+          setMesajecantidadunica('seleccione el registro')
+          setModoedicioningreso(false)
           const registros=dataingresos
           
           if(Object.keys(registros).length>0){
@@ -58,6 +128,12 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
               
               elemento.key = elemento.id;
             })
+            let totalingreso=0
+            let cantingreso=0
+            registros.forEach(({ monto_ingreso }) => {totalingreso += monto_ingreso,cantingreso+=1})
+            setMontototalingreso(totalingreso)
+            setCanttotalingreso(cantingreso)
+            
             setDetalle(registros)
             
           }
@@ -83,11 +159,30 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
 
   const onSelectChange = (newSelectedRowKeys) => {
         
+      if(newSelectedRowKeys.length>0){
+        setErroreliminacion(false)
+      }else{
+        setErroreliminacion(true)
+      }
+
+      if(newSelectedRowKeys.length ===1){
         
-        setSelectedRowKeys(newSelectedRowKeys);
+        setErrorcantidadunica(false)
+      }else{
         
-      };
+          setErrorcantidadunica(true)
+          if(newSelectedRowKeys.length > 1){
+            setMesajecantidadunica('solo debe seleccionar un registro.')
+          }
+          else{
+            setMesajecantidadunica('seleccionar el registro')
+          }
+        }
+       setSelectedRowKeys(newSelectedRowKeys);
+        
+    };
   const rowSelection = { selectedRowKeys, onChange: onSelectChange,};
+  const [api, contextHolder] = notification.useNotification();
   const handleOk = () => {
       setConfirmLoading(true);
       setTimeout(() => {
@@ -97,48 +192,54 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
     };
     return(
         <div>
-            
-            <Table rowSelection={rowSelection} 
+            {contextHolder}
+            <Table 
+              rowSelection={rowSelection} 
+              scroll={{y: 400,}}
               columns={columns} 
               dataSource={detalle} 
               pagination={false}
               bordered
-              summary={(pageData) => {
-                let totalBorrow = 0;
-                let totalRepayment = 0;
-                pageData.forEach(({ monto_ingreso }) => {
-                totalBorrow += monto_ingreso;
-                totalRepayment +=1
-                
-                });
-                return (
-                <>
-                    <Table.Summary.Row>
-                        <Table.Summary.Cell index={0} colSpan={3} >
-                            <Text type="danger" strong> CANT. REG : {totalRepayment} -  TOTAL INGRESOS {'>>>>>>>>>>>'}  </Text>
-                        </Table.Summary.Cell>
-
-                        <Table.Summary.Cell index={1} colSpan={1}>
-                            <Text strong>GS. {Number(totalBorrow).toLocaleString('es-ES')}</Text>
-                        </Table.Summary.Cell>
-
-                        
-
-                    </Table.Summary.Row>
-
-                    
-                </>
-                );
-              }}
             />
 
-            <div className='contenedor-flex'>
-                  
-           
-
-              <Button type="primary" icon={<DeleteOutlined/>} danger onClick={eliminar}> Eliminar </Button>
+            <div className='contenedor-resumen'>
+                <FormItem >
+                  <Text strong>CANTIDAD REGISTROS: </Text>
+                  <Text strong>   {Number(canttotalingreso).toLocaleString('es-ES')}</Text>
                     
-                <Button type="primary" icon={<RetweetOutlined/> }  >Actualizar</Button>
+                </FormItem>
+
+                <FormItem >
+                    <Text strong>TOTAL INGRESOS: </Text>
+                    <Text strong>GS. {Number(montototalingreso).toLocaleString('es-ES')}</Text>
+                    
+                </FormItem>
+
+            </div>
+
+            <div className='contenedor-flex'>
+
+                <Button type="primary" 
+                        icon={<CheckOutlined /> } 
+                        onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
+                        > Detalle
+                </Button>
+
+                <Button type="primary" 
+                        icon={<DeleteOutlined/>} 
+                        danger 
+                        
+                        onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
+                        > 
+                        Eliminar 
+                </Button>
+                    
+                <Button type="primary" 
+                        icon={<RetweetOutlined/> }  
+                        onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
+                        >
+                          Actualizar
+                </Button>
 
                 <Button type="primary" icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
 
@@ -156,6 +257,8 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
                                           setOpenregistroingreso={setOpenregistroingreso} 
                                           setDataingresos={setDataingresos}
                                           setDataresumen={setDataresumen}
+                                          detalleseleccioningreso={detalleseleccioningreso}
+                                          modoedicioningreso={modoedicioningreso}
                                           ></ModalRegistroIngreso>)}
                 
             </div>

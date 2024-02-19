@@ -15,7 +15,7 @@ const navegaciones={
   'Logo':'/my-resumenCuentas',
   'Inicio':'/Home',
   'Egresos':'/RegistroEgreso',
-  'PagoAporte':'/my-pagoAporte',
+  'Productos':'/Productos',
   'Solidaridad':'/my-pagoSolidaridad',
   'SedeSocial':'/my-pagoSedeSocial',
   'Prestamo':'/my-pagosPrestamos',
@@ -113,8 +113,8 @@ const items = [
       children:[
         
         {
-          label: 'Adquisicion de Rueda',
-          key: 'AdquisicionRueda',
+          label: 'Productos Financieros',
+          key: 'Productos',
           icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
          
         },

@@ -29,10 +29,10 @@ const formItemLayout = {
   
 
 function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataegresos,
-  setDataresumen}){
+  setDataresumen,detalleseleccion,modoedicion}){
 
   const [open, setOpen] = useState(openregistroegreso);
-
+  
   
   const { MonthPicker, RangePicker } = DatePicker;
   dayjs.extend(customParseFormat);
@@ -45,10 +45,54 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
   const[monto,setMonto]=useState(0)
   const[anotacion,setAnotacion]=useState('')
 
+  const [codigoegreso, setCodigoegreso]=useState(0)
+  const [ready, setReady]=useState(false)
+  const [valoresdefault,setValoresdefault]=useState([])
+  const [modoactualizacion,setModoactualizacion]=useState(false)
+  const [marcaradiobutton,serMarcaradiobutton]=useState('0')
+  const [titulo,setTitulo]=useState('')
+  
+
+  const cargarvaloresdefault=(listproduc,listserv)=>{
+    
+    if(Object.keys(detalleseleccion).length>0){
+      setCodigoegreso(detalleseleccion[0]['id'])
+      setMonto(detalleseleccion[0]['monto_gasto'])
+      setAnotacion(detalleseleccion[0]['anotacion'])
+      setFechaegreso(detalleseleccion[0]['fecha_gasto'])
+      setGastosel(detalleseleccion[0]['gasto'])
+      setModoactualizacion(true)     
+      setValoresdefault(detalleseleccion)
+
+      if(detalleseleccion[0]['CategoriaGasto']==='Servicios'){
+        serMarcaradiobutton('2')
+        setDatosgastos(listserv)
+      }else{
+        serMarcaradiobutton('1')
+        setDatosgastos(listproduc)
+      }
+      
+      if(modoedicion===false){
+        
+        setTitulo('ACTUALIZAR EL EGRESO')
+      }
+      else{
+        setTitulo('DETALLE DEL EGRESO')
+      }
+
+
+    }else{
+      setCodigoegreso(0)
+      setTitulo('AGREGAR UN NUEVO EGRESO')
+    }
+
+    
+  }
   const showModal = () => {
     setOpen(true);
     setOpenregistroegreso(false)
   };
+ 
   const handleOk = () => {
     setOpen(false);
     setOpenregistroegreso(false)
@@ -58,15 +102,15 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
     setOpenregistroegreso(false)
   };
     
-    const closemodal=()=>{
+  const closemodal=()=>{
       setOpenregistroegreso(false)
       setOpenregistroegreso(false)
     }
 
 
   useEffect(() => {
-    
-        const cargardatos = async () => {
+          
+          const cargardatos = async () => {
           const body = {};
           const endpoint='MisGastos/'
           const result = await Generarpeticion(endpoint, 'POST', body);
@@ -77,9 +121,11 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
             const lista=result['data']
             const listaproductos = lista.filter((pro) => pro.categoria === 1);
             const listaservicios = lista.filter((ser) => ser.categoria === 2);
+            
             setGastosproductos(listaproductos)
             setGastosservicios(listaservicios)
-            
+            cargarvaloresdefault(listaproductos,listaservicios)
+            setReady(true)
             
           } else {
             
@@ -90,9 +136,6 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
     
         cargardatos();
       }, []);
-
-
-
 
 
   const tipocategoria=(event)=>{
@@ -134,6 +177,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
   const registrar_egreso = async () => {
         
           const datosregistrar = {
+              codgasto:codigoegreso,
               gasto:gasttosel,
               monto:monto,
               fecha:fechaegreso,
@@ -157,116 +201,169 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
             
             // navigate('/');
           }
-        };
+       };
 
 
+  if(ready){
+    return(
+         <div >
+ 
+             <Modal
 
-   return(
-        <div >
-
-            <Modal
-            
-                open={open}
-                title="AGREGAR REGISTRO EGRESO"
-                onOk={handleOk}
-                onCancel={handleCancel}
-                footer={(_, { OkBtn, CancelBtn }) => (
-                <>
-                    <Button onClick={closemodal}> Cancelar</Button>
+                 open={open}
+                 title={titulo}
+                 onOk={handleOk}
+                 onCancel={handleCancel}
+                 footer={(_, { OkBtn, CancelBtn }) => (
+                 <>
                     
-                    <Button type="primary" onClick={registrar_egreso}>Registrar</Button>
-                    
-                </>
-                )}
-              >
-            
-                  <Form
-                      {...formItemLayout}
-                      variant="filled"
-                      style={{
-                      maxWidth: 600,
-                      }}
-                  >   
-                      <Form.Item label="Categoria">
-                        <Radio.Group onChange={tipocategoria}>
-                          <Radio value="1"> Productos </Radio>
-                          <Radio value="2"> Servicios </Radio>
-                        </Radio.Group>
-                      </Form.Item>
+                      {!modoedicion && (<Button onClick={closemodal}> Cancelar</Button>)}
+                      {!modoedicion && ( <Button type="primary" onClick={registrar_egreso}>Registrar</Button>)}
 
+
+                      {modoedicion && (<Button onClick={closemodal}> Cerrar</Button>)}
                       
-                      <Form.Item label="Gasto"name="Gasto"
-                                  rules={[
-                                      {
-                                      required: true,
-                                      message: 'Please input!',
-                                      },
-                                  ]}
-                      >
-                          <Select name="listagasto" value={gasttosel} onChange={seleccionargasto}>
-                              <Select.Option value="">Seleccionar gasto</Select.Option>
-                              {datosgastos &&  datosgastos.map((g) => (
-                                  <Select.Option key={g.id} value={g.id}>
-                                      {g.nombre_gasto}
-                                  </Select.Option>
-                              ))}
-                          </Select>
+                      
+                     
+                    
+                 </>
+                 )}
+               >
+             
+                   <Form
+                       {...formItemLayout}
+                       variant="filled"
+                       style={{
+                       maxWidth: 600,
+                       }}
+                   >   
+ 
+                      
+                      <Form.Item label="Cod Egreso"name="CodEgreso">
+                           
+                           <InputNumber 
+                              defaultValue={modoactualizacion ? valoresdefault[0]['id'] : 0} 
+                              style={{width: '100%',}} disabled /> 
+                      </Form.Item>
+ 
+ 
+                      <Form.Item label="Categoria" >
+                         <Radio.Group onChange={tipocategoria} defaultValue={marcaradiobutton}>
+                           <Radio value="1" disabled={modoedicion}> Productos </Radio>
+                           <Radio value="2" disabled={modoedicion}> Servicios </Radio>
+                         </Radio.Group>
+                      </Form.Item>
+ 
+                       
+                       <Form.Item label="Gasto"name="Gasto"
+                                   rules={[
+                                       {
+                                       required: true,
+                                       message: 'Please input!',
+                                       },
+                                   ]}
+                       >
+                           <Select 
+                                name="listagasto" 
+                                value={gasttosel}
+                                disabled={modoedicion}
+                                defaultValue={modoactualizacion ? valoresdefault[0]['NombreGasto'] : ''} 
+                                onChange={seleccionargasto}>
+                               <Select.Option  value="">Seleccionar gasto</Select.Option>
+                               {datosgastos &&  datosgastos.map((g) => (
+                                   <Select.Option key={g.id} value={g.id}>
+                                       {g.nombre_gasto}
+                                   </Select.Option>
+                               ))}
+                           </Select>
+                           
+                       </Form.Item>
+                       
+                       
+ 
+                       <Form.Item
+                           label="Fecha Gasto"
+                           name="DatePicker"
+                           rules={[
+                               {
+                               required: true,
+                               message: 'Please input!',
+                               },
+                           ]}
+                           >
+                           <DatePicker 
+                                placeholder='Fecha Egreso' 
+                                dateFormat="yyyy-MM-dd"
+                                onChange={seleccionfecha}
+                                disabled={modoedicion}
+                                defaultValue={ modoactualizacion ?  dayjs(valoresdefault[0]['fecha_gasto'], dateFormat) : ''} 
+                                format={dateFormat} 
+                                
+                                />
+                       </Form.Item>
+                       
+                       <Form.Item
+                           label="Monto Egreso"
+                           name="MontoEgreso"
+                           rules={[
+                               {
+                               required: true,
+                               message: 'Please input!',
+                               },
+                           ]}
+                           >
+                           <InputNumber 
+                              onChange={seleccionarmonto}
+                               style={{
+                               width: '100%',
+                               }}
+                               defaultValue={modoactualizacion ? valoresdefault[0]['monto_gasto'] : 0}
+                               disabled={modoedicion}
+                           />
+                       </Form.Item>
+ 
+                       <Form.Item
+                           label="Anotacion"
+                           name="Anotacion"
+                           
+                           rules={[
+                               {
+                               required: false,
+                               message: '',
+                               
+                               },
+                           ]}
+                           >
+                           <Input.TextArea 
+                                defaultValue={modoactualizacion ? valoresdefault[0]['anotacion'] : ''} 
+                                onChange={seleccionaranotacion}
+                                disabled={modoedicion}
+                                />
+                       </Form.Item>
+
+
+
+                      {modoactualizacion && (
+                       <Form.Item
+                           label="Fecha Registro"
+                           name="FechaRegistro"
+                           disabled 
                           
-                      </Form.Item>
-                      
-                      
+                           >
+                           
+                           <InputNumber defaultValue={valoresdefault[0]['fecha_registro'] }
+                              style={{width: '100%',}} disabled /> 
+                        </Form.Item>
 
-                      <Form.Item
-                          label="Fecha Gasto"
-                          name="DatePicker"
-                          rules={[
-                              {
-                              required: true,
-                              message: 'Please input!',
-                              },
-                          ]}
-                          >
-                          <DatePicker placeholder='Fecha Egreso' dateFormat="yyyy-MM-dd"onChange={seleccionfecha}>
+                      )
+                      }
+ 
+                   </Form>
+              </Modal>
+         </div>
+     )
 
-                          </DatePicker>
-                      </Form.Item>
-                      
-                  
-              
-                      <Form.Item
-                          label="Monto Egreso"
-                          name="MontoEgreso"
-                          rules={[
-                              {
-                              required: true,
-                              message: 'Please input!',
-                              },
-                          ]}
-                          >
-                          <InputNumber onChange={seleccionarmonto}
-                              style={{
-                              width: '100%',
-                              }}
-                          />
-                      </Form.Item>
-
-                      <Form.Item
-                          label="Anotacion"
-                          name="Anotacion"
-                          rules={[
-                              {
-                              required: false,
-                              message: '',
-                              },
-                          ]}
-                          >
-                          <Input.TextArea onChange={seleccionaranotacion}/>
-                      </Form.Item>
-
-                  </Form>
-             </Modal>
-        </div>
-    )
+  }
 
 }
 

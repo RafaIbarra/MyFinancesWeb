@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Table,Typography,notification,Space    } from 'antd';
-import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone,WarningOutlined  } from '@ant-design/icons';
+import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone,WarningOutlined,InfoOutlined,CheckOutlined } from '@ant-design/icons';
 import ModalEliminarEgreso from './modal_eliminar_egreso';
 import ModalRegistroEgreso from './modal_registro_egreso';
 import './detalleegreso.css'
@@ -12,21 +12,24 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
    
     
     const [detalle,setDetalle]=useState(null)
-    
+    const [detalleseleccion,setDetalleseleccion]=useState([])
+
     const [openeliminaregreso, setOpeneliminaregreso] = useState(false);
     const [openregistroegreso, setOpenregistroegreso] = useState(false);
     
     const [loading, setLoading] = useState(false);
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
 
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     const [montototalegreso,setMontototalegreso]=useState(0)
     const [canttotalegreso,setcanttotalegreso]=useState(0)
+
     const [erroreliminarcion, setErroreliminacion]=useState(false)
-    const [errorcantidadunica, setErrorcantidadunica]=useState(false)
+    const [errorcantidadunica, setErrorcantidadunica]=useState(true)
     const [mesajecantidadunica, setMesajecantidadunica]=useState('')
+    const [modoedicion,setModoedicion]=useState(false)
     
     
     const columns=[
@@ -53,26 +56,31 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
     useEffect(() => {
        
         const cargardatos =  () => {
+            setSelectedRowKeys([])
+            // if(selectedRowKeys.length > 0){
+            //   setErroreliminacion(false)
+            // }else{
+            //   setErroreliminacion(true)
+            // }
 
-            if(selectedRowKeys.length > 0){
-              setErroreliminacion(false)
-            }else{
-              setErroreliminacion(true)
-            }
-
-
-            if(selectedRowKeys.length !==1){
-              setErrorcantidadunica(false)
-            }else{
-                setErrorcantidadunica(true)
-                if(selectedRowKeys.length > 1){
-                  setMesajecantidadunica('Solo debe seleccionar un registro.')
-                }
-                else{
-                  setMesajecantidadunica('Seleccione el registro')
-                }
-             }
-           
+            
+            // if(selectedRowKeys.length ===1){
+          
+            //   setErrorcantidadunica(false)
+            // }else{
+              
+            //     setErrorcantidadunica(true)
+            //     if(selectedRowKeys.length > 1){
+            //       setMesajecantidadunica('solo debe seleccionar un registro.')
+            //     }
+            //     else{
+            //       setMesajecantidadunica('seleccione el registro')
+            //     }
+            //  }
+            setErroreliminacion(true)
+            setErrorcantidadunica(true)
+            setMesajecantidadunica('seleccione el registro')
+            setModoedicion(false)
             const registros=dataegresos
 
             if(Object.keys(registros).length>0){
@@ -117,17 +125,17 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
           setErroreliminacion(true)
         }
 
-        if(newSelectedRowKeys.length !==1){
-          console.log('sin error')
+        if(newSelectedRowKeys.length ===1){
+          
           setErrorcantidadunica(false)
         }else{
-          console.log('Con  error')
+          
             setErrorcantidadunica(true)
             if(newSelectedRowKeys.length > 1){
-              setMesajecantidadunica('Solo debe seleccionar un registro.')
+              setMesajecantidadunica('solo debe seleccionar un registro.')
             }
             else{
-              setMesajecantidadunica('Seleccione el registro')
+              setMesajecantidadunica('seleccionar el registro')
             }
          }
 
@@ -140,24 +148,25 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
     const [api, contextHolder] = notification.useNotification();
 
     const mensajeControlEliminacion = (placement) => {
-    api.open({
-        message: 'ERROR',
-        
-        description:
-          'Debe seleccionar uno o mas registros de egresos para eliminar!!.',
-          placement,
-        icon: (<WarningOutlined style={{color: 'red',}}/>
-        ),
-      });
-    };
-      
-
-    const mensajeregistrounico = (placement) => {
       api.open({
           message: 'ERROR',
           
           description:
-            {mesajecantidadunica},
+            'Debe seleccionar uno o mas registros de egresos para eliminar!!.',
+            placement,
+          icon: (<WarningOutlined style={{color: 'red',}}/>
+          ),
+        });
+    };
+      
+
+    const mensajeregistrounico = (placement,accion) => {
+      
+      api.open({
+          message: 'ERROR',
+          
+          description:
+          `Para la ${accion}  ${mesajecantidadunica}`,
           placement,
           icon: (<WarningOutlined style={{color: 'red',}}/>
           ),
@@ -173,19 +182,38 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
       }
 
     const actualizar=()=>{
+        
         const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
         
+        const detallesel=detalle.filter((item) => item.id ===ultimoElemento)
+        setDetalleseleccion(detallesel)
+        setOpenregistroegreso(true)
+        setModoedicion(false)
+
+        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+
+      }
+
+    const detalleregistro=()=>{
+        
+        const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
+        
+        const detallesel=detalle.filter((item) => item.id ===ultimoElemento)
+        setDetalleseleccion(detallesel)
+        setOpenregistroegreso(true)
+        setModoedicion(true)
+
+        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
 
       }
 
     const nuevo=()=>{
-        
+      setDetalleseleccion([])
       setOpenregistroegreso(true)
+      setModoedicion(false)
       }
 
-    const showPopconfirm = () => {
-        setOpen(true);
-      };
+ 
 
     const handleOk = () => {
         setConfirmLoading(true);
@@ -198,15 +226,16 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
     
     
     const handleCancel = () => {
-        console.log('Clicked cancel button');
+        
         setOpen(false);
       };
       
     return(
         <div>
             {contextHolder}
-            <div > 
-              <Table rowSelection={rowSelection} 
+            
+              <Table 
+                rowSelection={rowSelection} 
                 scroll={{y: 400,}}
                 columns={columns} 
                 dataSource={detalle} 
@@ -215,7 +244,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
                 
               
               />
-              </div>
+            
             
 
 
@@ -235,7 +264,14 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
 
             </div>
             <div className='contenedor-flex'>
-                
+               <Button type="primary" 
+                        icon={<CheckOutlined /> } 
+                        onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
+                        > 
+                        
+                      Detalle
+                </Button>
+
                 <Button type="primary" 
                     icon={<DeleteOutlined/>} 
                     danger 
@@ -246,7 +282,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
                     
                 <Button type="primary" 
                         icon={<RetweetOutlined/> } 
-                        onClick={ errorcantidadunica ? () => mensajeregistrounico('top') : actualizar}
+                        onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
                         > 
                         
                         Actualizar
@@ -266,7 +302,9 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
                                             setOpenregistroegreso={setOpenregistroegreso} 
                                             setDataegresos={setDataegresos} 
                                             setDataresumen={setDataresumen}
-                                            ></ModalRegistroEgreso>)}
+                                            detalleseleccion={detalleseleccion}
+                                            modoedicion={modoedicion}
+                                          ></ModalRegistroEgreso>)}
                 
             </div>
            

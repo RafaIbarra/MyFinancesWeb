@@ -29,7 +29,8 @@ const formItemLayout = {
   
 
 function ModalRegistroIngreso({
-  openregistroingreso,setOpenregistroingreso,setDataingresos,setDataresumen
+  openregistroingreso,setOpenregistroingreso,setDataingresos,setDataresumen,
+  detalleseleccioningreso,modoedicioningreso
 
 }){
 
@@ -39,13 +40,65 @@ function ModalRegistroIngreso({
     const { MonthPicker, RangePicker } = DatePicker;
     dayjs.extend(customParseFormat);
     const dateFormat = 'YYYY-MM-DD';
-    const [fechaegreso, setFechaegreso] = useState(null);
+    const [fechaingreso, setFechaingreso] = useState(null);
     const[datosproductos,setDatosproductos]=useState(null)
     const[productosfijos,setProductosfijos]=useState(null)
     const[productosocacionales,setProductosocacionales]=useState(null)
     const[productosel,setProductosel]=useState(0)
     const[monto,setMonto]=useState(0)
     const[anotacion,setAnotacion]=useState('')
+
+    const [codigoingreso, setCodigoingreso]=useState(0)
+    const [ready, setReady]=useState(false)
+    const [valoresdefaultingreso,setValoresdefaultingreso]=useState([])
+    const [modoactualizacioningreso,setModoactualizacioningreso]=useState(false)
+    const [marcaradiobuttoningreso,serMarcaradiobuttoningreso]=useState('0')
+    const [tituloingreso,setTituloingreso]=useState('')
+
+
+    const cargarvaloresdefault=(fijo_list,ocacionales_list)=>{
+    
+      if(Object.keys(detalleseleccioningreso).length>0){
+
+        setCodigoingreso(detalleseleccioningreso[0]['id'])
+        setMonto(detalleseleccioningreso[0]['monto_ingreso'])
+        setAnotacion(detalleseleccioningreso[0]['anotacion'])
+        setFechaingreso(detalleseleccioningreso[0]['fecha_ingreso'])
+        setProductosel(detalleseleccioningreso[0]['producto_financiero'])
+        
+        setModoactualizacioningreso(true)     
+        setValoresdefaultingreso(detalleseleccioningreso)
+  
+        if(detalleseleccioningreso[0]['TipoIngreso']==='Fijo'){
+          serMarcaradiobuttoningreso('1')
+          setDatosproductos(fijo_list)
+          
+        }else{
+          serMarcaradiobuttoningreso('2')
+          setDatosproductos(ocacionales_list)
+          
+        }
+        
+        if(modoedicioningreso===false){
+          
+          setTituloingreso('ACTUALIZAR EL INGRESO')
+        }
+        else{
+          setTituloingreso('DETALLE DEL INGRESO')
+        }
+  
+  
+      }else{
+        setCodigoingreso(0)
+        setTituloingreso('AGREGAR UN NUEVO INGRESO')
+      }
+  
+      
+    }
+
+
+
+
 
     const showModal = () => {
       setOpen(true);
@@ -81,6 +134,8 @@ function ModalRegistroIngreso({
             const listasocacionales = lista.filter((oca) => oca.tipoproducto === 2);
             setProductosfijos(listafijos)
             setProductosocacionales(listasocacionales)
+            cargarvaloresdefault(listafijos,listasocacionales)
+            setReady(true)
             
             
           } else {
@@ -131,14 +186,15 @@ function ModalRegistroIngreso({
       }
     const seleccionfecha=(date, dateString)=> {
         
-        setFechaegreso(dateString)
+        setFechaingreso(dateString)
       }
     const registrar_ingreso = async () => {
         
           const datosregistrar = {
+              codingreso:codigoingreso,
               producto:productosel,
               monto:monto,
-              fecha:fechaegreso,
+              fecha:fechaingreso,
               anotacion:anotacion,
               
   
@@ -162,135 +218,162 @@ function ModalRegistroIngreso({
         };
 
 
+    if(ready){
+      return(
+          <div >
 
-    return(
-        <div >
+              <Modal
+              
+              open={open}
+              title={tituloingreso}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              footer={(_, { OkBtn, CancelBtn }) => (
+              <>
+                  {!modoedicioningreso && (<Button onClick={closemodal}> Cancelar</Button>)}
+                  {!modoedicioningreso && ( <Button type="primary" onClick={registrar_ingreso}>Registrar</Button>)}
+                  {modoedicioningreso && (<Button onClick={closemodal}> Cerrar</Button>)}
+              </>
+              )}
+          >
+              
+              <Form
+                  {...formItemLayout}
+                  variant="filled"
+                  style={{
+                  maxWidth: 600,
+                  }}
+              >   
 
-            <Modal
-            
-            open={open}
-            title="AGREGAR REGISTRO INGRESO"
-            onOk={handleOk}
-            onCancel={handleCancel}
-            footer={(_, { OkBtn, CancelBtn }) => (
-            <>
-                <Button onClick={closemodal}> Cancelar</Button>
-                <Button onClick={closemodal}> Eliminar</Button>
-                {/* <CancelBtn />
-                <OkBtn /> */}
-            </>
-            )}
-        >
-            
-            <Form
-                {...formItemLayout}
-                variant="filled"
-                style={{
-                maxWidth: 600,
-                }}
-            >   
-                <Form.Item label="Categoria">
-                  <Radio.Group onChange={tipoproducto}>
-                    <Radio value="1"> Fijo </Radio>
-                    <Radio value="2"> Ocacionales </Radio>
-                  </Radio.Group>
-                </Form.Item>
+                  <Form.Item label="Cod Ingreso"name="CodIngreso">
+                           
+                           <InputNumber 
+                              defaultValue={modoactualizacioningreso ? valoresdefaultingreso[0]['id'] : 0} 
+                              style={{width: '100%',}} disabled /> 
+                  </Form.Item>
 
-                
-                <Form.Item label="Ingreso"name="Ingreso"
-                            rules={[
-                                {
-                                required: true,
-                                message: 'Please input!',
-                                },
-                            ]}
-                >
-                    <Select name="listaproductos"
-                            value={productosel}
-                            onChange={seleccionproducto }
-                    >
-                         <Select.Option value="">Seleccionar </Select.Option>
-                         {datosproductos &&  datosproductos.map((g) => (
-                             <Select.Option key={g.id} value={g.id}>
-                                 {g.nombre_producto}
-                             </Select.Option>
-                         ))}
-                    </Select>
-                    
-                </Form.Item>
-                
-                
+                  <Form.Item label="Categoria">
+                    <Radio.Group onChange={tipoproducto} defaultValue={marcaradiobuttoningreso}>
+                      <Radio value="1" disabled={modoedicioningreso}> Fijo </Radio>
+                      <Radio value="2" disabled={modoedicioningreso} > Ocacionales </Radio>
+                    </Radio.Group>
+                  </Form.Item>
 
-                <Form.Item
-                    label="Fecha Ingreso"
-                    name="DatePicker"
-                    rules={[
-                        {
-                        required: true,
-                        message: 'Please input!',
-                        },
-                    ]}
-                    >
-                    <DatePicker 
-                        placeholder='Fecha Ingreso'
-                        dateFormat="yyyy-MM-dd"
-                        onChange={seleccionfecha}
-                        // onChange={onChange}
-                        
-                        >
+                  
+                  <Form.Item label="Ingreso"name="Ingreso"
+                              rules={[
+                                  {
+                                  required: true,
+                                  message: 'Please input!',
+                                  },
+                              ]}
+                  >
+                      <Select name="listaproductos"
+                              value={productosel}
+                              disabled={modoedicioningreso}
+                              defaultValue={modoactualizacioningreso ? valoresdefaultingreso[0]['NombreIngreso'] : ''} 
+                              onChange={seleccionproducto }
+                      >
+                          <Select.Option value="">Seleccionar </Select.Option>
+                          {datosproductos &&  datosproductos.map((g) => (
+                              <Select.Option key={g.id} value={g.id}>
+                                  {g.nombre_producto}
+                              </Select.Option>
+                          ))}
+                      </Select>
+                      
+                  </Form.Item>
+                  
+                  
 
-                    </DatePicker>
-                </Form.Item>
-                
-            
-                
+                  <Form.Item
+                      label="Fecha Ingreso"
+                      name="DatePicker"
+                      rules={[
+                          {
+                          required: true,
+                          message: 'Please input!',
+                          },
+                      ]}
+                      >
+                      <DatePicker 
+                          placeholder='Fecha Ingreso'
+                          dateFormat="yyyy-MM-dd"
+                          onChange={seleccionfecha}
+                          disabled={modoedicioningreso}
+                          defaultValue={ modoactualizacioningreso ?  dayjs(valoresdefaultingreso[0]['fecha_ingreso'], dateFormat) : ''} 
+                          format={dateFormat} 
+                          
+                          >
 
-                <Form.Item
-                    label="Monto Ingreso"
-                    name="MontoIngreso"
-                    rules={[
-                        {
-                        required: true,
-                        message: 'Please input!',
-                        },
-                    ]}
-                    >
-                    <InputNumber
-                        onChange={seleccionarmonto}
-                        style={{
-                        width: '100%',
-                        }}
-                    />
-                </Form.Item>
+                      </DatePicker>
+                  </Form.Item>
+                  
+              
+                  
 
-                <Form.Item
-                    label="Anotacion"
-                    name="Anotacion"
-                    rules={[
-                        {
-                        required: false,
-                        message: '',
-                        },
-                    ]}
-                    >
-                    <Input.TextArea onChange={seleccionaranotacion}/>
-                </Form.Item>
+                  <Form.Item
+                      label="Monto Ingreso"
+                      name="MontoIngreso"
+                      rules={[
+                          {
+                          required: true,
+                          message: 'Please input!',
+                          },
+                      ]}
+                      >
+                      <InputNumber
+                          onChange={seleccionarmonto}
+                          style={{
+                          width: '100%',
+                          }}
+                          defaultValue={modoactualizacioningreso ? valoresdefaultingreso[0]['monto_ingreso'] : 0}
+                          disabled={modoedicioningreso}
+                      />
+                  </Form.Item>
+
+                  <Form.Item
+                      label="Anotacion"
+                      name="Anotacion"
+                      rules={[
+                          {
+                          required: false,
+                          message: '',
+                          },
+                      ]}
+                      >
+                      <Input.TextArea 
+                            onChange={seleccionaranotacion}
+                            defaultValue={modoactualizacioningreso ? valoresdefaultingreso[0]['anotacion'] : ''}
+                            disabled={modoedicioningreso}
+                            
+                      />
+                  </Form.Item>
+
+                  {modoactualizacioningreso && (
+                       <Form.Item
+                           label="Fecha Registro"
+                           name="FechaRegistro"
+                           disabled 
+                          
+                           >
+                           
+                           <InputNumber defaultValue={valoresdefaultingreso[0]['fecha_registro'] }
+                              style={{width: '100%',}} disabled /> 
+                        </Form.Item>
+
+                      )
+                      }
 
 
-                <Form.Item
-                    wrapperCol={{
-                        offset: 6,
-                        span: 16,
-                    }}
-                    >
-                   <Button type="primary" onClick={registrar_ingreso}>Registrar</Button>
-                </Form.Item>
+                  
 
 
-            </Form>
-        </Modal>
-        </div>
-    )
+              </Form>
+          </Modal>
+          </div>
+      )
+    }
 
 }
 
