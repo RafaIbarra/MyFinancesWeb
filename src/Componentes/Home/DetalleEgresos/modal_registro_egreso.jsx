@@ -5,8 +5,8 @@ import {DatePicker } from 'antd';
 import Generarpeticion from '../../../peticiones/apipeticiones';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-
-
+import { Navigate, useNavigate } from "react-router-dom";
+import CerrarSesion from '../../../App/cerrarsesion';
 const formItemLayout = {
     labelCol: {
       xs: {
@@ -30,7 +30,8 @@ const formItemLayout = {
 
 function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataegresos,
   setDataresumen,detalleseleccion,modoedicion}){
-
+  
+  const navigate=useNavigate()
   const [open, setOpen] = useState(openregistroegreso);
   
   
@@ -127,11 +128,11 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
             cargarvaloresdefault(listaproductos,listaservicios)
             setReady(true)
             
-          } else {
-            
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            // navigate('/');
-          }
+          } else if(respuesta === 403 || respuesta === 401){
+            CerrarSesion()
+            navigate('/')
+
+            }
         };
     
         cargardatos();
@@ -196,11 +197,11 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
             setDataegresos(registros['Egresos'])
             setOpenregistroegreso(false)
             
-          } else {
-            
-            
-            // navigate('/');
-          }
+          } else if(respuesta === 403 || respuesta === 401){
+            CerrarSesion()
+            navigate('/')
+
+        }
        };
 
 

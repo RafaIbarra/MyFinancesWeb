@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Button,Form,Input,InputNumber,Radio,Modal } from 'antd';
 import Generarpeticion from '../../peticiones/apipeticiones';
-
+import { Navigate, useNavigate } from "react-router-dom";
+import CerrarSesion from '../../App/cerrarsesion';
 const formItemLayout = {
     labelCol: {
       xs: {
@@ -26,7 +27,7 @@ function ModalRegistroGasto({
     detalleselecciongasto,modoediciongasto,
     cargarcomponentesgasto,setCargarcomponentesgasto
 }){
-
+    const navigate=useNavigate()
     const [open, setOpen] = useState(openregistrogasto);
     const [titulogasto,setTitulogasto]=useState('')
 
@@ -47,14 +48,15 @@ function ModalRegistroGasto({
         if(Object.keys(detalleselecciongasto).length>0){
   
             setCodigogasto(detalleselecciongasto[0]['id'])
-            // setTipoproducto(detalleselecciongasto[0]['tipoproducto'])
+            setTipogasto(detalleselecciongasto[0]['tipogasto'])
+            setCategoriagasto(detalleselecciongasto[0]['categoria'])
             setNombregasto(detalleselecciongasto[0]['nombre_gasto'])
             
             
             setModoactualizaciongasto(true)     
             setValoresdefaultgasto(detalleselecciongasto)
-            setMarcatipogasto(detalleselecciongasto[0]['tipogasto'])
-            setMarcacategoriagasto(detalleselecciongasto[0]['categoria'])
+            setMarcatipogasto(detalleselecciongasto[0]['tipogasto'].toString())
+            setMarcacategoriagasto(detalleselecciongasto[0]['categoria'].toString())
 
 
             
@@ -115,13 +117,15 @@ function ModalRegistroGasto({
     const registro_gasto = async () => {
     
         const datosregistrar = {
-            codigoproducto:codigoproducto,
-            tipoproducto:tipoproducto,
-            nombre:nombreproducto
+            codigogasto:codigogasto,
+            tipogasto:tipogasto,
+            categoria:categoriagasto,
+            nombre:nombregasto
         
 
         };
-        const endpoint='RegistroProductoFinanciero/'
+        
+        const endpoint='RegistroGasto/'
         const result = await Generarpeticion(endpoint, 'POST', datosregistrar);
         
         const respuesta=result['resp']
@@ -132,10 +136,10 @@ function ModalRegistroGasto({
             setCargarcomponentesgasto(!cargarcomponentesgasto)
             setOpenregistrogasto(false)
             
-        } else {
-            
-            
-            // navigate('/');
+        } else if(respuesta === 403 || respuesta === 401){
+            CerrarSesion()
+            navigate('/')
+
         }
         };
 

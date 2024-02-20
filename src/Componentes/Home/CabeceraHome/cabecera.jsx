@@ -4,10 +4,11 @@ import Handelstorage from '../../../Storage/handelstorage';
 import {Button,InputNumber,Select } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import './cabecera.css'
-
+import { Navigate, useNavigate } from "react-router-dom";
+import CerrarSesion from '../../../App/cerrarsesion';
 function HomeCabecera ({cargarresumen,setCargarresumen}){
 
-    
+    const navigate=useNavigate()
 
     const[meses,Setmeses]=useState(null)
     const[mesdefault,setMesdefault]=useState('')
@@ -99,7 +100,11 @@ function HomeCabecera ({cargarresumen,setCargarresumen}){
               setMesdefault(listamesactual[0]['nombre_mes'])
               setTerminacarga(true)
               
-          }
+          }else if(respuesta === 403 || respuesta === 401){
+            CerrarSesion()
+            navigate('/')
+
+        }
           
         };
         cargardatos()

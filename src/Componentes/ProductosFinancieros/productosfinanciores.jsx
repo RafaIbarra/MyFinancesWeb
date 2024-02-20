@@ -6,8 +6,11 @@ import ModalEliminarProducto from './modal_eliminar_producto';
 import Generarpeticion from '../../peticiones/apipeticiones';
 import './productos.css'
 import FormItem from 'antd/es/form/FormItem';
+import { Navigate, useNavigate } from "react-router-dom";
+import CerrarSesion from '../../App/cerrarsesion';
 const { Text } = Typography;
 function Productosfinancieros(){
+    const navigate=useNavigate()
     const [api, contextHolder] = notification.useNotification();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -149,7 +152,12 @@ function Productosfinancieros(){
                   }
                 
                 
-            }
+            }else if(respuesta === 403 || respuesta === 401){
+              CerrarSesion()
+              // Handelstorage('borrar')
+              navigate('/')
+
+          }
             setErroreliminacion(true)
             setErrorcantidadunica(true)
             setMesajecantidadunica('seleccione el registro')

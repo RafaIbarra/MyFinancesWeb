@@ -51,7 +51,13 @@ const Handelstorage=(opcion,item,valor)=>{
           
         };
       }
-  }
+    }
+
+    const borrar=()=>{
+      
+      localStorage.removeItem("userdate")
+      localStorage.removeItem("userData")
+    }
 
     const actualizardate =(item,valor)=>{
       const datosActuales = JSON.parse(localStorage.getItem('userdate'))
@@ -74,5 +80,8 @@ const Handelstorage=(opcion,item,valor)=>{
     else if(opcion === 'actualizardate') {
           actualizardate(item,valor)
       }
+    else if(opcion === 'borrar') {
+      borrar()
+    }
 }
 export default Handelstorage

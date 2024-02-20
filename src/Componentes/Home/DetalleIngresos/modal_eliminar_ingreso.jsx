@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { Button, Modal, Space } from 'antd';
 import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone  } from '@ant-design/icons';
 import Generarpeticion from '../../../peticiones/apipeticiones';
-
+import { Navigate, useNavigate } from "react-router-dom";
+import CerrarSesion from '../../../App/cerrarsesion';
 
 function ModalEliminarIngreso({
   openeliminaringreso,
@@ -13,6 +14,7 @@ function ModalEliminarIngreso({
 
 }
   ){
+  const navigate=useNavigate()
   const [titulo,setTitulo]=useState('')
   const [mensaje,setMensaje]=useState('')
   const [open, setOpen] = useState(openeliminaringreso);
@@ -51,11 +53,11 @@ function ModalEliminarIngreso({
         setDataingresos(registros['Ingresos'])
         setOpeneliminaringreso(false)
         
-    } else {
-        
-        
-        // navigate('/');
-      }
+    } else if(respuesta === 403 || respuesta === 401){
+      CerrarSesion()
+      navigate('/')
+
+  }
   
   }
 

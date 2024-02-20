@@ -2,13 +2,17 @@ import React, {useEffect, useState} from 'react';
 import { Button, Table, Typography,notification } from 'antd';
 import { DeleteOutlined,RetweetOutlined,PlusCircleTwoTone,CheckOutlined,WarningOutlined} from '@ant-design/icons';
 import ModalRegistroGasto from './modal_registro_gastos';
+import ModalEliminarGastos from './modal_eliminar_gastos';
 import Generarpeticion from '../../peticiones/apipeticiones';
 import './gastos.css'
 import FormItem from 'antd/es/form/FormItem';
+import { Navigate, useNavigate } from "react-router-dom";
+import CerrarSesion from '../../App/cerrarsesion';
 
 const { Text } = Typography;
 
 function Gastos(){
+    const navigate=useNavigate()
     const [api, contextHolder] = notification.useNotification();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -33,10 +37,63 @@ function Gastos(){
     const [cargarcomponentesgasto,setCargarcomponentesgasto]=useState(false)
 
     const columns=[
-        { title: 'Codigo',dataIndex: 'id',key: 'id_gast',width:'100px'},
-        { title: 'Nombre Gasto',dataIndex: 'nombre_gasto',key: 'nombre_gasto'},
-        { title: 'Tipo',dataIndex: 'DescripcionTipoGasto',key: 'DescripcionTipoGasto'},
-        { title: 'Categoria',dataIndex: 'DescripcionCategoriaGasto',key: 'DescripcionCategoriaGasto'},
+        { title: 'Codigo',
+          dataIndex: 'id',
+          key: 'id_gast',
+          width:'100px',
+          defaultSortOrder: 'ascend',
+          sorter: (a, b) => a.id - b.id,
+        },
+
+        { title: 'Nombre Gasto',
+          dataIndex: 'nombre_gasto',
+          key: 'nombre_gasto',
+          // defaultSortOrder: 'descend',
+          // sorter: (a, b) => a.nombre_gasto.length - b.nombre_gasto.length,
+          sorter: (a, b) => a.nombre_gasto.localeCompare(b.nombre_gasto),
+        },
+
+
+        { title: 'Tipo',
+          dataIndex: 'DescripcionTipoGasto',
+          key: 'DescripcionTipoGasto',
+          filters: [
+            {
+              text: 'Ocasionales',
+              value: 'Ocasionales',
+            },
+            {
+              text: 'Fijo',
+              value: 'Fijo',
+            },
+            
+          ],
+
+          onFilter: (value, record) => record.DescripcionTipoGasto.indexOf(value) === 0,
+        },
+
+
+
+        { title: 'Categoria',
+          dataIndex: 'DescripcionCategoriaGasto',
+          key: 'DescripcionCategoriaGasto',
+          filters: [
+            {
+              text: 'Productos',
+              value: 'Productos',
+            },
+            {
+              text: 'Servicios',
+              value: 'Servicios',
+            },
+            
+          ],
+
+          onFilter: (value, record) => record.DescripcionCategoriaGasto.indexOf(value) === 0,
+
+
+        },
+
         { title: 'Monto Total Registrado',
           dataIndex: 'TotalEgresos',
           key: 'TotalEgresos',
@@ -51,7 +108,9 @@ function Gastos(){
         
       ]
 
-
+      // const onChange = (pagination, filters, sorter, extra) => {
+      //   console.log('params', pagination, filters, sorter, extra);
+      // };
     const nuevo=()=>{
         setDetalleselecciongasto([])
         setOpenregistrogasto(true)
@@ -59,7 +118,7 @@ function Gastos(){
       }
 
     const eliminar=()=>{
-    
+        
         setOpeneliminargasto(true)
         
       }
@@ -123,7 +182,7 @@ function Gastos(){
             const result = await Generarpeticion(endpoint, 'POST', body);
             
             const respuesta=result['resp']
-            
+            console.log(respuesta)
             if (respuesta === 200) {
                 const registros=result['data']
                 
@@ -149,6 +208,10 @@ function Gastos(){
                     }
                 
                 
+            } else if(respuesta === 403 || respuesta === 401){
+                CerrarSesion()
+                navigate('/')
+
             }
             setErroreliminacion(true)
             setErrorcantidadunica(true)
@@ -210,6 +273,7 @@ function Gastos(){
                     dataSource={gastos} 
                     pagination={false}
                     bordered
+                    // onChange={onChange}
                   />
                   <div className='contenedor-resumen'>
                       <FormItem >
@@ -255,13 +319,13 @@ function Gastos(){
                                   onClick={nuevo} 
                                   >Agregar
                           </Button>
-                          {/* {openeliminarproducto &&( <ModalEliminarProducto 
-                                        openeliminarproducto={openeliminarproducto}
-                                        setOpeneliminarproducto={setOpeneliminarproducto}
+                          {openeliminargasto &&( <ModalEliminarGastos 
+                                        openeliminargasto={openeliminargasto}
+                                        setOpeneliminargasto={setOpeneliminargasto}
                                         selectedRowKeys={selectedRowKeys}
-                                        cargarcomponentesproductos={cargarcomponentesproductos}
-                                        setCargarcomponentesproductos={setCargarcomponentesproductos} 
-                                      ></ModalEliminarProducto>)} */}
+                                        cargarcomponentesgasto={cargarcomponentesgasto}
+                                        setCargarcomponentesgasto={setCargarcomponentesgasto} 
+                                      ></ModalEliminarGastos>)}
 
     
                           {openregistrogasto &&( <ModalRegistroGasto 

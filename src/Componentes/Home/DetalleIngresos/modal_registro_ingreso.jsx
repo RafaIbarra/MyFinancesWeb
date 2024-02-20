@@ -5,7 +5,8 @@ import {DatePicker } from 'antd';
 import Generarpeticion from '../../../peticiones/apipeticiones';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-
+import { Navigate, useNavigate } from "react-router-dom";
+import CerrarSesion from '../../../App/cerrarsesion';
 
 const formItemLayout = {
     labelCol: {
@@ -34,9 +35,8 @@ function ModalRegistroIngreso({
 
 }){
 
-  const [open, setOpen] = useState(openregistroingreso);
-
-  
+    const navigate=useNavigate()
+    const [open, setOpen] = useState(openregistroingreso);
     const { MonthPicker, RangePicker } = DatePicker;
     dayjs.extend(customParseFormat);
     const dateFormat = 'YYYY-MM-DD';
@@ -138,10 +138,10 @@ function ModalRegistroIngreso({
             setReady(true)
             
             
-          } else {
-            
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            // navigate('/');
+          }else if(respuesta === 403 || respuesta === 401){
+            CerrarSesion()
+            navigate('/')
+
           }
         };
     
@@ -210,11 +210,11 @@ function ModalRegistroIngreso({
             setDataingresos(registros['Ingresos'])
             setOpenregistroingreso(false)
             
-          } else {
-            
-            
-            // navigate('/');
-          }
+          } else if(respuesta === 403 || respuesta === 401){
+            CerrarSesion()
+            navigate('/')
+
+        }
         };
 
 

@@ -34,9 +34,47 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
     
     const columns=[
       
-      { title: 'Descripcion',dataIndex: 'NombreGasto',key: 'DetalleEgreso_Descripcion'},
-      { title: 'Tipo',dataIndex: 'TipoGasto',key: 'DetalleEgreso_Tipo'},
-      { title: 'Categoria',dataIndex: 'CategoriaGasto', key: 'DetalleEgreso_Categoria'},
+      { title: 'Descripcion',
+        dataIndex: 'NombreGasto',
+        key: 'DetalleEgreso_Descripcion',
+        sorter: (a, b) => a.NombreGasto.localeCompare(b.NombreGasto),
+      },
+      { title: 'Tipo',
+        dataIndex: 'TipoGasto',
+        key: 'DetalleEgreso_Tipo',
+        filters: [
+          {
+            text: 'Ocasionales',
+            value: 'Ocasionales',
+          },
+          {
+            text: 'Fijo',
+            value: 'Fijo',
+          },
+          
+        ],
+        onFilter: (value, record) => record.TipoGasto.indexOf(value) === 0,
+      },
+
+      { title: 'Categoria',
+        dataIndex: 'CategoriaGasto', 
+        key: 'DetalleEgreso_Categoria',
+        filters: [
+          {
+            text: 'Productos',
+            value: 'Productos',
+          },
+          {
+            text: 'Servicios',
+            value: 'Servicios',
+          },
+          
+        ],
+
+        onFilter: (value, record) => record.CategoriaGasto.indexOf(value) === 0,
+
+      },
+
       { title: 'Egreso',
         dataIndex: 'monto_gasto',
         key: 'DetalleEgreso_Egreso',
@@ -47,7 +85,12 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
         ),
       },
       { title: 'Fecha Gasto',dataIndex: 'fecha_gasto',key: 'DetalleEgreso_FechaGasto'},
-      { title: 'Fecha Registro',dataIndex: 'fecha_registro',key: 'DetalleEgreso_FechaRegistro',width: 250,},
+      { title: 'Fecha Registro',
+        dataIndex: 'fecha_registro',
+        key: 'DetalleEgreso_FechaRegistro',
+        width: 250,
+        sorter: (a, b) => new Date(a.fecha_registro) - new Date(b.fecha_registro),
+      },
       
     ]
     
