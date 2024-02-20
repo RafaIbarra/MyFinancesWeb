@@ -1,17 +1,15 @@
 import React,{useState,useEffect} from "react";
 
-
-
+import { Routes, Route, Navigate,useNavigate,HashRouter  } from 'react-router-dom'; 
 import Login  from "../Componentes/Login/Login";
 import Home from "../Componentes/Home/home";
 import NavBar from "../Componentes/NavBar/navbar";
 import NabarHor from "../Componentes/NavBar/nabvarhorizontal";
-import { Routes, Route, Navigate,useNavigate,HashRouter  } from 'react-router-dom'; 
-// import RegistroGasto from "../Componentes/RegistroGasto/registrogasto";
-// import RegistroEgreso from "../Componentes/RegistroEgreso/registroegreso";
-import ComprobarStorage from "./verificarstorage";
 import Productosfinancieros from "../Componentes/ProductosFinancieros/productosfinanciores";
 import Gastos from "../Componentes/Gastos/gastos";
+import CloseSesion from "../Componentes/Closesesion/closesesion";
+import RegistroUsuario from "../Componentes/RegistroUsuario/registrousuario";
+import ComprobarStorage from "./verificarstorage";
 
 function App (){
     
@@ -51,11 +49,13 @@ return(
                 {Estadologin && (<NabarHor />)}
                 <Routes>
                     <Route path="/" element={<Login activarsesion={activarsesion} desactivarsesion={desactivarsesion} />} />
+                    <Route path="/Registro" element={<RegistroUsuario />} />
                     <Route path="/Home" element={<Home />} />
                     {/* <Route path="/RegistroGasto" element={<RegistroGasto />} />
                     <Route path="/RegistroEgreso" element={<RegistroEgreso />} /> */}
                     <Route path="/Productos" element={<Productosfinancieros />} />
                     <Route path="/Gastos" element={<Gastos />} />
+                    <Route path="/Closesesion" element={<CloseSesion />} />
                     
                 </Routes>
             </div>

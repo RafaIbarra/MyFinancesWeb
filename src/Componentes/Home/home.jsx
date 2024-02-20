@@ -9,7 +9,7 @@ import './home.css'
 import HomeCabecera from './CabeceraHome/cabecera';
 import Handelstorage from '../../Storage/handelstorage';
 import { Navigate, useNavigate } from "react-router-dom";
-import CerrarSesion from '../../App/cerrarsesion';
+
 
 function Home (){
     const navigate=useNavigate()
@@ -49,9 +49,8 @@ function Home (){
             
             
         }else if(respuesta === 403 || respuesta === 401){
-          CerrarSesion()
-          // Handelstorage('borrar')
-          navigate('/')
+          
+          navigate('/Closesesion')
 
       }
         setCargaconfirmada(true)

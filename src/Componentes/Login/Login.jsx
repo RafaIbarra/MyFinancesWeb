@@ -37,9 +37,10 @@ function Login({activarsesion,desactivarsesion}){
         setUsername(event.target.value);
       };
       
-      const cargarcontrasena = (event) => {
+    const cargarcontrasena = (event) => {
         setPassword(event.target.value);
       };
+
     const ingresar =async (event)=>{
         
         const datos =await Iniciarsesion(username, password)
@@ -60,6 +61,10 @@ function Login({activarsesion,desactivarsesion}){
             console.log(datos['data']['error'])
         }
         
+    }
+
+    const registrarse=()=>{
+        navigate('/Registro')
     }
 
     useEffect(() => {
@@ -130,7 +135,7 @@ function Login({activarsesion,desactivarsesion}){
                         <Button type="primary"  className="login-form-button" onClick={ingresar}>
                         Iniciar Sesion
                         </Button>
-                        O <a href="">Registrarse!</a>
+                        O <a onClick={registrarse}>Registrarse!</a>
                     </Form.Item>
                 </Form>
 

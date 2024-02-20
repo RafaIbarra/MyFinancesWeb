@@ -7,6 +7,7 @@ import ModalRegistroIngreso from './modal_registro_ingreso';
 import './detalleingreso.css'
 import FormItem from 'antd/es/form/FormItem';
 const { Text } = Typography;
+
 function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
 
   const [loading, setLoading] = useState(false);

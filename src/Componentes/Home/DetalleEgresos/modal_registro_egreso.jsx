@@ -6,7 +6,7 @@ import Generarpeticion from '../../../peticiones/apipeticiones';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Navigate, useNavigate } from "react-router-dom";
-import CerrarSesion from '../../../App/cerrarsesion';
+import Handelstorage from '../../../Storage/handelstorage';
 const formItemLayout = {
     labelCol: {
       xs: {
@@ -38,6 +38,8 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
   const { MonthPicker, RangePicker } = DatePicker;
   dayjs.extend(customParseFormat);
   const dateFormat = 'YYYY-MM-DD';
+  const [mesprincipal,setMesprincipal]=useState(0)
+  const [annoprincipal,setAnnoprincipal]=useState(0)
   const [fechaegreso, setFechaegreso] = useState(null);
   const[datosgastos,setDatosgastos]=useState(null)
   const[gastosproductos,setGastosproductos]=useState(null)
@@ -112,6 +114,12 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
   useEffect(() => {
           
           const cargardatos = async () => {
+          const datestorage=Handelstorage('obtenerdate');
+          const mes_storage=datestorage['datames']
+          const anno_storage=datestorage['dataanno']
+          setMesprincipal(mes_storage)
+          setAnnoprincipal(anno_storage)
+
           const body = {};
           const endpoint='MisGastos/'
           const result = await Generarpeticion(endpoint, 'POST', body);
@@ -129,7 +137,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
             setReady(true)
             
           } else if(respuesta === 403 || respuesta === 401){
-            CerrarSesion()
+            
             navigate('/')
 
             }
@@ -191,15 +199,28 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
           
           const respuesta=result['resp']
           if (respuesta === 200) {
-            await new Promise(resolve => setTimeout(resolve, 2000))
             const registros=result['data']
-            setDataresumen(registros['Resumen'])
-            setDataegresos(registros['Egresos'])
+            
+            const primeraFecha = new Date(registros['Egresos'][0].fecha_gasto);
+            
+            const mes = primeraFecha.getMonth() + 1;
+            const año = primeraFecha.getFullYear();
+            
+
+            await new Promise(resolve => setTimeout(resolve, 2000))
+
+            if(mes===mesprincipal && annoprincipal===año ){
+              
+              setDataresumen(registros['Resumen'])
+              setDataegresos(registros['Egresos'])
+            }
+        
+
             setOpenregistroegreso(false)
             
           } else if(respuesta === 403 || respuesta === 401){
-            CerrarSesion()
-            navigate('/')
+            
+            navigate('/Closesesion')
 
         }
        };

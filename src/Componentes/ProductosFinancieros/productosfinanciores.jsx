@@ -7,7 +7,7 @@ import Generarpeticion from '../../peticiones/apipeticiones';
 import './productos.css'
 import FormItem from 'antd/es/form/FormItem';
 import { Navigate, useNavigate } from "react-router-dom";
-import CerrarSesion from '../../App/cerrarsesion';
+
 const { Text } = Typography;
 function Productosfinancieros(){
     const navigate=useNavigate()
@@ -153,9 +153,9 @@ function Productosfinancieros(){
                 
                 
             }else if(respuesta === 403 || respuesta === 401){
-              CerrarSesion()
-              // Handelstorage('borrar')
-              navigate('/')
+              
+              
+              navigate('/Closesesion')
 
           }
             setErroreliminacion(true)

@@ -5,7 +5,7 @@ import {Button,InputNumber,Select } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import './cabecera.css'
 import { Navigate, useNavigate } from "react-router-dom";
-import CerrarSesion from '../../../App/cerrarsesion';
+
 function HomeCabecera ({cargarresumen,setCargarresumen}){
 
     const navigate=useNavigate()
@@ -101,8 +101,8 @@ function HomeCabecera ({cargarresumen,setCargarresumen}){
               setTerminacarga(true)
               
           }else if(respuesta === 403 || respuesta === 401){
-            CerrarSesion()
-            navigate('/')
+            
+            navigate('/Closesesion')
 
         }
           

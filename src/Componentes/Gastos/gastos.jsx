@@ -7,7 +7,7 @@ import Generarpeticion from '../../peticiones/apipeticiones';
 import './gastos.css'
 import FormItem from 'antd/es/form/FormItem';
 import { Navigate, useNavigate } from "react-router-dom";
-import CerrarSesion from '../../App/cerrarsesion';
+
 
 const { Text } = Typography;
 
@@ -209,8 +209,8 @@ function Gastos(){
                 
                 
             } else if(respuesta === 403 || respuesta === 401){
-                CerrarSesion()
-                navigate('/')
+                
+                navigate('/Closesesion')
 
             }
             setErroreliminacion(true)

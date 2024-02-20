@@ -3,7 +3,7 @@ import { Button, Modal, Space } from 'antd';
 import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone  } from '@ant-design/icons';
 import Generarpeticion from '../../peticiones/apipeticiones';
 import { Navigate, useNavigate } from "react-router-dom";
-import CerrarSesion from '../../App/cerrarsesion';
+
 
 function ModalEliminarGastos(
     {
@@ -51,8 +51,8 @@ function ModalEliminarGastos(
             setOpeneliminargasto(false)
             
         } else if(respuesta === 403 || respuesta === 401){
-            CerrarSesion()
-            navigate('/')
+            
+            navigate('/Closesesion')
 
             }
         

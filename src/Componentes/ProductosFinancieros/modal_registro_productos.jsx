@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button,Form,Input,InputNumber,Radio,Modal } from 'antd';
 import Generarpeticion from '../../peticiones/apipeticiones';
 import { Navigate, useNavigate } from "react-router-dom";
-import CerrarSesion from '../../App/cerrarsesion';
+
 
 const formItemLayout = {
     labelCol: {
@@ -28,7 +28,7 @@ function ModalRegistroProducto({
     detalleseleccionproducto,modoedicionproducto,
     cargarcomponentesproductos,setCargarcomponentesproductos
 }){
-
+    const navigate=useNavigate()
     const [open, setOpen] = useState(openregistroproducto);
     const [tituloproducto,setTituloproducto]=useState('')
 
@@ -135,8 +135,8 @@ function ModalRegistroProducto({
           setOpenregistroproducto(false)
           
         } else if(respuesta === 403 || respuesta === 401){
-            CerrarSesion()
-            navigate('/')
+            
+            navigate('/Closesesion')
 
         }
       };

@@ -6,7 +6,7 @@ import Generarpeticion from '../../../peticiones/apipeticiones';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Navigate, useNavigate } from "react-router-dom";
-import CerrarSesion from '../../../App/cerrarsesion';
+import Handelstorage from '../../../Storage/handelstorage';
 
 const formItemLayout = {
     labelCol: {
@@ -40,6 +40,8 @@ function ModalRegistroIngreso({
     const { MonthPicker, RangePicker } = DatePicker;
     dayjs.extend(customParseFormat);
     const dateFormat = 'YYYY-MM-DD';
+    const [mesprincipal,setMesprincipal]=useState(0)
+    const [annoprincipal,setAnnoprincipal]=useState(0)
     const [fechaingreso, setFechaingreso] = useState(null);
     const[datosproductos,setDatosproductos]=useState(null)
     const[productosfijos,setProductosfijos]=useState(null)
@@ -122,6 +124,11 @@ function ModalRegistroIngreso({
     useEffect(() => {
     
         const cargardatos = async () => {
+          const datestorage=Handelstorage('obtenerdate');
+          const mes_storage=datestorage['datames']
+          const anno_storage=datestorage['dataanno']
+          setMesprincipal(mes_storage)
+          setAnnoprincipal(anno_storage)
           const body = {};
           const endpoint='MisProductosFinancieros/'
           const result = await Generarpeticion(endpoint, 'POST', body);
@@ -139,7 +146,7 @@ function ModalRegistroIngreso({
             
             
           }else if(respuesta === 403 || respuesta === 401){
-            CerrarSesion()
+            
             navigate('/')
 
           }
@@ -205,14 +212,25 @@ function ModalRegistroIngreso({
           const respuesta=result['resp']
           if (respuesta === 200) {
             await new Promise(resolve => setTimeout(resolve, 2000))
+
             const registros=result['data']
-            setDataresumen(registros['Resumen'])
-            setDataingresos(registros['Ingresos'])
+            const primeraFecha = new Date(registros['Ingresos'][0].fecha_ingreso);
+            const mes = primeraFecha.getMonth() + 1;
+            const año = primeraFecha.getFullYear();
+
+            if(mes===mesprincipal && annoprincipal===año ){
+              
+              setDataingresos(registros['Ingresos'])
+              setDataresumen(registros['Resumen'])
+            }
+
+            
+            
             setOpenregistroingreso(false)
             
           } else if(respuesta === 403 || respuesta === 401){
-            CerrarSesion()
-            navigate('/')
+            
+            navigate('/Closesesion')
 
         }
         };
