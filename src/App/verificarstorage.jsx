@@ -6,9 +6,16 @@ const ComprobarStorage=()=>{
     const tokenstorage = datosstarage['token'];
 
     if (tokenstorage) {
-        return true
+        // return true
+        return {
+            datosesion:true,
+            user_name:datosstarage['user_name']
+        }
     } else {
-        return false
+        return {
+            datosesion:false,
+            user_name:''
+        }
     }
       
 }

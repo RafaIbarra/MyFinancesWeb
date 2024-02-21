@@ -99,9 +99,6 @@ function ModalRegistroIngreso({
     }
 
 
-
-
-
     const showModal = () => {
       setOpen(true);
       setOpenregistroingreso(false)
@@ -214,9 +211,9 @@ function ModalRegistroIngreso({
             await new Promise(resolve => setTimeout(resolve, 2000))
 
             const registros=result['data']
-            const primeraFecha = new Date(registros['Ingresos'][0].fecha_ingreso);
-            const mes = primeraFecha.getMonth() + 1;
-            const año = primeraFecha.getFullYear();
+            
+            const mes = registros['Ingresos'][0].MesIngreso;
+            const año = registros['Ingresos'][0].AnnoIngreso;
 
             if(mes===mesprincipal && annoprincipal===año ){
               
@@ -234,7 +231,16 @@ function ModalRegistroIngreso({
 
         }
         };
+    
+    const formatearValor = (value) => {
+      // Formatear el valor con separadores de miles
+      return value ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '';
+      };
 
+    const parsearValor = (value) => {
+        // Eliminar separadores de miles al convertir el valor
+        return value ? parseInt(value.replace(/,/g, ''), 10) : undefined;
+      };
 
     if(ready){
       return(
@@ -282,7 +288,7 @@ function ModalRegistroIngreso({
                               rules={[
                                   {
                                   required: true,
-                                  message: 'Please input!',
+                                  message: 'Favor Seleccione!',
                                   },
                               ]}
                   >
@@ -310,7 +316,7 @@ function ModalRegistroIngreso({
                       rules={[
                           {
                           required: true,
-                          message: 'Please input!',
+                          message: 'Favor Seleccione la fecha!',
                           },
                       ]}
                       >
@@ -336,17 +342,17 @@ function ModalRegistroIngreso({
                       rules={[
                           {
                           required: true,
-                          message: 'Please input!',
+                          message: 'Favor ingrese el monto!',
                           },
                       ]}
                       >
                       <InputNumber
                           onChange={seleccionarmonto}
-                          style={{
-                          width: '100%',
-                          }}
+                          style={{width: '100%',}}
                           defaultValue={modoactualizacioningreso ? valoresdefaultingreso[0]['monto_ingreso'] : 0}
                           disabled={modoedicioningreso}
+                          formatter={formatearValor}
+                          parser={parsearValor}
                       />
                   </Form.Item>
 

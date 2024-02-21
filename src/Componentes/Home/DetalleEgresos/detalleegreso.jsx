@@ -141,6 +141,8 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
 
             }else{
               setDetalle([])
+              setMontototalegreso(0)
+              setcanttotalegreso(0)
               
             }
             setSelectedRowKeys([])

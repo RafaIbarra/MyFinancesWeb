@@ -70,8 +70,8 @@ function HomeCabecera ({cargarresumen,setCargarresumen}){
         }
         
         setCargarresumen(!cargarresumen)
-        setCargaringresos(!cargaringresos)
-        setCargarEgresos(!cargaregresos)
+        // setCargaringresos(!cargaringresos)
+        // setCargarEgresos(!cargaregresos)
   
         
         

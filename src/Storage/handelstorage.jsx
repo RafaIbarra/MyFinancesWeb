@@ -22,6 +22,7 @@ const Handelstorage=(opcion,item,valor)=>{
             token: userLocalStorageData.token,
             refreshToken: userLocalStorageData.refreshToken,
             sesion: userLocalStorageData.sesion,
+            user_name: userLocalStorageData.user_name,
             
           };
         }else{
@@ -29,6 +30,7 @@ const Handelstorage=(opcion,item,valor)=>{
             token: false,
             refreshToken: false,
             sesion: false,
+            user_name: false,
             
           };
         }

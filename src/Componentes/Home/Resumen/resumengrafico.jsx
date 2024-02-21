@@ -30,7 +30,8 @@ function Resumengrafico({mes,anno}){
             fetch(endpoint, requestOptions)
             .then(res => res.json())
             .then(data => {
-                setImagen(data.imagen_grafico);  
+                setImagen(data.imagen_grafico);
+                console.log(data.imagen_grafico)  
             })
         };
         cargardatos();

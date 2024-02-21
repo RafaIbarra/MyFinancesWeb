@@ -138,7 +138,7 @@ function Resumen({dataresumen}){
                 />
 
                 
-              <Resumengrafico></Resumengrafico>
+              {/* <Resumengrafico></Resumengrafico> */}
 
                 
 

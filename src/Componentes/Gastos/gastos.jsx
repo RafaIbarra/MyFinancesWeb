@@ -264,7 +264,7 @@ function Gastos(){
         return(
             <div>
                   {contextHolder}
-                  <h4 className='tituloform' > Datos Gastos </h4>
+                  <h4 className='tituloform' > Conceptos de Egresos </h4>
                   <Table 
                     rowSelection={rowSelection} 
                     scroll={{x: 300,y: 400,}}

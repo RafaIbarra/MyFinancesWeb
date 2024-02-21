@@ -17,9 +17,9 @@ const layout = {
   };
 
 const validateMessages = {
-    required: '${label} is required!',
+    required: '${label} es requerido!',
     types: {
-      email: '${label} is not a valid email!',
+      email: '${label} no es email valido!',
       number: '${label} is not a valid number!',
     },
     number: {
@@ -32,7 +32,7 @@ const onFinish = (values) => {
     console.log(values);
   };
 
-function RegistroUsuario ({activarsesion,desactivarsesion}){
+function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
     const navigate=useNavigate()
     const { MonthPicker, RangePicker } = DatePicker;
     dayjs.extend(customParseFormat);
@@ -101,11 +101,15 @@ function RegistroUsuario ({activarsesion,desactivarsesion}){
                 token:datos['data']['token'],
                 sesion:datos['data']['sesion'],
                 refresh:datos['data']['refresh'],
+                user_name:datos['data']['user_name'],
             }
             
             
             Handelstorage('agregar',userdata,'')
             activarsesion()
+            const sesionmin=username.toLowerCase()
+            const sesioncapitalize = sesionmin.charAt(0).toUpperCase() + sesionmin.slice(1);
+            setSesionname(sesioncapitalize)
             navigate('/Home')
         }else{
             console.log(datos['data']['error'])
@@ -176,7 +180,7 @@ function RegistroUsuario ({activarsesion,desactivarsesion}){
                            rules={[
                                {
                                required: true,
-                               message: 'Please input!',
+                               message: 'Favor seleccione la fecha!',
                                },
                            ]}
                            >

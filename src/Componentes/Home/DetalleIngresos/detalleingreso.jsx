@@ -140,6 +140,8 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
           }
           else{
             setDetalle([])
+            setMontototalingreso(0)
+            setCanttotalingreso(0)
             
           }
           

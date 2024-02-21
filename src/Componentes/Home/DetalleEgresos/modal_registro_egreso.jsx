@@ -173,6 +173,16 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
           setMonto(valor)
   
       }
+
+  const formatearValor = (value) => {
+    // Formatear el valor con separadores de miles
+    return value ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '';
+    };
+
+  const parsearValor = (value) => {
+      // Eliminar separadores de miles al convertir el valor
+      return value ? parseInt(value.replace(/,/g, ''), 10) : undefined;
+    };
   const seleccionaranotacion=(event)=>{
           const valor= event.target.value;
           
@@ -200,11 +210,11 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
           const respuesta=result['resp']
           if (respuesta === 200) {
             const registros=result['data']
+
+            console.log(registros['Egresos'][0])
             
-            const primeraFecha = new Date(registros['Egresos'][0].fecha_gasto);
-            
-            const mes = primeraFecha.getMonth() + 1;
-            const año = primeraFecha.getFullYear();
+            const mes = registros['Egresos'][0].MesEgreso;
+            const año = registros['Egresos'][0].AnnoEgreso;
             
 
             await new Promise(resolve => setTimeout(resolve, 2000))
@@ -281,7 +291,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
                                    rules={[
                                        {
                                        required: true,
-                                       message: 'Please input!',
+                                       message: 'Favor seleccione!',
                                        },
                                    ]}
                        >
@@ -309,7 +319,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
                            rules={[
                                {
                                required: true,
-                               message: 'Please input!',
+                               message: 'Favor seleccione la fecha!',
                                },
                            ]}
                            >
@@ -327,20 +337,17 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
                        <Form.Item
                            label="Monto Egreso"
                            name="MontoEgreso"
-                           rules={[
-                               {
-                               required: true,
-                               message: 'Please input!',
-                               },
-                           ]}
+                           rules={[{required: true,message: 'Favor ingrese el monto!',},]}
                            >
                            <InputNumber 
                               onChange={seleccionarmonto}
                                style={{
                                width: '100%',
                                }}
-                               defaultValue={modoactualizacion ? valoresdefault[0]['monto_gasto'] : 0}
-                               disabled={modoedicion}
+                              defaultValue={modoactualizacion ? valoresdefault[0]['monto_gasto'] : 0}
+                              disabled={modoedicion}
+                              formatter={formatearValor}
+                              parser={parsearValor}
                            />
                        </Form.Item>
  

@@ -13,7 +13,7 @@ import ComprobarStorage from "../../App/verificarstorage";
 import './login.css'
 
 
-function Login({activarsesion,desactivarsesion}){
+function Login({activarsesion,desactivarsesion,setSesionname}){
     
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
@@ -29,7 +29,9 @@ function Login({activarsesion,desactivarsesion}){
     
     const navegar=()=>{
         activarsesion()
-        
+        const sesionmin=username.toLowerCase()
+        const sesioncapitalize = sesionmin.charAt(0).toUpperCase() + sesionmin.slice(1);
+        setSesionname(sesioncapitalize)
         navigate('/Home')
 
     }
@@ -52,6 +54,7 @@ function Login({activarsesion,desactivarsesion}){
                 token:datos['data']['token'],
                 sesion:datos['data']['sesion'],
                 refresh:datos['data']['refresh'],
+                user_name:datos['data']['user_name'],
             }
             
             
@@ -70,9 +73,9 @@ function Login({activarsesion,desactivarsesion}){
 
     useEffect(() => {
         const datosstarage = ComprobarStorage();
-        
+        const credenciales=datosstarage['datosesion']
     
-        if (datosstarage) {
+        if (credenciales) {
           
          navegar()
           
@@ -105,7 +108,7 @@ function Login({activarsesion,desactivarsesion}){
                     <Form.Item name="username"
                         rules={[{
                             required: true,
-                            message: 'Please input your Username!',
+                            message: 'Favor ingrese su nombre de usuario!',
                                 },]}
                     >
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" onChange={cargarusuario} />
@@ -113,7 +116,7 @@ function Login({activarsesion,desactivarsesion}){
                     <Form.Item name="password"
                         rules={[{
                             required: true,
-                            message: 'Please input your Password!',
+                            message: 'Favor ingrese su contraseña!',
                                 },]}
                     >
                         <Input prefix={<LockOutlined className="site-form-item-icon" />}

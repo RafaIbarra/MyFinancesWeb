@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { HomeOutlined,SwapOutlined,
-        DiffOutlined,SoundOutlined,InteractionOutlined,FileUnknownOutlined,CheckOutlined,RightOutlined } 
+        DiffOutlined,SoundOutlined,InteractionOutlined,FileUnknownOutlined,CheckOutlined,RightOutlined,UserOutlined  } 
       from '@ant-design/icons';
 
 import { Button,Menu,message, Space   } from 'antd';
@@ -29,7 +29,21 @@ const navegaciones={
 
 
 
-const items = [
+
+
+
+function NavBar({sesionname}){
+  const items = [
+    {
+      label:(
+        <div className='nombreuser'>
+          <UserOutlined style={{ fontSize: '20px',marginRight:'10px' }}/>
+          {sesionname}</div>
+      ),
+      key:"User",
+      
+    }
+    ,
     // {
     //   label:(
     //     <img src={logoCoop} alt="Logo" className="h-12 w-auto" />
@@ -41,168 +55,175 @@ const items = [
       key:"Inicio",
       icon:<HomeOutlined style={{ fontSize: tamaño }}/>,      
     },
-    {
-      label: "Movimientos",
-      key: 'SubMenu2',
-      icon: <SwapOutlined style={{ fontSize: tamaño }}/>,
-      children:[
-        {
-          label: 'Egresos',
-          key: 'Egresos',
-           icon: <RightOutlined style={{ fontSize: tamañosub }}/>,           
-        },
-        {
-          label: 'Ingresos',
-          key: 'Aterceros',
-           icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-        },
-      ],      
-    },
-    {
-      label: "Servicios/Pagos",
-      key: 'SubMenu3',
-      icon: <DiffOutlined style={{ fontSize: tamaño }}/>,
-      children:[
+    // {
+    //   label: "Movimientos",
+    //   key: 'SubMenu2',
+    //   icon: <SwapOutlined style={{ fontSize: tamaño }}/>,
+    //   children:[
+    //     {
+    //       label: 'Egresos',
+    //       key: 'Egresos',
+    //        icon: <RightOutlined style={{ fontSize: tamañosub }}/>,           
+    //     },
+    //     {
+    //       label: 'Ingresos',
+    //       key: 'Aterceros',
+    //        icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+    //     },
+    //   ],      
+    // },
+    // {
+    //   label: "Servicios/Pagos",
+    //   key: 'SubMenu3',
+    //   icon: <DiffOutlined style={{ fontSize: tamaño }}/>,
+    //   children:[
 
-        {
-          type:'group',
-          label: 'Cuotas Sociales',
-          icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-          children:[
-            {
-              label: 'Pago Aporte',
-              key: 'PagoAporte',
-              icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-            },
-            {
-              label: 'Solidaridad',
-              key: 'Solidaridad',
-              icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-            },
-            {
-              label: 'Sede Social',
-              key: 'SedeSocial',
-              icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-            },
-          ]
-        },
-        {
-          label: 'Préstamo',
-          key: 'Prestamo',
-          icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-        },
-        {
-          label: 'Tarjeta de Crédito',
-          key: 'TarjetaCredito',
-          icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-        },
-        ,
-        {
-          label: 'Cuenta Colegio',
-          key: 'CuentaColegio',
-          icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-        },
+    //     {
+    //       type:'group',
+    //       label: 'Cuotas Sociales',
+    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+    //       children:[
+    //         {
+    //           label: 'Pago Aporte',
+    //           key: 'PagoAporte',
+    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
+    //         },
+    //         {
+    //           label: 'Solidaridad',
+    //           key: 'Solidaridad',
+    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
+    //         },
+    //         {
+    //           label: 'Sede Social',
+    //           key: 'SedeSocial',
+    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
+    //         },
+    //       ]
+    //     }
+    //     ,
+    //     {
+    //       label: 'Préstamo',
+    //       key: 'Prestamo',
+    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+    //     },
+    //     {
+    //       label: 'Tarjeta de Crédito',
+    //       key: 'TarjetaCredito',
+    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+    //     },
+    //     ,
+    //     {
+    //       label: 'Cuenta Colegio',
+    //       key: 'CuentaColegio',
+    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+    //     },
 
-      ]
-    },
+    //   ]
+    // }
+    ,
+
+
     {
-      label: "AutoGestiones",
+      label: "Conceptos",
       key:"AutoGestiones",
       icon:<InteractionOutlined style={{ fontSize: tamaño }}/>,
      
       children:[
         
         {
-          label: 'Productos Financieros',
+          label: 'Conceptos de Ingresos',
           key: 'Productos',
           icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
          
         },
         {
-          label: 'Registros Gastos',
+          label: 'Conceptos de Egresos',
           key: 'Gastos',
           icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
          
-        },
-        
-        {
-          label: 'Solcitar Tarjeta de Crédito',
-          key: 'SolcitarTarjetaCredito',
-          icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-         
-        },
-        {
-          label: 'Solicitar Tarjeta de Débito',
-          key: 'SolicitarTarjetaDébito',
-          icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-
-        },
-        
-
-      ]
-
-    },
-    {
-      label: "Consultas",
-      key:"Consultas",
-      icon:<FileUnknownOutlined style={{ fontSize: tamaño }}/>,
-      children:[
-
-        {
-          type:'group',
-          label: 'Comprobantes',
-          children:[
-            {
-              label: 'Facturas',
-              key: 'Facturas',
-              icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-            },
-           
-          ]
-        },
-        {
-          type:'group',
-          label: 'Consultas',
-          children:[
-            {
-              label: 'Padrón',
-              key: 'Padron',
-              icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-            },
-            {
-              label: 'Excedentes',
-              key: 'Excedentes',
-              icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-            },
-            {
-              label: 'Extracto de tarjetas',
-              key: 'Extractotarjetas',
-              icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-            },
-           
-          ]
-        },
-        {
-          label: 'Promociones',
-          key: 'Promociones',
-          icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
         }
+        ,
+        
+        // {
+        //   label: 'Solcitar Tarjeta de Crédito',
+        //   key: 'SolcitarTarjetaCredito',
+        //   icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+         
+        // },
+        // {
+        //   label: 'Solicitar Tarjeta de Débito',
+        //   key: 'SolicitarTarjetaDébito',
+        //   icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+
+        // }
+        // ,
+        
 
       ]
-    },
-    {
-      label: "RegistroGasto",
-      key:"RegistroGasto",
-      icon:<HomeOutlined style={{ fontSize: tamaño }}/>,
+
+    }
+    ,
+    // {
+    //   label: "Consultas",
+    //   key:"Consultas",
+    //   icon:<FileUnknownOutlined style={{ fontSize: tamaño }}/>,
+    //   children:[
+
+    //     {
+    //       type:'group',
+    //       label: 'Comprobantes',
+    //       children:[
+    //         {
+    //           label: 'Facturas',
+    //           key: 'Facturas',
+    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
+    //         },
+           
+    //       ]
+    //     },
+    //     {
+    //       type:'group',
+    //       label: 'Consultas',
+    //       children:[
+    //         {
+    //           label: 'Padrón',
+    //           key: 'Padron',
+    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
+    //         },
+    //         {
+    //           label: 'Excedentes',
+    //           key: 'Excedentes',
+    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
+    //         },
+    //         {
+    //           label: 'Extracto de tarjetas',
+    //           key: 'Extractotarjetas',
+    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
+    //         },
+           
+    //       ]
+    //     },
+    //     {
+    //       label: 'Promociones',
+    //       key: 'Promociones',
+    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+    //     }
+
+    //   ]
+    // }
+    // ,
+    // {
+    //   label: "RegistroGasto",
+    //   key:"RegistroGasto",
+    //   icon:<HomeOutlined style={{ fontSize: tamaño }}/>,
       
-    },  
+    // }
+    // ,
+    
 ]
 
 
-
-function NavBar(){
-
-       
+    
     const navigate=useNavigate()
     const [current, setCurrent] = useState('mail');
     const [messageApi, contextHolder] = message.useMessage();
@@ -246,6 +267,9 @@ function NavBar(){
         {contextHolder}
         <Menu  onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}  className="navbarant navbarantItem" style={{ width: '75%' }} />
 
+        {/* <div>
+          {username}
+        </div> */}
         
         {/* <div  className="navbarant navbarantUser" style={{ width: '15%',height:'80px' }}>
           <div  style={{width: '65%',paddingTop:'25px'}}>
