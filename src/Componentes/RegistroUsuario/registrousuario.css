@@ -20,8 +20,8 @@
 
 .login-registro-box {
     position: absolute;
-    width: 700px;
-    height: 400px;
+    width: 500px;
+    height: 600px;
     /* padding: 50px; */
     margin: 0;
     border: 1px solid #ccc;
@@ -31,3 +31,18 @@
     padding: 0px;
     padding-top: 20px;
   }
+
+
+  .estiloimg{
+    height: 7rem
+}
+
+
+.contenedor-flex {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+  justify-content: center;
+  /* align-items: center;  */
+  width: '100%';
+}

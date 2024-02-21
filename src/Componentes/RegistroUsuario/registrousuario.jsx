@@ -5,9 +5,11 @@ import { Button, Checkbox, Form, Input,DatePicker } from 'antd'
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import './registrousuario.css'
+import ApiRegistroUsuario from "../../peticiones/apiregistrousuario";
+import Handelstorage from "../../Storage/handelstorage";
 const layout = {
     labelCol: {
-      span: 5,
+      span: 8,
     },
     wrapperCol: {
       span: 16,
@@ -25,12 +27,12 @@ const validateMessages = {
     },
   }
 
-
+const tamañoobjeto=250
 const onFinish = (values) => {
     console.log(values);
   };
 
-function RegistroUsuario (){
+function RegistroUsuario ({activarsesion,desactivarsesion}){
     const navigate=useNavigate()
     const { MonthPicker, RangePicker } = DatePicker;
     dayjs.extend(customParseFormat);
@@ -41,6 +43,7 @@ function RegistroUsuario (){
     const [fechanac,setFechanac]=useState('')
     const [username,setUsername]=useState('')
     const [correo,setCorreo]=useState('')
+    const [password,setPassword]=useState('')
 
     const cargarnombre=(event)=>{
         setNombre(event.target.value)
@@ -68,23 +71,45 @@ function RegistroUsuario (){
         setCorreo(event.target.value)
 
         }
+    const cargarcontrasena = (event) => {
+            setPassword(event.target.value);
+        };
 
     const volveriniciosesion=()=>{
         navigate('/')
     }
 
-    const registrar =()=>{
+    const registrar = async()=>{
         const datosregistrar = {
-            nombre_usuario:nombre,
-            apellido_usuario:apellido,
-            fecha_nacimiento:fechanac,
-            user_name:username,
+            nombre:nombre,
+            apellido:apellido,
+            nacimiento:fechanac,
+            user:username,
             correo:correo,
+            password:password
             
 
         };
 
         console.log(datosregistrar)
+        const datos =await ApiRegistroUsuario(datosregistrar)
+        
+        if(datos['resp']===200){
+            
+            
+            const userdata={
+                token:datos['data']['token'],
+                sesion:datos['data']['sesion'],
+                refresh:datos['data']['refresh'],
+            }
+            
+            
+            Handelstorage('agregar',userdata,'')
+            activarsesion()
+            navigate('/Home')
+        }else{
+            console.log(datos['data']['error'])
+        }
     }
     return(
 
@@ -98,23 +123,37 @@ function RegistroUsuario (){
                     variant="filled"
                     onFinish={onFinish}
                     style={{
-                    Width: 600,
+                    Width: 400,
                     padding:'0px'
                     // ,backgroundColor:'rgb(0,0,0)'
                     
                     }}
                     validateMessages={validateMessages}
                 >
+
+                    <Form.Item>
+                        <div className="divimg">
+                                <img className="estiloimg"
+                                    
+                                    src= "/icono.svg"
+                                    alt="login-icon"
+                                    // style="height: 7rem"
+                                />
+                         </div>
+                    </Form.Item>
                     <Form.Item
                         name={['user', 'Nombre']}
                         label="Nombre"
+                        
                         rules={[
                             {
                             required: true,
                             },
                         ]}
                     >
-                        <Input placeholder="Nombre" onChange={cargarnombre}/>
+                        <Input placeholder="Nombre" onChange={cargarnombre}
+                                style={{width:tamañoobjeto}}
+                        />
 
                     </Form.Item>
 
@@ -127,7 +166,7 @@ function RegistroUsuario (){
                             },
                         ]}
                     >
-                        <Input placeholder="Apellido" onChange={cargarapellido} />
+                        <Input placeholder="Apellido" onChange={cargarapellido} style={{width:tamañoobjeto}} />
 
                     </Form.Item>
 
@@ -148,6 +187,7 @@ function RegistroUsuario (){
                                 // disabled={modoedicion}
                                 // defaultValue={ modoactualizacion ?  dayjs(valoresdefault[0]['fecha_gasto'], dateFormat) : ''} 
                                 format={dateFormat} 
+                                style={{width:tamañoobjeto}}
                                 
                                 />
                        </Form.Item>
@@ -163,7 +203,7 @@ function RegistroUsuario (){
                             },
                         ]}
                     >
-                        <Input placeholder="User Name" onChange={cargaruser}/>
+                        <Input placeholder="User Name" onChange={cargaruser} style={{width:tamañoobjeto}}/>
 
                     </Form.Item>
 
@@ -176,29 +216,37 @@ function RegistroUsuario (){
                             },
                         ]}
                     >
-                        <Input placeholder="nombre@correo.com" onChange={cargarcorreo}/>
+                        <Input placeholder="nombre@correo.com" onChange={cargarcorreo} style={{width:tamañoobjeto}}/>
+                    </Form.Item>
+
+                    <Form.Item
+                        name={['user', 'Password']}
+                        label="Contraseña"
+                        rules={[
+                            {
+                            required: true,
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Contraseña" type="password" onChange={cargarcontrasena} style={{width:tamañoobjeto}}/>
+
                     </Form.Item>
                     
-                    <Form.Item
+                   
 
-                        wrapperCol={{
-                            ...layout.wrapperCol,
-                            offset: 8,
-                        }}
-                    >
-                       <Button onClick={volveriniciosesion}> Volver a iniciar Sesion</Button>
+                    <div className="contenedor-flex ">
 
-                    </Form.Item>
-                    <Form.Item
+                       <Button type="primary" onClick={volveriniciosesion} style={{width:200}}
+                       > Volver a iniciar Sesion</Button>
 
-                        wrapperCol={{
-                            ...layout.wrapperCol,
-                            offset: 8,
-                        }}
-                    >
-                       <Button onClick={registrar}> Registrarse</Button>
+                   
+                       <Button type="primary" onClick={registrar}
+                       style={{width:200}}
+                       > Registrarse</Button>
+                    </div>
+                        
 
-                    </Form.Item>
+                    
                     
                 </Form>
             </div>

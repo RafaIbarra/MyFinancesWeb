@@ -49,7 +49,7 @@ return(
                 {Estadologin && (<NabarHor />)}
                 <Routes>
                     <Route path="/" element={<Login activarsesion={activarsesion} desactivarsesion={desactivarsesion} />} />
-                    <Route path="/Registro" element={<RegistroUsuario />} />
+                    <Route path="/Registro" element={<RegistroUsuario activarsesion={activarsesion} desactivarsesion={desactivarsesion} />} />
                     <Route path="/Home" element={<Home />} />
                     {/* <Route path="/RegistroGasto" element={<RegistroGasto />} />
                     <Route path="/RegistroEgreso" element={<RegistroEgreso />} /> */}

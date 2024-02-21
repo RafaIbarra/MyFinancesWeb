@@ -63,7 +63,8 @@ function Login({activarsesion,desactivarsesion}){
         
     }
 
-    const registrarse=()=>{
+    const registrarse=(event)=>{
+        event.preventDefault();
         navigate('/Registro')
     }
 
@@ -135,7 +136,9 @@ function Login({activarsesion,desactivarsesion}){
                         <Button type="primary"  className="login-form-button" onClick={ingresar}>
                         Iniciar Sesion
                         </Button>
-                        O <a onClick={registrarse}>Registrarse!</a>
+                        {/* O <a onClick={registrarse}>Registrarse!</a> */}
+                        O <a href="" onClick={registrarse}>Registrarse!</a>
+                        
                     </Form.Item>
                 </Form>
 

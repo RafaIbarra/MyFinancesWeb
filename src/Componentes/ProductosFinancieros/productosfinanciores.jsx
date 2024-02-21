@@ -147,7 +147,7 @@ function Productosfinancieros(){
                   }
                   else{
                     
-                    setDetalle([])
+                    setProductos([])
                     
                   }
                 

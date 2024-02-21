@@ -182,7 +182,7 @@ function Gastos(){
             const result = await Generarpeticion(endpoint, 'POST', body);
             
             const respuesta=result['resp']
-            console.log(respuesta)
+            
             if (respuesta === 200) {
                 const registros=result['data']
                 
@@ -203,7 +203,7 @@ function Gastos(){
                     }
                     else{
                     
-                    setDetalle([])
+                      setGastos([])
                     
                     }
                 
