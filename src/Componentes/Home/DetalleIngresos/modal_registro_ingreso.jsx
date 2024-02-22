@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {Button,Form,Input,InputNumber,Select,Radio,Modal } from 'antd';
+import {Button,Form,Input,InputNumber,Select,Radio,Modal,Typography,notification } from 'antd';
 import {DatePicker } from 'antd';
 import Generarpeticion from '../../../peticiones/apipeticiones';
 import dayjs from 'dayjs';
@@ -8,6 +8,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Navigate, useNavigate } from "react-router-dom";
 import Handelstorage from '../../../Storage/handelstorage';
 
+import { WarningOutlined} from '@ant-design/icons';
 const formItemLayout = {
     labelCol: {
       xs: {
@@ -27,7 +28,8 @@ const formItemLayout = {
     },
   };
  
-  
+
+const { Text } = Typography;
 
 function ModalRegistroIngreso({
   openregistroingreso,setOpenregistroingreso,setDataingresos,setDataresumen,
@@ -56,6 +58,8 @@ function ModalRegistroIngreso({
     const [modoactualizacioningreso,setModoactualizacioningreso]=useState(false)
     const [marcaradiobuttoningreso,serMarcaradiobuttoningreso]=useState('0')
     const [tituloingreso,setTituloingreso]=useState('')
+
+    
 
 
     const cargarvaloresdefault=(fijo_list,ocacionales_list)=>{
@@ -205,7 +209,7 @@ function ModalRegistroIngreso({
           };
           const endpoint='RegistroIngreso/'
           const result = await Generarpeticion(endpoint, 'POST', datosregistrar);
-          
+          console.log(result)
           const respuesta=result['resp']
           if (respuesta === 200) {
             await new Promise(resolve => setTimeout(resolve, 2000))
@@ -225,13 +229,24 @@ function ModalRegistroIngreso({
             
             setOpenregistroingreso(false)
             
-          } else if(respuesta === 403 || respuesta === 401){
-            
-            navigate('/Closesesion')
+          } else if(respuesta === 403 || respuesta === 401){navigate('/Closesesion')
+          }else {
+            console.log('disparar mensaje de error')
+            console.log(result['data']['error'])
+            mostrarmensajeerror('top',result['data']['error'])
+          }
+    };
 
-        }
-        };
-    
+    const mostrarmensajeerror = (placement,mensaje) => {
+          api.open({
+              message: 'ERROR',
+              description: ` ${mensaje}`,
+              placement,
+              icon: (<WarningOutlined style={{color: 'red',}}/>
+              ),
+            });
+          };
+    const [api, contextHolder] = notification.useNotification();
     const formatearValor = (value) => {
       // Formatear el valor con separadores de miles
       return value ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '';
@@ -245,7 +260,7 @@ function ModalRegistroIngreso({
     if(ready){
       return(
           <div >
-
+             
               <Modal
               
               open={open}
@@ -268,7 +283,10 @@ function ModalRegistroIngreso({
                   maxWidth: 600,
                   }}
               >   
+                  <Form.Item>
 
+                   {contextHolder}
+                  </Form.Item>
                   <Form.Item label="Cod Ingreso"name="CodIngreso">
                            
                            <InputNumber 
