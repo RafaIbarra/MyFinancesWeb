@@ -31,5 +31,14 @@
     font-style: italic;
     font-weight: bold;
     padding-left: 10px;
+    color: black;
 
+  }
+
+  .contenedor-drow{
+    background-color: var(--color-botonesContenedores);
+    height:50px;
+    display: flex;
+    align-items: center;
+    width: 7%;
   }

@@ -7,8 +7,11 @@ const ComprobarStorage=()=>{
 
     if (tokenstorage) {
         // return true
+        console.log('el user name :')
+        datosstarage['user_name']
         return {
             datosesion:true,
+
             user_name:datosstarage['user_name']
         }
     } else {

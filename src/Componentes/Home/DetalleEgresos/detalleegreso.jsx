@@ -5,6 +5,7 @@ import ModalEliminarEgreso from './modal_eliminar_egreso';
 import ModalRegistroEgreso from './modal_registro_egreso';
 import './detalleegreso.css'
 import FormItem from 'antd/es/form/FormItem';
+import Resumengrafico from '../Resumen/resumengrafico';
 
 
 const { Text } = Typography;
@@ -100,26 +101,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
        
         const cargardatos =  () => {
             setSelectedRowKeys([])
-            // if(selectedRowKeys.length > 0){
-            //   setErroreliminacion(false)
-            // }else{
-            //   setErroreliminacion(true)
-            // }
-
             
-            // if(selectedRowKeys.length ===1){
-          
-            //   setErrorcantidadunica(false)
-            // }else{
-              
-            //     setErrorcantidadunica(true)
-            //     if(selectedRowKeys.length > 1){
-            //       setMesajecantidadunica('solo debe seleccionar un registro.')
-            //     }
-            //     else{
-            //       setMesajecantidadunica('seleccione el registro')
-            //     }
-            //  }
             setErroreliminacion(true)
             setErrorcantidadunica(true)
             setMesajecantidadunica('seleccione el registro')
@@ -219,11 +201,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
       };
 
     const eliminar=()=>{
-        
-          setOpeneliminaregreso(true)
-        
-        
-        
+        setOpeneliminaregreso(true)
       }
 
     const actualizar=()=>{
@@ -258,8 +236,6 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
       setModoedicion(false)
       }
 
- 
-
     const handleOk = () => {
         setConfirmLoading(true);
         setTimeout(() => {
@@ -276,85 +252,81 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
       };
       
     return(
-        <div>
+        <div className='contenedor-tab-egresos'>
             {contextHolder}
-            
+            <div className='contenedor-tabla-egresos'>
+
               <Table 
-                rowSelection={rowSelection} 
-                scroll={{y: 400,}}
-                columns={columns} 
-                size="small"
-                dataSource={detalle} 
-                pagination={false}
-                bordered
-                
-              
+                  rowSelection={rowSelection} 
+                  scroll={{y: 400,}}
+                  columns={columns} 
+                  size="small"
+                  dataSource={detalle} 
+                  pagination={false}
+                  bordered 
               />
-            
-            
+          
+              <div className='contenedor-resumen'>
+                  <FormItem >
+                    <Text strong>CANTIDAD REGISTROS: </Text>
+                    <Text strong>   {Number(canttotalegreso).toLocaleString('es-ES')}</Text>
+                      
+                  </FormItem>
 
+                  <FormItem >
+                      <Text strong>TOTAL EGRESOS: </Text>
+                      <Text strong>GS. {Number(montototalegreso).toLocaleString('es-ES')}</Text>
+                      
+                  </FormItem>
 
-
-            <div className='contenedor-resumen'>
-                <FormItem >
-                  <Text strong>CANTIDAD REGISTROS: </Text>
-                  <Text strong>   {Number(canttotalegreso).toLocaleString('es-ES')}</Text>
-                    
-                </FormItem>
-
-                <FormItem >
-                    <Text strong>TOTAL EGRESOS: </Text>
-                    <Text strong>GS. {Number(montototalegreso).toLocaleString('es-ES')}</Text>
-                    
-                </FormItem>
-
-            </div>
-            <div className='contenedor-flex'>
-               <Button type="primary" 
-                        icon={<CheckOutlined /> } 
-                        onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
-                        > 
-                        
-                      Detalle
-                </Button>
-
+              </div>
+              <div className='contenedor-flex-botonera'>
                 <Button type="primary" 
-                    icon={<DeleteOutlined/>} 
-                    danger 
-                    onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
-                    > 
-                    Eliminar 
-                </Button>
-                    
-                <Button type="primary" 
-                        icon={<RetweetOutlined/> } 
-                        onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
-                        > 
-                        
-                        Actualizar
-                </Button>
+                          icon={<CheckOutlined /> } 
+                          onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
+                          > 
+                          
+                        Detalle
+                  </Button>
 
-                <Button type="primary" icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
-                
-                
-                {openeliminaregreso &&( <ModalEliminarEgreso openeliminaregreso={openeliminaregreso} 
-                                                    setOpeneliminaregreso={setOpeneliminaregreso} 
-                                                    setDataegresos={setDataegresos} 
-                                                    setDataresumen={setDataresumen} 
-                                                    selectedRowKeys={selectedRowKeys} 
-                                      ></ModalEliminarEgreso>)}
+                  <Button type="primary" 
+                      icon={<DeleteOutlined/>} 
+                      danger 
+                      onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
+                      > 
+                      Eliminar 
+                  </Button>
+                      
+                  <Button type="primary" 
+                          icon={<RetweetOutlined/> } 
+                          onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
+                          > 
+                          
+                          Actualizar
+                  </Button>
 
-                {openregistroegreso &&( <ModalRegistroEgreso openregistroegreso={openregistroegreso} 
-                                            setOpenregistroegreso={setOpenregistroegreso} 
-                                            setDataegresos={setDataegresos} 
-                                            setDataresumen={setDataresumen}
-                                            detalleseleccion={detalleseleccion}
-                                            modoedicion={modoedicion}
-                                          ></ModalRegistroEgreso>)}
-                
+                  <Button type="primary" icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
+                  
+                  
+                  {openeliminaregreso &&( <ModalEliminarEgreso openeliminaregreso={openeliminaregreso} 
+                                                      setOpeneliminaregreso={setOpeneliminaregreso} 
+                                                      setDataegresos={setDataegresos} 
+                                                      setDataresumen={setDataresumen} 
+                                                      selectedRowKeys={selectedRowKeys} 
+                                        ></ModalEliminarEgreso>)}
+
+                  {openregistroegreso &&( <ModalRegistroEgreso openregistroegreso={openregistroegreso} 
+                                              setOpenregistroegreso={setOpenregistroegreso} 
+                                              setDataegresos={setDataegresos} 
+                                              setDataresumen={setDataresumen}
+                                              detalleseleccion={detalleseleccion}
+                                              modoedicion={modoedicion}
+                                            ></ModalRegistroEgreso>)}
+                  
+              </div>
             </div>
            
-
+            <Resumengrafico></Resumengrafico>
         </div>
     )
 

@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 
-import { HomeOutlined,SwapOutlined,
-        DiffOutlined,SoundOutlined,InteractionOutlined,FileUnknownOutlined,CheckOutlined,RightOutlined,UserOutlined  } 
-      from '@ant-design/icons';
+import { HomeOutlined,SwapOutlined,DiffOutlined,SoundOutlined,InteractionOutlined,
+        FileUnknownOutlined,CheckOutlined,RightOutlined,UserOutlined,DownOutlined   
+      } from '@ant-design/icons';
 
-import { Button,Menu,message, Space   } from 'antd';
+import { Button,Menu,message, Space,Dropdown   } from 'antd';
 import { Navigate, useNavigate } from "react-router-dom";
 import './NavBar.css'
+import Handelstorage
+ from '../../Storage/handelstorage';
 // import logoCoop from '../../assets/logoCoop.png';
 // import ConsultaDatosUser from '../Usuario/ConsultaDatosUser';
 const tamaño='13px'
 const tamañosub='12px'
+
 const navegaciones={
   'Logo':'/my-resumenCuentas',
   'Inicio':'/Home',
@@ -27,206 +30,86 @@ const navegaciones={
 
 }
 
-
-
-
-
-
 function NavBar({sesionname}){
-  const items = [
-    {
-      label:(
-        <div className='nombreuser'>
-          <UserOutlined style={{ fontSize: '20px',marginRight:'10px' }}/>
-          {sesionname}</div>
-      ),
-      key:"User",
-      
+    const navigate=useNavigate()
+    const cerrarsesion=(event)=>{
+      Handelstorage('borrar')
+      navigate('/')
     }
-    ,
-    // {
-    //   label:(
-    //     <img src={logoCoop} alt="Logo" className="h-12 w-auto" />
-    //   ),
-    //   key:"Logo"
-    // },
-    {
-      label: "Inicio",
-      key:"Inicio",
-      icon:<HomeOutlined style={{ fontSize: tamaño }}/>,      
-    },
-    // {
-    //   label: "Movimientos",
-    //   key: 'SubMenu2',
-    //   icon: <SwapOutlined style={{ fontSize: tamaño }}/>,
-    //   children:[
-    //     {
-    //       label: 'Egresos',
-    //       key: 'Egresos',
-    //        icon: <RightOutlined style={{ fontSize: tamañosub }}/>,           
-    //     },
-    //     {
-    //       label: 'Ingresos',
-    //       key: 'Aterceros',
-    //        icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-    //     },
-    //   ],      
-    // },
-    // {
-    //   label: "Servicios/Pagos",
-    //   key: 'SubMenu3',
-    //   icon: <DiffOutlined style={{ fontSize: tamaño }}/>,
-    //   children:[
-
-    //     {
-    //       type:'group',
-    //       label: 'Cuotas Sociales',
-    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-    //       children:[
-    //         {
-    //           label: 'Pago Aporte',
-    //           key: 'PagoAporte',
-    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-    //         },
-    //         {
-    //           label: 'Solidaridad',
-    //           key: 'Solidaridad',
-    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-    //         },
-    //         {
-    //           label: 'Sede Social',
-    //           key: 'SedeSocial',
-    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-    //         },
-    //       ]
-    //     }
-    //     ,
-    //     {
-    //       label: 'Préstamo',
-    //       key: 'Prestamo',
-    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-    //     },
-    //     {
-    //       label: 'Tarjeta de Crédito',
-    //       key: 'TarjetaCredito',
-    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-    //     },
-    //     ,
-    //     {
-    //       label: 'Cuenta Colegio',
-    //       key: 'CuentaColegio',
-    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-    //     },
-
-    //   ]
-    // }
-    ,
-
-
-    {
-      label: "Conceptos",
-      key:"AutoGestiones",
-      icon:<InteractionOutlined style={{ fontSize: tamaño }}/>,
-     
-      children:[
+    const items = [
+      {
+        label: <a href="https://www.antgroup.com">1st menu item</a>,
+        key: '0000',
+      },
+      {
+        label: <a href="https://www.aliyun.com">2nd menu item</a>,
+        key: '11111',
+      },
+      {
+        type: 'divider',
+      },
+      {
+        label: (
+          <Button type='primary' danger style={{width:'100%',height:'100%'}} onClick={cerrarsesion} > CERRAR SESION </Button>
+        ),
+        key: '333333',
         
-        {
-          label: 'Conceptos de Ingresos',
-          key: 'Productos',
-          icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-         
-        },
-        {
-          label: 'Conceptos de Egresos',
-          key: 'Gastos',
-          icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-         
-        }
-        ,
-        
-        // {
-        //   label: 'Solcitar Tarjeta de Crédito',
-        //   key: 'SolcitarTarjetaCredito',
-        //   icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-         
-        // },
-        // {
-        //   label: 'Solicitar Tarjeta de Débito',
-        //   key: 'SolicitarTarjetaDébito',
-        //   icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+      },
+      ];
 
-        // }
-        // ,
-        
 
+    const itemsmenu = [
+      
+    
+      {
+        label: "Inicio",
+        
+        key:"Inicio",
+        icon:<HomeOutlined style={{ fontSize: '25px',marginTop:'12px' }}/>,      
+      },
+      
+      ,
+
+
+      {
+        label: "Conceptos",
+        key:"AutoGestiones",
+        icon:<InteractionOutlined style={{ fontSize: tamaño }}/>,
+      
+        children:[
+          
+          {
+            label: 'Conceptos de Ingresos',
+            key: 'Productos',
+            icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+          
+          },
+          {
+            label: 'Conceptos de Egresos',
+            key: 'Gastos',
+            icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+          
+          }
+          ,
+          
+          
+          
+
+        ]
+
+      }
+      ,
+      
+      
       ]
 
-    }
-    ,
-    // {
-    //   label: "Consultas",
-    //   key:"Consultas",
-    //   icon:<FileUnknownOutlined style={{ fontSize: tamaño }}/>,
-    //   children:[
-
-    //     {
-    //       type:'group',
-    //       label: 'Comprobantes',
-    //       children:[
-    //         {
-    //           label: 'Facturas',
-    //           key: 'Facturas',
-    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-    //         },
-           
-    //       ]
-    //     },
-    //     {
-    //       type:'group',
-    //       label: 'Consultas',
-    //       children:[
-    //         {
-    //           label: 'Padrón',
-    //           key: 'Padron',
-    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-    //         },
-    //         {
-    //           label: 'Excedentes',
-    //           key: 'Excedentes',
-    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-    //         },
-    //         {
-    //           label: 'Extracto de tarjetas',
-    //           key: 'Extractotarjetas',
-    //           icon: <CheckOutlined style={{ fontSize: tamañosub }}/>
-    //         },
-           
-    //       ]
-    //     },
-    //     {
-    //       label: 'Promociones',
-    //       key: 'Promociones',
-    //       icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
-    //     }
-
-    //   ]
-    // }
-    // ,
-    // {
-    //   label: "RegistroGasto",
-    //   key:"RegistroGasto",
-    //   icon:<HomeOutlined style={{ fontSize: tamaño }}/>,
-      
-    // }
-    // ,
-    
-]
-
 
     
-    const navigate=useNavigate()
+    
     const [current, setCurrent] = useState('mail');
     const [messageApi, contextHolder] = message.useMessage();
+
+    
 
     const error = () => {
       messageApi.open({
@@ -265,7 +148,29 @@ function NavBar({sesionname}){
         </div> */}
 
         {contextHolder}
-        <Menu  onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}  className="navbarant navbarantItem" style={{ width: '75%' }} />
+        <Menu  onClick={onClick} selectedKeys={[current]} mode="horizontal" items={itemsmenu}  className="navbarant navbarantItem" style={{ width: '93%' }} />
+        <div className='contenedor-drow'>
+
+            <Dropdown
+            menu={{
+              items,
+            }}
+            placement="bottomRight"
+            trigger={['click']}
+            
+          >
+            <a onClick={(e) => e.preventDefault()} className='nombreuser' >
+              <Space>
+              {sesionname}
+                <UserOutlined />
+              </Space>
+            </a>
+          </Dropdown>
+
+        </div>
+
+
+
 
         {/* <div>
           {username}

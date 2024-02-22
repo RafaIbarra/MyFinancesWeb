@@ -1,20 +1,6 @@
-/* .custom-table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  .custom-table th, .custom-table td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  .custom-table tfoot td {
-    border-top: 2px solid #dddddd;
-  } */
 
 
-.contenedor-flex {
+.contenedor-flex-botonera {
     display: flex;
     gap: 20px;
     margin-top: 5px;
@@ -23,7 +9,18 @@
     width: '100%';
   }
 
-
+.contenedor-tabla-egresos{
+  
+    width: 75%;
+  }
+  
+.contenedor-tab-egresos{
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+    
+    width: '100%';
+  }
 
 
 .contenedor-resumen {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Resumen from './Resumen/resumenv2';
+import Resumen from './Resumen/resumen';
 import DetalleEgreso from './DetalleEgresos/detalleegreso';
 import DetalleIngreso from './DetalleIngresos/detalleingreso';
 import Generarpeticion from '../../peticiones/apipeticiones';
@@ -71,24 +71,26 @@ function Home (){
                 
               ></HomeCabecera>
               
-            
-            <Tabs
-                defaultActiveKey="homeresumen"
-                id="uncontrolled-tab-example"
-                className="mb-3"
-                // onClick={tab_resumen}
-              >
-                <Tab eventKey="homeresumen" title="Resumen Movimientos" >
+            <div style={{marginLeft:'20px',marginRight:'10px'}}>
 
-                  {cargaconfirmada &&(<Resumen dataresumen={dataresumen}   ></Resumen>)}
-                </Tab>
-                <Tab eventKey="homeingresos" title="Detalle de Ingresos">
-                  {cargaconfirmada &&(<DetalleIngreso dataingresos={dataingresos} setDataingresos={setDataingresos} setDataresumen={setDataresumen}></DetalleIngreso>)}
-                </Tab>
-                <Tab eventKey="homeegresos" title="Detalle de Egresos" >
-                  {cargaconfirmada &&( <DetalleEgreso dataegresos={dataegresos} setDataegresos={setDataegresos} setDataresumen={setDataresumen} ></DetalleEgreso>)}
-                </Tab>
-            </Tabs>
+              <Tabs
+                  defaultActiveKey="homeresumen"
+                  id="uncontrolled-tab-example"
+                  className="mb-3"
+                  // onClick={tab_resumen}
+                >
+                  <Tab eventKey="homeresumen" title="Resumen Movimientos" >
+
+                    {cargaconfirmada &&(<Resumen dataresumen={dataresumen}   ></Resumen>)}
+                  </Tab>
+                  <Tab eventKey="homeingresos" title="Detalle de Ingresos">
+                    {cargaconfirmada &&(<DetalleIngreso dataingresos={dataingresos} setDataingresos={setDataingresos} setDataresumen={setDataresumen}></DetalleIngreso>)}
+                  </Tab>
+                  <Tab eventKey="homeegresos" title="Detalle de Egresos" >
+                    {cargaconfirmada &&( <DetalleEgreso dataegresos={dataegresos} setDataegresos={setDataegresos} setDataresumen={setDataresumen} ></DetalleEgreso>)}
+                  </Tab>
+              </Tabs>
+            </div>
             
         </div>
     )

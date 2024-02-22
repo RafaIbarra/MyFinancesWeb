@@ -3,7 +3,7 @@ import { Button, Table, Typography,notification } from 'antd';
 import { DeleteOutlined,RetweetOutlined,PlusCircleTwoTone,CheckOutlined,WarningOutlined} from '@ant-design/icons';
 import ModalEliminarIngreso from './modal_eliminar_ingreso';
 import ModalRegistroIngreso from './modal_registro_ingreso';
-
+import Resumengrafico from '../Resumen/resumengrafico';
 import './detalleingreso.css'
 import FormItem from 'antd/es/form/FormItem';
 const { Text } = Typography;
@@ -194,79 +194,81 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
       }, 2000);
     };
     return(
-        <div>
-            {contextHolder}
-            <Table 
-              rowSelection={rowSelection} 
-              scroll={{y: 400,}}
-              size="small"
-              columns={columns} 
-              dataSource={detalle} 
-              pagination={false}
-              bordered
-            />
+        <div className='contenedor-tab-ingresos'>
+          <div className='contenedor-tabla-ingresos'>
 
-            <div className='contenedor-resumen'>
-                <FormItem >
-                  <Text strong>CANTIDAD REGISTROS: </Text>
-                  <Text strong>   {Number(canttotalingreso).toLocaleString('es-ES')}</Text>
-                    
-                </FormItem>
+              {contextHolder}
+              <Table rowSelection={rowSelection} 
+                scroll={{y: 400,}}
+                size="small"
+                columns={columns} 
+                dataSource={detalle} 
+                pagination={false}
+                bordered
+              />
 
-                <FormItem >
-                    <Text strong>TOTAL INGRESOS: </Text>
-                    <Text strong>GS. {Number(montototalingreso).toLocaleString('es-ES')}</Text>
-                    
-                </FormItem>
+              <div className='contenedor-resumen'>
+                  <FormItem >
+                    <Text strong>CANTIDAD REGISTROS: </Text>
+                    <Text strong>   {Number(canttotalingreso).toLocaleString('es-ES')}</Text>
+                      
+                  </FormItem>
 
-            </div>
+                  <FormItem >
+                      <Text strong>TOTAL INGRESOS: </Text>
+                      <Text strong>GS. {Number(montototalingreso).toLocaleString('es-ES')}</Text>
+                      
+                  </FormItem>
 
-            <div className='contenedor-flex'>
+              </div>
 
-                <Button type="primary" 
-                        icon={<CheckOutlined /> } 
-                        onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
-                        > Detalle
-                </Button>
+              <div className='contenedor-flex-botonera'>
 
-                <Button type="primary" 
-                        icon={<DeleteOutlined/>} 
-                        danger 
-                        
-                        onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
-                        > 
-                        Eliminar 
-                </Button>
-                    
-                <Button type="primary" 
-                        icon={<RetweetOutlined/> }  
-                        onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
-                        >
-                          Actualizar
-                </Button>
+                  <Button type="primary" 
+                          icon={<CheckOutlined /> } 
+                          onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
+                          > Detalle
+                  </Button>
 
-                <Button type="primary" icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
+                  <Button type="primary" 
+                          icon={<DeleteOutlined/>} 
+                          danger 
+                          
+                          onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
+                          > 
+                          Eliminar 
+                  </Button>
+                      
+                  <Button type="primary" 
+                          icon={<RetweetOutlined/> }  
+                          onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
+                          >
+                            Actualizar
+                  </Button>
 
-                
-                {openeliminaringreso &&( <ModalEliminarIngreso 
-                                        openeliminaringreso={openeliminaringreso}
-                                        setOpeneliminaringreso={setOpeneliminaringreso}
-                                        setDataingresos={setDataingresos}
-                                        selectedRowKeys={selectedRowKeys}
-                                        setDataresumen={setDataresumen} 
-                                      ></ModalEliminarIngreso>)}
+                  <Button type="primary" icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
 
-                {openregistroingreso &&( <ModalRegistroIngreso 
-                                          openregistroingreso={openregistroingreso} 
-                                          setOpenregistroingreso={setOpenregistroingreso} 
+                  
+                  {openeliminaringreso &&( <ModalEliminarIngreso 
+                                          openeliminaringreso={openeliminaringreso}
+                                          setOpeneliminaringreso={setOpeneliminaringreso}
                                           setDataingresos={setDataingresos}
-                                          setDataresumen={setDataresumen}
-                                          detalleseleccioningreso={detalleseleccioningreso}
-                                          modoedicioningreso={modoedicioningreso}
-                                          ></ModalRegistroIngreso>)}
-                
-            </div>
+                                          selectedRowKeys={selectedRowKeys}
+                                          setDataresumen={setDataresumen} 
+                                        ></ModalEliminarIngreso>)}
 
+                  {openregistroingreso &&( <ModalRegistroIngreso 
+                                            openregistroingreso={openregistroingreso} 
+                                            setOpenregistroingreso={setOpenregistroingreso} 
+                                            setDataingresos={setDataingresos}
+                                            setDataresumen={setDataresumen}
+                                            detalleseleccioningreso={detalleseleccioningreso}
+                                            modoedicioningreso={modoedicioningreso}
+                                            ></ModalRegistroIngreso>)}
+                  
+              </div>
+          </div>
+              <Resumengrafico></Resumengrafico>
         </div>
     )
 

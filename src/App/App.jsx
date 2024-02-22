@@ -48,7 +48,7 @@ return(
         <div style={ Estadologin ? {  display: 'flex', flexDirection: 'column' }: null}>
         {Estadologin && (<NavBar sesionname={sesionname}/>)}
             <div style={ Estadologin ?{ display: 'flex', flexDirection: 'row' }: null}>
-                {Estadologin && (<NabarHor />)}
+                {/* {Estadologin && (<NabarHor />)} */}
                 <Routes>
                     <Route path="/" element={<Login activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname} />} />
                     <Route path="/Registro" element={<RegistroUsuario activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname}/>} />
