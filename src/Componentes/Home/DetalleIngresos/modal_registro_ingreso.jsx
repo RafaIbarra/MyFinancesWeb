@@ -209,7 +209,7 @@ function ModalRegistroIngreso({
           };
           const endpoint='RegistroIngreso/'
           const result = await Generarpeticion(endpoint, 'POST', datosregistrar);
-          console.log(result)
+          
           const respuesta=result['resp']
           if (respuesta === 200) {
             await new Promise(resolve => setTimeout(resolve, 2000))
@@ -231,8 +231,7 @@ function ModalRegistroIngreso({
             
           } else if(respuesta === 403 || respuesta === 401){navigate('/Closesesion')
           }else {
-            console.log('disparar mensaje de error')
-            console.log(result['data']['error'])
+            
             mostrarmensajeerror('top',result['data']['error'])
           }
     };

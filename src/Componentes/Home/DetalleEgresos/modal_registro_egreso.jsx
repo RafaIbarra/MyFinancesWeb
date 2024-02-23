@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 
-import {Button,Form,Input,InputNumber,Select,Radio,Modal } from 'antd';
+import {Button,Form,Input,InputNumber,Select,Radio,Modal,Typography,notification } from 'antd';
 import {DatePicker } from 'antd';
 import Generarpeticion from '../../../peticiones/apipeticiones';
 import dayjs from 'dayjs';
+import { WarningOutlined} from '@ant-design/icons';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Navigate, useNavigate } from "react-router-dom";
 import Handelstorage from '../../../Storage/handelstorage';
@@ -27,6 +28,7 @@ const formItemLayout = {
   };
  
   
+const { Text } = Typography;
 
 function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataegresos,
   setDataresumen,detalleseleccion,modoedicion}){
@@ -211,7 +213,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
           if (respuesta === 200) {
             const registros=result['data']
 
-            console.log(registros['Egresos'][0])
+            
             
             const mes = registros['Egresos'][0].MesEgreso;
             const año = registros['Egresos'][0].AnnoEgreso;
@@ -232,8 +234,22 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
             
             navigate('/Closesesion')
 
-        }
+          }else {
+            
+            mostrarmensajeerror('top',result['data']['error'])
+          }
        };
+
+  const mostrarmensajeerror = (placement,mensaje) => {
+        api.open({
+            message: 'ERROR',
+            description: ` ${mensaje}`,
+            placement,
+            icon: (<WarningOutlined style={{color: 'red',}}/>
+            ),
+          });
+        };
+  const [api, contextHolder] = notification.useNotification();
 
 
   if(ready){
@@ -270,7 +286,9 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
                        }}
                    >   
  
-                      
+                      <Form.Item>
+                      {contextHolder}
+                      </Form.Item>
                       <Form.Item label="Cod Egreso"name="CodEgreso">
                            
                            <InputNumber 
