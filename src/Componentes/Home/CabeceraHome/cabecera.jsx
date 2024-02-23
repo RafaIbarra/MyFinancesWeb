@@ -112,47 +112,48 @@ function HomeCabecera ({cargarresumen,setCargarresumen}){
 
       if(terminacarga){
         return(
-        
+          <div>
+
             <div className='contenedor-flex'>
-    
-    
-                      
-                      <FormItem label="Año">
-    
-                        <InputNumber
-                                
-                                defaultValue={anno}
-                                onChange={seleccionaranno}
-                                style={{
-                                width: '100%',
-                                }}
-                            />
-                      </FormItem>
-    
-                      <FormItem label="Mes">
-    
-                        <Select name='listameses'
-                          style={{ width: 200 }}
-                          defaultValue={mesdefault}
+  
+                <FormItem label="Año">
+
+                  <InputNumber
                           
-                          onChange={seleccionarmes}
-                        >
-                              
-                              {meses &&  meses.map((g) => (
-                                  <Select.Option key={g.numero_mes} value={g.numero_mes}>
-                                      {g.nombre_mes}
-                                  </Select.Option>
-                              ))}
-                        </Select>
-                      </FormItem>
-                      
-                      <Button type="primary" onClick={procesar}>Cargar Datos</Button>
-                       
-    
-    
+                          defaultValue={anno}
+                          onChange={seleccionaranno}
+                          style={{
+                          width: '100%',
+                          }}
+                      />
+                </FormItem>
+
+                <FormItem label="Mes">
+
+                  <Select name='listameses'
+                    style={{ width: 200 }}
+                    defaultValue={mesdefault}
                     
+                    onChange={seleccionarmes}
+                  >
+                        
+                        {meses &&  meses.map((g) => (
+                            <Select.Option key={g.numero_mes} value={g.numero_mes}>
+                                {g.nombre_mes}
+                            </Select.Option>
+                        ))}
+                  </Select>
+                </FormItem>
+                
+                <Button type="primary" onClick={procesar}>Cargar Datos</Button>    
+                    
+                
+            
             </div>
-    
+
+            
+
+          </div>
             
             
         )

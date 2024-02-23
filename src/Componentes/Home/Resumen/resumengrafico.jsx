@@ -52,22 +52,22 @@ function Resumengrafico({mes,anno}){
         <div className='contenedor-imagen'>
                 <h4 className='titulografico' > Relacion Ingreso-Egresos </h4> 
                 
-                <Image
+                {/* <Image
                     src={`data:image/png;base64,${imagen}`}
                     width={'180%'}
                     height={'100%'}
                     style={{marginLeft:'-20%',marginTop:'-2.5%' } }
                     
-                />
+                /> */}
         
     
 
-                {/* <img 
+                <img 
                 src={`data:image/png;base64,${imagen}`}
                 alt="Descripción de la imagen"
                 
                 className="img-resumen"
-              /> */}
+              />
         
       </div>
 

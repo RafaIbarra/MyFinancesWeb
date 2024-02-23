@@ -283,6 +283,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
                        variant="filled"
                        style={{
                        maxWidth: 600,
+                       marginTop:'-35px'
                        }}
                    >   
  

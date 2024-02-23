@@ -71,7 +71,7 @@ function Home (){
                 
               ></HomeCabecera>
               
-            <div style={{marginLeft:'20px',marginRight:'10px'}}>
+            <div className='hometabs'>
 
               <Tabs
                   defaultActiveKey="homeresumen"
@@ -90,6 +90,7 @@ function Home (){
                     {cargaconfirmada &&( <DetalleEgreso dataegresos={dataegresos} setDataegresos={setDataegresos} setDataresumen={setDataresumen} ></DetalleEgreso>)}
                   </Tab>
               </Tabs>
+              
             </div>
             
         </div>

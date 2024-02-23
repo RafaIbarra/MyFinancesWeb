@@ -157,9 +157,6 @@ function ModalRegistroIngreso({
       }, []);
 
 
-
-
-
     const tipoproducto=(event)=>{
         setProductosel(null)
         setProductosel(0)
@@ -280,6 +277,7 @@ function ModalRegistroIngreso({
                   variant="filled"
                   style={{
                   maxWidth: 600,
+                  marginTop:'-30px'
                   }}
               >   
                   <Form.Item>

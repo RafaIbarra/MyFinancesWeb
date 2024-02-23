@@ -62,9 +62,10 @@ function NavBar({sesionname}){
       
     
       {
-        label: "Inicio",
+        label: (<p style={{fontSize:'20px',marginTop:'-50px',marginLeft:'30px'}} >Inicio</p>),
+        // label:'Inicio',
         
-        key:"Inicio",
+        key: 'Inicio',
         icon:<HomeOutlined style={{ fontSize: '25px',marginTop:'12px' }}/>,      
       },
       
