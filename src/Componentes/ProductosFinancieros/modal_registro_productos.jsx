@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Button,Form,Input,InputNumber,Radio,Modal } from 'antd';
+import {Button,Form,Input,InputNumber,Radio,Modal,Typography,notification } from 'antd';
 import Generarpeticion from '../../peticiones/apipeticiones';
 import { Navigate, useNavigate } from "react-router-dom";
-
+import { WarningOutlined} from '@ant-design/icons';
 
 const formItemLayout = {
     labelCol: {
@@ -22,7 +22,7 @@ const formItemLayout = {
       },
     },
   };
-
+const { Text } = Typography;
 function ModalRegistroProducto({
     openregistroproducto,setOpenregistroproducto,setProductos,
     detalleseleccionproducto,modoedicionproducto,
@@ -138,8 +138,22 @@ function ModalRegistroProducto({
             
             navigate('/Closesesion')
 
+        }else {
+            
+            mostrarmensajeerror('top',result['data']['error'])
         }
       };
+
+    const mostrarmensajeerror = (placement,mensaje) => {
+        api.open({
+            message: 'ERROR',
+            description: ` ${mensaje}`,
+            placement,
+            icon: (<WarningOutlined style={{color: 'red',}}/>
+            ),
+            });
+        };
+    const [api, contextHolder] = notification.useNotification();
 
     useEffect(() => {
     
@@ -181,7 +195,10 @@ function ModalRegistroProducto({
                             maxWidth: 600,
                             }}
                         >   
+                            <Form.Item>
 
+                                {contextHolder}
+                            </Form.Item>
                             <Form.Item label="Cod Producto"name="CodProducto">
                                     
                                     <InputNumber 

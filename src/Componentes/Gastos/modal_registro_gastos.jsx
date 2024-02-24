@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Button,Form,Input,InputNumber,Radio,Modal } from 'antd';
+import {Button,Form,Input,InputNumber,Radio,Modal,Typography,notification } from 'antd';
 import Generarpeticion from '../../peticiones/apipeticiones';
 import { Navigate, useNavigate } from "react-router-dom";
-
+import { WarningOutlined} from '@ant-design/icons';
 const formItemLayout = {
     labelCol: {
       xs: {
@@ -21,7 +21,7 @@ const formItemLayout = {
       },
     },
   };
-
+const { Text } = Typography;
 function ModalRegistroGasto({
     openregistrogasto,setOpenregistrogasto,
     detalleselecciongasto,modoediciongasto,
@@ -140,8 +140,22 @@ function ModalRegistroGasto({
             
             navigate('/Closesesion')
 
-        }
+        }else {
+            
+            mostrarmensajeerror('top',result['data']['error'])
+          }
+    };
+
+    const mostrarmensajeerror = (placement,mensaje) => {
+        api.open({
+            message: 'ERROR',
+            description: ` ${mensaje}`,
+            placement,
+            icon: (<WarningOutlined style={{color: 'red',}}/>
+            ),
+            });
         };
+    const [api, contextHolder] = notification.useNotification();
 
     useEffect(() => {
 
@@ -182,7 +196,10 @@ function ModalRegistroGasto({
                         maxWidth: 600,
                         }}
                     >   
+                        <Form.Item>
 
+                            {contextHolder}
+                        </Form.Item>
                         <Form.Item label="Cod Gasto"name="CodGasto">
                                 
                                 <InputNumber 
