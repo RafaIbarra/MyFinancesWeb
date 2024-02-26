@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Table,Typography,notification,Space    } from 'antd';
 import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone,WarningOutlined,InfoOutlined,CheckOutlined } from '@ant-design/icons';
-import ModalEliminarEgreso from './modal_eliminar_egreso';
-import ModalRegistroEgreso from './modal_registro_egreso';
-import './detalleegreso.css'
 import FormItem from 'antd/es/form/FormItem';
-import GraficoEgresoso from './graficoegresos';
+import './detalleegreso.css'
+
+import ModalEliminarEgreso from './Modales/modal_eliminar_egreso'
+import ModalRegistroEgreso from './Modales/modal_registro_egreso';
+import GraficoEgresoso from './Grafico/graficoegresos';
 
 
 const { Text } = Typography;
@@ -259,6 +260,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
               <Table 
                   rowSelection={rowSelection} 
                   scroll={{y: 400,}}
+                  style={{height:'450px'}}
                   columns={columns} 
                   size="small"
                   dataSource={detalle} 
@@ -326,7 +328,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
               </div>
             </div>
            
-            <GraficoEgresoso></GraficoEgresoso>
+            <GraficoEgresoso dataegresos={dataegresos}></GraficoEgresoso>
         </div>
     )
 

@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 
-import { HomeOutlined,SwapOutlined,DiffOutlined,SoundOutlined,InteractionOutlined,
-        FileUnknownOutlined,CheckOutlined,RightOutlined,UserOutlined,DownOutlined   
+import { HomeOutlined,SwapOutlined,DiffOutlined,SoundOutlined,InteractionOutlined,BarChartOutlined,
+        FileUnknownOutlined,CheckOutlined,RightOutlined,UserOutlined,DownOutlined,FallOutlined,RiseOutlined
       } from '@ant-design/icons';
 
 import { Button,Menu,message, Space,Dropdown   } from 'antd';
 import { Navigate, useNavigate } from "react-router-dom";
+
+import { Avatar } from 'antd';
+
 import './NavBar.css'
 import Handelstorage
  from '../../Storage/handelstorage';
 // import logoCoop from '../../assets/logoCoop.png';
 // import ConsultaDatosUser from '../Usuario/ConsultaDatosUser';
-const tamaño='13px'
-const tamañosub='12px'
+
+const tamañoletra='15px'
+const margenleft='30px'
+const margentop='-50px'
+const tamañoicono='25px'
+const tamañosubicono='15px'
+const margentopicono='12px'
 
 const navegaciones={
-  'Logo':'/my-resumenCuentas',
+
   'Inicio':'/Home',
   'Egresos':'/RegistroEgreso',
-  'Productos':'/Productos',
-  'Gastos':'/Gastos',
-  'SedeSocial':'/my-pagoSedeSocial',
-  'Prestamo':'/my-pagosPrestamos',
-  'TarjetaCredito':'/my-pagoTarjetas',
-  'CuentaColegio':'/my-pagoColegio',
-  'RegistroGasto':'/RegistroGasto',
-  'DatosUser':'DatosUser',
-  'Padron':'/my-ConsultaPadron',
+  'ConceptosIngresos':'/Productos',
+  'ConceptosEgresos':'/Gastos',
+  
 
 }
 
@@ -62,47 +64,82 @@ function NavBar({sesionname}){
       
     
       {
-        label: (<p style={{fontSize:'20px',marginTop:'-50px',marginLeft:'30px'}} >Inicio</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Inicio</p>),
         // label:'Inicio',
         
         key: 'Inicio',
-        icon:<HomeOutlined style={{ fontSize: '25px',marginTop:'12px' }}/>,      
+        icon:<HomeOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono }}/>,      
       },
       
+      {
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Conceptos Ingresos</p>),
+        // label:'Inicio',
+        
+        key: 'ConceptosIngresos',
+        icon:<RiseOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono }}/>,      
+      },
+      
+      {
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Conceptos Egresos</p>),
+        // label:'Inicio',
+        
+        key: 'ConceptosEgresos',
+        icon:<FallOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono }}/>,      
+      },
       ,
 
 
       {
-        label: "Conceptos",
-        key:"AutoGestiones",
-        icon:<InteractionOutlined style={{ fontSize: tamaño }}/>,
-      
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Movimientos</p>),
+        key:"Movimientos",
+        icon:<SwapOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono }}/>,  
         children:[
           
           {
-            label: 'Conceptos de Ingresos',
-            key: 'Productos',
-            icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+            label: 'Movimientos de Ingresos',
+            key: 'MovimientosIngresos',
+            icon: <RightOutlined style={{ fontSize: tamañosubicono }}/>, 
           
           },
           {
-            label: 'Conceptos de Egresos',
-            key: 'Gastos',
-            icon: <RightOutlined style={{ fontSize: tamañosub }}/>, 
+            label: 'Movimiento de Egresos',
+            key: 'MovimientosEgresos',
+            icon: <RightOutlined style={{ fontSize: tamañosubicono }}/>, 
           
           }
           ,
+
+        ]
+
+      }
+      ,
+
+      {
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Estadisticas</p>),
+        key:"Estadisticas",
+        icon:<BarChartOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono }}/>,  
+        children:[
           
+          {
+            label: 'Estadisticas de Ingresos',
+            key: 'EstadisticasIngresos',
+            icon: <RightOutlined style={{ fontSize: tamañosubicono }}/>, 
           
+          },
+          {
+            label: 'Estadisticas de Egresos',
+            key: 'EstadisticasEgresos',
+            icon: <RightOutlined style={{ fontSize: tamañosubicono }}/>, 
           
+          }
+          ,
 
         ]
 
       }
       ,
       
-      
-      ]
+    ]
 
 
     
@@ -149,7 +186,8 @@ function NavBar({sesionname}){
         </div> */}
 
         {contextHolder}
-        <Menu  onClick={onClick} selectedKeys={[current]} mode="horizontal" items={itemsmenu}  className="navbarant navbarantItem" style={{ width: '93%' }} />
+        <Menu  onClick={onClick} selectedKeys={[current]} mode="horizontal" items={itemsmenu}  className="navbarant navbarantItem" style={{ width: '92%' }} />
+        
         <div className='contenedor-drow'>
 
             <Dropdown
@@ -163,7 +201,10 @@ function NavBar({sesionname}){
             <a onClick={(e) => e.preventDefault()} className='nombreuser' >
               <Space>
               {sesionname}
-                <UserOutlined />
+                {/* <UserOutlined /> */}
+                <Space wrap size={5}>
+                    <Avatar shape="square" size="large" icon={<UserOutlined />} />
+                </Space>
               </Space>
             </a>
           </Dropdown>

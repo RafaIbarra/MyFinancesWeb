@@ -1,48 +1,44 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Modal, Space } from 'antd';
 import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone  } from '@ant-design/icons';
-import Generarpeticion from '../../../peticiones/apipeticiones';
 import { Navigate, useNavigate } from "react-router-dom";
 
+import Generarpeticion from '../../../../peticiones/apipeticiones'
 
-function ModalEliminarIngreso({
-  openeliminaringreso,
-  setOpeneliminaringreso,
-  setDataingresos,
-  selectedRowKeys,
-  setDataresumen
 
-}
-  ){
+function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,
+  setDataegresos,
+  setDataresumen,selectedRowKeys})
+  {
   const navigate=useNavigate()
   const [titulo,setTitulo]=useState('')
   const [mensaje,setMensaje]=useState('')
-  const [open, setOpen] = useState(openeliminaringreso);
+  const [open, setOpen] = useState(openeliminaregreso);
 
   const showModal = () => {
     setOpen(true);
-    setOpeneliminaringreso(false)
+    setOpeneliminaregreso(false)
   };
   const handleOk = () => {
     setOpen(false);
-    setOpeneliminaringreso(false)
+    setOpeneliminaregreso(false)
   };
   const handleCancel = () => {
     setOpen(false);
-    setOpeneliminaringreso(false)
+    setOpeneliminaregreso(false)
   };
     
   const closemodal=()=>{
-    setOpeneliminaringreso(false)
+    setOpeneliminaregreso(false)
         
     }
 
   const eliminar= async ()=>{
     const datoseliminar = {
-      ingresos:selectedRowKeys,};
+      gastos:selectedRowKeys,};
 
 
-    const endpoint='EliminarIngreso/'
+    const endpoint='EliminarEgreso/'
     const result = await Generarpeticion(endpoint, 'POST', datoseliminar);
       
     const respuesta=result['resp']
@@ -50,8 +46,8 @@ function ModalEliminarIngreso({
         await new Promise(resolve => setTimeout(resolve, 2000))
         const registros=result['data']
         setDataresumen(registros['Resumen'])
-        setDataingresos(registros['Ingresos'])
-        setOpeneliminaringreso(false)
+        setDataegresos(registros['Egresos'])
+        setOpeneliminaregreso(false)
         
     } else if(respuesta === 403 || respuesta === 401){
       
@@ -62,7 +58,7 @@ function ModalEliminarIngreso({
   }
 
 
-    useEffect(() => {
+  useEffect(() => {
       const titulos=()=>{
         if(selectedRowKeys.length>1){
           setTitulo('ELIMINAR REGISTROS')
@@ -105,4 +101,4 @@ function ModalEliminarIngreso({
 
 }
 
-export default ModalEliminarIngreso
+export default ModalEliminarEgreso

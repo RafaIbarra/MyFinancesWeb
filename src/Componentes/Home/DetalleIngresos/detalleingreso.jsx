@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Table, Typography,notification } from 'antd';
 import { DeleteOutlined,RetweetOutlined,PlusCircleTwoTone,CheckOutlined,WarningOutlined} from '@ant-design/icons';
-import ModalEliminarIngreso from './modal_eliminar_ingreso';
-import ModalRegistroIngreso from './modal_registro_ingreso';
-import GraficoIngresos from './graficoingresos';
-import './detalleingreso.css'
 import FormItem from 'antd/es/form/FormItem';
+
+import ModalEliminarIngreso from './Modales/modal_eliminar_ingreso';
+import ModalRegistroIngreso from './Modales/modal_registro_ingreso';
+import GraficoIngresos from './Grafico/graficoingresos';
+import './detalleingreso.css'
+
 const { Text } = Typography;
 
 function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
@@ -200,6 +202,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
               {contextHolder}
               <Table rowSelection={rowSelection} 
                 scroll={{y: 400,}}
+                style={{height:'450px'}}
                 size="small"
                 columns={columns} 
                 dataSource={detalle} 
@@ -268,7 +271,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
                   
               </div>
           </div>
-              <GraficoIngresos></GraficoIngresos>
+              <GraficoIngresos dataingresos={dataingresos}></GraficoIngresos>
         </div>
     )
 

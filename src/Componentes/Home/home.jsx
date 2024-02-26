@@ -9,7 +9,7 @@ import './home.css'
 import HomeCabecera from './CabeceraHome/cabecera';
 import Handelstorage from '../../Storage/handelstorage';
 import { Navigate, useNavigate } from "react-router-dom";
-
+import Cargadatos from './Cargadatos';
 
 function Home (){
     const navigate=useNavigate()
@@ -22,6 +22,7 @@ function Home (){
     
 
     const[cargarresumen,setCargarresumen]=useState(false)
+    const[spindatos,setSpindato]=useState(false)
 
 
     useEffect(() => {
@@ -67,10 +68,12 @@ function Home (){
               <HomeCabecera 
                 cargarresumen={cargarresumen}
                 setCargarresumen={setCargarresumen}
+                setSpindato={setSpindato}
                 
                 
               ></HomeCabecera>
-              
+          {!spindatos &&(
+
             <div className='hometabs'>
 
               <Tabs
@@ -92,6 +95,17 @@ function Home (){
               </Tabs>
               
             </div>
+          )
+          } 
+
+          {spindatos &&(
+            <Cargadatos setSpindato={setSpindato}></Cargadatos>
+          )
+
+          }
+
+
+
             
         </div>
     )

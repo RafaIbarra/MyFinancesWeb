@@ -6,7 +6,7 @@ import FormItem from 'antd/es/form/FormItem';
 import './cabecera.css'
 import { Navigate, useNavigate } from "react-router-dom";
 
-function HomeCabecera ({cargarresumen,setCargarresumen}){
+function HomeCabecera ({cargarresumen,setCargarresumen,setSpindato}){
 
     const navigate=useNavigate()
 
@@ -70,6 +70,7 @@ function HomeCabecera ({cargarresumen,setCargarresumen}){
         }
         
         setCargarresumen(!cargarresumen)
+        setSpindato(true)
         // setCargaringresos(!cargaringresos)
         // setCargarEgresos(!cargaregresos)
   
@@ -99,6 +100,7 @@ function HomeCabecera ({cargarresumen,setCargarresumen}){
               
               setMesdefault(listamesactual[0]['nombre_mes'])
               setTerminacarga(true)
+              
               
           }else if(respuesta === 403 || respuesta === 401){
             

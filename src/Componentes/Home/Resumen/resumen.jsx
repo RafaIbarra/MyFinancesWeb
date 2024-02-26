@@ -140,7 +140,7 @@ function Resumen({dataresumen}){
           </div>
 
                 
-          <Resumengrafico></Resumengrafico>
+          <Resumengrafico dataresumen={dataresumen}></Resumengrafico>
 
                 
 

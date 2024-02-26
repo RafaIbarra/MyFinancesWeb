@@ -1,16 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import Generarpeticion from '../../../peticiones/apipeticiones';
-import Handelstorage from '../../../Storage/handelstorage';
 import Button from 'react-bootstrap/Button';
 import { base64Decode } from 'base64-js';
 import { Image } from 'antd';
 
+import Handelstorage from '../../../../Storage/handelstorage';
+
 import './graficoegresos.css'
-function GraficoEgresoso({mes,anno}){
+function GraficoEgresoso({dataegresos}){
     const [imagen, setImagen] = useState(null);
     const [mostrar,setMostrar]=useState(false)
+    const datestorage=Handelstorage('obtenerdate');
+    const mes_storage=datestorage['datames']
+    const anno_storage=datestorage['dataanno']
 
-    const endpoint='http://127.0.0.1:8000/api/GraficoEgresos/2024/2/'
+    const endpoint='http://127.0.0.1:8000/api/GraficoEgresos/' + anno_storage + '/' + mes_storage +'/'
+    
     let requestOptions = {};
     let bodyoptions = {};
     const datosstarage=Handelstorage('obtener');
@@ -33,11 +37,12 @@ function GraficoEgresoso({mes,anno}){
             .then(data => {
                 setImagen(data.imagen_grafico);
                 
+                
             })
         };
         cargardatos();
         
-    }, []);
+    }, [dataegresos]);
     
     const mostrardatos=async()=>{
         fetch(endpoint, requestOptions)
@@ -49,35 +54,23 @@ function GraficoEgresoso({mes,anno}){
         console.log(imagen)
     }
       return(
-        <div className='contenedor-imagen'>
-                {/* <h4 className='titulografico' > Relacion Ingreso-Egresos </h4>  */}
-                
-                {/* <Image
-                    src={`data:image/png;base64,${imagen}`}
-                    width={'180%'}
-                    height={'100%'}
-                    style={{marginLeft:'-20%',marginTop:'-2.5%' } }
-                    
-                /> */}
-        
+        <div className='contenedor_principal-egreso'>
+            <h4 className='titulo-grafico-egreso' > Distribucion de Egresos </h4> 
+            
     
+            <div className='contenedor-imagen-egreso'>
 
                 <img 
                 src={`data:image/png;base64,${imagen}`}
                 alt="Descripción de la imagen"
                 
-                className="img-resumen"
-              />
+                className="imagen-egreso"
+                />
+            </div>
         
       </div>
 
 
-    // <Image
-    // width={600}
-    // src={`data:image/png;base64,${imagen}`}
-    // >
-        
-    // </Image>
 
 
     )

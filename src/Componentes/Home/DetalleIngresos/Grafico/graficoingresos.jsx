@@ -1,16 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import Generarpeticion from '../../../peticiones/apipeticiones';
-import Handelstorage from '../../../Storage/handelstorage';
 import Button from 'react-bootstrap/Button';
 import { base64Decode } from 'base64-js';
 import { Image } from 'antd';
 
+
+import Generarpeticion from '../../../../peticiones/apiiniciosesion'
+import Handelstorage from '../../../../Storage/handelstorage'
 import './graficoingresos.css'
-function GraficoIngresos({mes,anno}){
+function GraficoIngresos({dataingresos}){
     const [imagen, setImagen] = useState(null);
     const [mostrar,setMostrar]=useState(false)
+    const datestorage=Handelstorage('obtenerdate');
+    const mes_storage=datestorage['datames']
+    const anno_storage=datestorage['dataanno']
 
-    const endpoint='http://127.0.0.1:8000/api/GraficoIngresos/2024/2/'
+    const endpoint='http://127.0.0.1:8000/api/GraficoIngresos/'+ anno_storage + '/' + mes_storage +'/'
     let requestOptions = {};
     let bodyoptions = {};
     const datosstarage=Handelstorage('obtener');
@@ -37,7 +41,7 @@ function GraficoIngresos({mes,anno}){
         };
         cargardatos();
         
-    }, []);
+    }, [dataingresos]);
     
     const mostrardatos=async()=>{
         fetch(endpoint, requestOptions)
@@ -49,35 +53,25 @@ function GraficoIngresos({mes,anno}){
         console.log(imagen)
     }
       return(
-        <div className='contenedor-imagen'>
-                {/* <h4 className='titulografico' > Relacion Ingreso-Egresos </h4>  */}
-                
-                {/* <Image
-                    src={`data:image/png;base64,${imagen}`}
-                    width={'180%'}
-                    height={'100%'}
-                    style={{marginLeft:'-20%',marginTop:'-2.5%' } }
-                    
-                /> */}
-        
-    
+        <div className='contenedor-principal-ingreso'>
+            <h4 className='titulo-grafico-ingreso' > Distribucion de ingresos </h4> 
+            
+            <div className='contenedor-imagen-ingreso'>
 
                 <img 
                 src={`data:image/png;base64,${imagen}`}
                 alt="Descripción de la imagen"
                 
-                className="img-resumen"
-              />
+                className="imagen-ingreso"
+                />
+
+            </div>
+
         
       </div>
 
 
-    // <Image
-    // width={600}
-    // src={`data:image/png;base64,${imagen}`}
-    // >
-        
-    // </Image>
+
 
 
     )

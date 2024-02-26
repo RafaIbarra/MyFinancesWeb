@@ -6,11 +6,14 @@ import { base64Decode } from 'base64-js';
 import { Image } from 'antd';
 
 import './resumengrafico.css'
-function Resumengrafico({mes,anno}){
+function Resumengrafico({dataresumen}){
     const [imagen, setImagen] = useState(null);
     const [mostrar,setMostrar]=useState(false)
+    const datestorage=Handelstorage('obtenerdate');
+    const mes_storage=datestorage['datames']
+    const anno_storage=datestorage['dataanno']
 
-    const endpoint='http://127.0.0.1:8000/api/GraficoBalance/2024/2/'
+    const endpoint='http://127.0.0.1:8000/api/GraficoBalance/' + anno_storage + '/' + mes_storage +'/'
     let requestOptions = {};
     let bodyoptions = {};
     const datosstarage=Handelstorage('obtener');
@@ -37,7 +40,7 @@ function Resumengrafico({mes,anno}){
         };
         cargardatos();
         
-    }, []);
+    }, [dataresumen]);
     
     const mostrardatos=async()=>{
         fetch(endpoint, requestOptions)
@@ -49,25 +52,18 @@ function Resumengrafico({mes,anno}){
         console.log(imagen)
     }
       return(
-        <div className='contenedor-imagen'>
-                {/* <h4 className='titulografico' > Relacion Ingreso-Egresos </h4>  */}
-                
-                {/* <Image
-                    src={`data:image/png;base64,${imagen}`}
-                    width={'180%'}
-                    height={'100%'}
-                    style={{marginLeft:'-20%',marginTop:'-2.5%' } }
-                    
-                /> */}
-        
-    
+        <div className='contenedor-principal-resumen'>
+            <h4 className='titulo-grafico-resumen' > Relacion Ingreso-Egresos </h4> 
+            
+            <div className='contenedor-imagen-resumen'>
 
                 <img 
                 src={`data:image/png;base64,${imagen}`}
                 alt="Descripción de la imagen"
                 
-                className="img-resumen"
-              />
+                className="imagen-resumen"
+                />
+            </div>
         
       </div>
 

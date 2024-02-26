@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-
 import {Button,Form,Input,InputNumber,Select,Radio,Modal,Typography,notification } from 'antd';
 import {DatePicker } from 'antd';
-import Generarpeticion from '../../../peticiones/apipeticiones';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Navigate, useNavigate } from "react-router-dom";
-import Handelstorage from '../../../Storage/handelstorage';
+import Generarpeticion from '../../../../peticiones/apipeticiones'
+import Handelstorage from '../../../../Storage/handelstorage'
+
 
 import { WarningOutlined} from '@ant-design/icons';
 const formItemLayout = {
