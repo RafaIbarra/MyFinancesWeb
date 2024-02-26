@@ -5,12 +5,12 @@ import Button from 'react-bootstrap/Button';
 import { base64Decode } from 'base64-js';
 import { Image } from 'antd';
 
-import './resumengrafico.css'
-function Resumengrafico({mes,anno}){
+import './graficoingresos.css'
+function GraficoIngresos({mes,anno}){
     const [imagen, setImagen] = useState(null);
     const [mostrar,setMostrar]=useState(false)
 
-    const endpoint='http://127.0.0.1:8000/api/GraficoBalance/2024/2/'
+    const endpoint='http://127.0.0.1:8000/api/GraficoIngresos/2024/2/'
     let requestOptions = {};
     let bodyoptions = {};
     const datosstarage=Handelstorage('obtener');
@@ -84,4 +84,4 @@ function Resumengrafico({mes,anno}){
 
 
 }
-export default Resumengrafico
+export default GraficoIngresos

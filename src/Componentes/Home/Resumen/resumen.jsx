@@ -89,7 +89,7 @@ function Resumen({dataresumen}){
         cargardatos();
       }, [dataresumen]);
 
-
+      // className='contenedor-resumen-flex'
       return(
         <div className='contenedor-resumen-flex'>
             
@@ -140,7 +140,7 @@ function Resumen({dataresumen}){
           </div>
 
                 
-            <Resumengrafico></Resumengrafico>
+          <Resumengrafico></Resumengrafico>
 
                 
 

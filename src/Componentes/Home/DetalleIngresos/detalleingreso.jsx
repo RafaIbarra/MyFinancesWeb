@@ -3,7 +3,7 @@ import { Button, Table, Typography,notification } from 'antd';
 import { DeleteOutlined,RetweetOutlined,PlusCircleTwoTone,CheckOutlined,WarningOutlined} from '@ant-design/icons';
 import ModalEliminarIngreso from './modal_eliminar_ingreso';
 import ModalRegistroIngreso from './modal_registro_ingreso';
-import Resumengrafico from '../Resumen/resumengrafico';
+import GraficoIngresos from './graficoingresos';
 import './detalleingreso.css'
 import FormItem from 'antd/es/form/FormItem';
 const { Text } = Typography;
@@ -268,7 +268,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
                   
               </div>
           </div>
-              <Resumengrafico></Resumengrafico>
+              <GraficoIngresos></GraficoIngresos>
         </div>
     )
 

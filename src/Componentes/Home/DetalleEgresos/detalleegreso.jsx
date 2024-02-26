@@ -5,7 +5,7 @@ import ModalEliminarEgreso from './modal_eliminar_egreso';
 import ModalRegistroEgreso from './modal_registro_egreso';
 import './detalleegreso.css'
 import FormItem from 'antd/es/form/FormItem';
-import Resumengrafico from '../Resumen/resumengrafico';
+import GraficoEgresoso from './graficoegresos';
 
 
 const { Text } = Typography;
@@ -326,7 +326,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
               </div>
             </div>
            
-            <Resumengrafico></Resumengrafico>
+            <GraficoEgresoso></GraficoEgresoso>
         </div>
     )
 
