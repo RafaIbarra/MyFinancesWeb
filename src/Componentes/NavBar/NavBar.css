@@ -3,7 +3,9 @@
     --color-letrasBotones: white;  
     --color-letrasLabel : black;
     --color-efectoHover : #C81748;
-    --color-botonesContenedores :rgb(231, 233, 232);
+    /*1° --color-botonesContenedores :rgb(231, 233, 232); */
+    /*2° --color-botonesContenedores :rgb(166, 184, 130); */
+    --color-botonesContenedores :rgb(182, 212, 212);
     --color-navbarant :rgb(154, 230, 193);
   }
   /* Estilos para el contenedor del menú */

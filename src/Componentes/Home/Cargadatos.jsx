@@ -4,34 +4,62 @@ import React, {useEffect, useState} from 'react';
 
 import { Spin,Progress  } from 'antd';
 
+import './cargadatos.css'
 
+const conicColors = {
+    '0%': '#87d068',
+    '50%': '#ffe58f',
+    '100%': '#ffccc7',
+  };
 function Cargadatos({setSpindato}){
 
     const [percent, setPercent] = useState(0);
+    const[textvalor,setTexttextvalor]=useState('Procesando')
 
-    useEffect(() => {
+    const increase = () => {
+        
+    
+            setPercent((prevPercent) => {
+                const newPercent = prevPercent + 10;
+                
+      
+                if (newPercent > 100) { 
+                    setTexttextvalor('Listo!!')
+                    setSpindato(false)
+                  return 100
+                  
+                }
+      
+                return newPercent;
+              });
+
+
 
         
 
-        
-        const cargardatos = async () => {
-            
-            await new Promise(resolve => setTimeout(resolve, 1000))
-            setSpindato(false)
-            
           
-        };
-        cargardatos()
+      };
+
+      useEffect(() => {
+        const intervalo = setInterval(() => {
+          
+          increase();
+        }, 200); 
+    
         
+        return () => clearInterval(intervalo);
       }, []);
 
     
 
         return(
-            <div className='oscurecer-contenido'>
-                <Spin size="large"/>
-                <Progress percent={percent} type="circle" />
-                <h6> Procesando </h6>
+            <div className='oscurecer-contenido-progress'>
+                
+                <Progress 
+                percent={percent} type="circle" 
+                strokeColor={conicColors}
+                />
+                <h6 className='letras'> {textvalor} </h6>
             </div>
         )
     

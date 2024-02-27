@@ -37,6 +37,7 @@ function Resumengrafico({dataresumen}){
                 setImagen(data.imagen_grafico);
                 
             })
+            setMostrar(true)
         };
         cargardatos();
         
@@ -51,32 +52,32 @@ function Resumengrafico({dataresumen}){
         setMostrar(true)
         console.log(imagen)
     }
-      return(
-        <div className='contenedor-principal-resumen'>
-            <h4 className='titulo-grafico-resumen' > Relacion Ingreso-Egresos </h4> 
-            
-            <div className='contenedor-imagen-resumen'>
+    if(mostrar){
+     
+        
 
-                <img 
-                src={`data:image/png;base64,${imagen}`}
-                alt="Descripción de la imagen"
+        return(
+            <div className='contenedor-principal-resumen'>
+                <h4 className='titulo-grafico-resumen' > Relacion Ingreso-Egresos </h4> 
                 
-                className="imagen-resumen"
-                />
-            </div>
-        
-      </div>
+                <div className='contenedor-imagen-resumen'>
+    
+                    <img 
+                    src={`data:image/png;base64,${imagen}`}
+                    alt="Descripción de la imagen"
+                    
+                    className="imagen-resumen"
+                    />
+                </div>
+            
+          </div>
+    
+    
+      
+    
+        )
 
-
-    // <Image
-    // width={600}
-    // src={`data:image/png;base64,${imagen}`}
-    // >
-        
-    // </Image>
-
-
-    )
+    }  
 
 
 }

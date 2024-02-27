@@ -72,7 +72,8 @@ function Home (){
                 
                 
               ></HomeCabecera>
-          {/* {!spindatos &&( */}
+          {
+            !spindatos &&(
 
             <div className='hometabs'>
 
@@ -102,14 +103,17 @@ function Home (){
               </Tabs>
               
             </div>
-          {/* )
-          }  */}
+            )
+          }
 
-          {/* {spindatos &&(
+          
+          
+
+          {spindatos &&(
             <Cargadatos setSpindato={setSpindato}></Cargadatos>
           )
 
-          } */}
+          }
 
 
 

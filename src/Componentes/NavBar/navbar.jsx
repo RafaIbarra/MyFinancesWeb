@@ -22,6 +22,7 @@ const tamañoicono='25px'
 const tamañosubicono='15px'
 const margentopicono='12px'
 
+
 const navegaciones={
 
   'Inicio':'/Home',
@@ -33,6 +34,11 @@ const navegaciones={
 }
 
 function NavBar({sesionname}){
+
+    const [colorsel,setColorsel]=useState('white')
+    const [colordefault,setColordefault]=useState('black')
+    const [keysel,setKeysel]=useState('')
+  
     const navigate=useNavigate()
     const cerrarsesion=(event)=>{
       Handelstorage('borrar')
@@ -64,35 +70,36 @@ function NavBar({sesionname}){
       
     
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Inicio</p>),
+        label: (<p key='p_inicio' style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'Inicio' ? colorsel : colordefault} } >Inicio</p>),
         // label:'Inicio',
         
         key: 'Inicio',
-        icon:<HomeOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono }}/>,      
+        icon:<HomeOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono,   color: keysel === 'Inicio' ? colorsel: colordefault }}/>,      
       },
       
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Conceptos Ingresos</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'ConceptosIngresos' ? colorsel : colordefault }} >Conceptos Ingresos</p>),
         // label:'Inicio',
         
         key: 'ConceptosIngresos',
-        icon:<RiseOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono }}/>,      
+        icon:<RiseOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono , color: keysel === 'ConceptosIngresos' ? colorsel : colordefault }}/>,      
+       
       },
       
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Conceptos Egresos</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'ConceptosEgresos' ? colorsel : colordefault}} >Conceptos Egresos</p>),
         // label:'Inicio',
         
         key: 'ConceptosEgresos',
-        icon:<FallOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono }}/>,      
+        icon:<FallOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono, color: keysel === 'ConceptosEgresos' ? colorsel : colordefault }}/>,      
       },
       ,
 
 
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Movimientos</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Movimientos', 'MovimientosIngresos','MovimientosEgresos'].includes(keysel) ? colorsel : colordefault}} >Movimientos</p>),
         key:"Movimientos",
-        icon:<SwapOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono }}/>,  
+        icon:<SwapOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono, color: ['Movimientos', 'MovimientosIngresos','MovimientosEgresos'].includes(keysel) ? colorsel : colordefault }}/>,  
         children:[
           
           {
@@ -115,9 +122,9 @@ function NavBar({sesionname}){
       ,
 
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft}} >Estadisticas</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Estadisticas', 'EstadisticasIngresos','EstadisticasIngresos'].includes(keysel) ? colorsel : colordefault}} >Estadisticas</p>),
         key:"Estadisticas",
-        icon:<BarChartOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono }}/>,  
+        icon:<BarChartOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono, color: ['Estadisticas', 'EstadisticasIngresos','EstadisticasIngresos'].includes(keysel) ? colorsel : colordefault }}/>,  
         children:[
           
           {
@@ -157,10 +164,11 @@ function NavBar({sesionname}){
       });
     };
     const onClick = (e) => {
-  
+         setKeysel(e.key)
         if (navegaciones[e.key] ){
-
-          
+            
+    
+            
             navigate(navegaciones[e.key])
          
 
@@ -168,13 +176,14 @@ function NavBar({sesionname}){
           error()
         }      
         setCurrent(e.key);
+        
     };
     const onhome=()=>{
       navigate('/my-resumenCuentas')
     }
     
 
-
+    
 
         
 
@@ -187,7 +196,7 @@ function NavBar({sesionname}){
 
         {contextHolder}
         <Menu  onClick={onClick} selectedKeys={[current]} mode="horizontal" items={itemsmenu}  className="navbarant navbarantItem" style={{ width: '92%' }} />
-        
+       
         <div className='contenedor-drow'>
 
             <Dropdown
