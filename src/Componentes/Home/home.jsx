@@ -72,7 +72,7 @@ function Home (){
                 
                 
               ></HomeCabecera>
-          {!spindatos &&(
+          {/* {!spindatos &&( */}
 
             <div className='hometabs'>
 
@@ -87,7 +87,14 @@ function Home (){
                     {cargaconfirmada &&(<Resumen dataresumen={dataresumen}   ></Resumen>)}
                   </Tab>
                   <Tab eventKey="homeingresos" title="Detalle de Ingresos">
-                    {cargaconfirmada &&(<DetalleIngreso dataingresos={dataingresos} setDataingresos={setDataingresos} setDataresumen={setDataresumen}></DetalleIngreso>)}
+                    {cargaconfirmada &&(<DetalleIngreso 
+                                                        dataingresos={dataingresos} 
+                                                        setDataingresos={setDataingresos} 
+                                                        setDataresumen={setDataresumen}>
+
+                                        </DetalleIngreso>
+                                        )
+                    }
                   </Tab>
                   <Tab eventKey="homeegresos" title="Detalle de Egresos" >
                     {cargaconfirmada &&( <DetalleEgreso dataegresos={dataegresos} setDataegresos={setDataegresos} setDataresumen={setDataresumen} ></DetalleEgreso>)}
@@ -95,14 +102,14 @@ function Home (){
               </Tabs>
               
             </div>
-          )
-          } 
+          {/* )
+          }  */}
 
-          {spindatos &&(
+          {/* {spindatos &&(
             <Cargadatos setSpindato={setSpindato}></Cargadatos>
           )
 
-          }
+          } */}
 
 
 

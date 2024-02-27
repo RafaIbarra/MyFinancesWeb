@@ -1,6 +1,6 @@
 .contenedor_principal-egreso{
     width: 600px;
-    height: 500px; 
+    height: 600px; 
     overflow: hidden;
 
     /* background-color: aquamarine;
@@ -33,4 +33,5 @@
     height: auto; /* La altura se ajustará automáticamente */
     display: block;
     margin-top: 30px;
+    /* margin-left: -100px; */
   }
