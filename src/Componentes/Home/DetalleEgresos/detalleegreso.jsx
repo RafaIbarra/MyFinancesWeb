@@ -10,7 +10,8 @@ import GraficoEgresoso from './Grafico/graficoegresos';
 
 
 const { Text } = Typography;
-function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
+function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
+                        setImgresumen,setImgegresos,imgegresos}){
    
     
     const [detalle,setDetalle]=useState(null)
@@ -257,8 +258,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
             {contextHolder}
             <div className='contenedor-tabla-egresos'>
 
-              <Table 
-                  rowSelection={rowSelection} 
+              <Table rowSelection={rowSelection} 
                   scroll={{y: 400,}}
                   style={{height:'450px'}}
                   columns={columns} 
@@ -314,7 +314,9 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
                                                       setOpeneliminaregreso={setOpeneliminaregreso} 
                                                       setDataegresos={setDataegresos} 
                                                       setDataresumen={setDataresumen} 
-                                                      selectedRowKeys={selectedRowKeys} 
+                                                      selectedRowKeys={selectedRowKeys}
+                                                      setImgresumen={setImgresumen}
+                                                      setImgegresos={setImgegresos}
                                         ></ModalEliminarEgreso>)}
 
                   {openregistroegreso &&( <ModalRegistroEgreso openregistroegreso={openregistroegreso} 
@@ -323,12 +325,14 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen}){
                                               setDataresumen={setDataresumen}
                                               detalleseleccion={detalleseleccion}
                                               modoedicion={modoedicion}
+                                              setImgresumen={setImgresumen}
+                                              setImgegresos={setImgegresos}
                                             ></ModalRegistroEgreso>)}
                   
               </div>
             </div>
            
-            <GraficoEgresoso dataegresos={dataegresos}></GraficoEgresoso>
+            <GraficoEgresoso dataegresos={dataegresos} imgegresos={imgegresos}></GraficoEgresoso>
         </div>
     )
 

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 
 
-import { Spin,Progress  } from 'antd';
+import { Progress  } from 'antd';
 
 import './cargadatos.css'
 
@@ -13,7 +13,7 @@ const conicColors = {
   };
 function Cargadatos({setSpindato}){
 
-    const [percent, setPercent] = useState(0);
+    const[percent, setPercent] = useState(0);
     const[textvalor,setTexttextvalor]=useState('Procesando')
 
     const increase = () => {
@@ -24,19 +24,15 @@ function Cargadatos({setSpindato}){
                 
       
                 if (newPercent > 100) { 
+                    
                     setTexttextvalor('Listo!!')
-                    setSpindato(false)
+                    
                   return 100
                   
                 }
       
                 return newPercent;
               });
-
-
-
-        
-
           
       };
 
@@ -44,8 +40,13 @@ function Cargadatos({setSpindato}){
         const intervalo = setInterval(() => {
           
           increase();
-        }, 200); 
-    
+        }, 80); 
+
+        setTimeout(() => {
+          clearInterval(intervalo);
+          setSpindato(false)
+          
+        }, 1000);
         
         return () => clearInterval(intervalo);
       }, []);

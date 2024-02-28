@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import Generarpeticion from '../../../peticiones/apipeticiones';
-import Handelstorage from '../../../Storage/handelstorage';
 import Resumengrafico from './resumengrafico';
 
 import { Table, Typography } from 'antd';
 const { Text } = Typography;
 
 import './resumen.css'
-function Resumen({dataresumen}){
+function Resumen({dataresumen,imgresumen}){
     
     // const[datos,setDatos]=useState(null)
     const[detalle,setDetalle]=useState(null)
@@ -140,7 +138,7 @@ function Resumen({dataresumen}){
           </div>
 
                 
-          <Resumengrafico dataresumen={dataresumen}></Resumengrafico>
+          <Resumengrafico dataresumen={dataresumen}  imgresumen={imgresumen}></Resumengrafico>
 
                 
 

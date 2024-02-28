@@ -32,7 +32,7 @@ const formItemLayout = {
 const { Text } = Typography;
 
 function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataegresos,
-  setDataresumen,detalleseleccion,modoedicion}){
+  setDataresumen,detalleseleccion,modoedicion,setImgresumen,setImgegresos}){
   
   const navigate=useNavigate()
   const [open, setOpen] = useState(openregistroegreso);
@@ -212,20 +212,23 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
           
           const respuesta=result['resp']
           if (respuesta === 200) {
-            const registros=result['data']
+            const registros=result['data']['datos']
 
             
             
             const mes = registros['Egresos'][0].MesEgreso;
             const año = registros['Egresos'][0].AnnoEgreso;
+
             
-
             await new Promise(resolve => setTimeout(resolve, 2000))
-
+            
             if(mes===mesprincipal && annoprincipal===año ){
               
               setDataresumen(registros['Resumen'])
               setDataegresos(registros['Egresos'])
+              const registros_imagenes=result['data']['graficos']
+              setImgresumen(registros_imagenes['imgResumen'])
+              setImgegresos(registros_imagenes['imgEgresos'])
             }
         
 

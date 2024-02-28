@@ -7,8 +7,7 @@ import Generarpeticion from '../../../../peticiones/apipeticiones'
 
 
 function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,
-  setDataegresos,
-  setDataresumen,selectedRowKeys})
+  setDataegresos,setDataresumen,selectedRowKeys,setImgresumen,setImgegresos})
   {
   const navigate=useNavigate()
   const [titulo,setTitulo]=useState('')
@@ -44,9 +43,14 @@ function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,
     const respuesta=result['resp']
     if (respuesta === 200) {
         await new Promise(resolve => setTimeout(resolve, 2000))
-        const registros=result['data']
+        const registros=result['data']['datos']
         setDataresumen(registros['Resumen'])
         setDataegresos(registros['Egresos'])
+
+        const registros_imagenes=result['data']['graficos']
+        setImgresumen(registros_imagenes['imgResumen'])
+        setImgegresos(registros_imagenes['imgEgresos'])
+
         setOpeneliminaregreso(false)
         
     } else if(respuesta === 403 || respuesta === 401){

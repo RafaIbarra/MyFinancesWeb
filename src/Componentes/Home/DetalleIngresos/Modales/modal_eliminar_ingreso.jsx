@@ -12,8 +12,9 @@ function ModalEliminarIngreso({
   setOpeneliminaringreso,
   setDataingresos,
   selectedRowKeys,
-  setDataresumen
-
+  setDataresumen,
+  setImgresumen,
+  setImgingresos
 }
   ){
   const navigate=useNavigate()
@@ -50,9 +51,12 @@ function ModalEliminarIngreso({
     const respuesta=result['resp']
     if (respuesta === 200) {
         await new Promise(resolve => setTimeout(resolve, 2000))
-        const registros=result['data']
+        const registros=result['data']['datos']
         setDataresumen(registros['Resumen'])
         setDataingresos(registros['Ingresos'])
+        const registros_imagenes=result['data']['graficos']
+        setImgresumen(registros_imagenes['imgResumen'])
+        setImgingresos(registros_imagenes['imgIngresos'])
         setOpeneliminaringreso(false)
         
     } else if(respuesta === 403 || respuesta === 401){

@@ -216,7 +216,7 @@ function Productosfinancieros(){
                     columns={columns} 
                     dataSource={productos} 
                     pagination={false}
-                    bordered
+                    bordered={true}
                   />
                   <div className='contenedor-resumen'>
                       <FormItem >

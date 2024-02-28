@@ -10,7 +10,8 @@ import './detalleingreso.css'
 
 const { Text } = Typography;
 
-function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
+function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
+  setImgresumen,setImgingresos,imgingresos}){
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -257,7 +258,9 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
                                           setOpeneliminaringreso={setOpeneliminaringreso}
                                           setDataingresos={setDataingresos}
                                           selectedRowKeys={selectedRowKeys}
-                                          setDataresumen={setDataresumen} 
+                                          setDataresumen={setDataresumen}
+                                          setImgresumen={setImgresumen}
+                                          setImgingresos={setImgingresos}
                                         ></ModalEliminarIngreso>)}
 
                   {openregistroingreso &&( <ModalRegistroIngreso 
@@ -267,11 +270,13 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen}){
                                             setDataresumen={setDataresumen}
                                             detalleseleccioningreso={detalleseleccioningreso}
                                             modoedicioningreso={modoedicioningreso}
+                                            setImgresumen={setImgresumen}
+                                            setImgingresos={setImgingresos}
                                             ></ModalRegistroIngreso>)}
                   
               </div>
           </div>
-              <GraficoIngresos dataingresos={dataingresos}></GraficoIngresos>
+              <GraficoIngresos dataingresos={dataingresos} imgingresos={imgingresos}></GraficoIngresos>
         </div>
     )
 

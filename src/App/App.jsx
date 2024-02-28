@@ -9,6 +9,7 @@ import Productosfinancieros from "../Componentes/ProductosFinancieros/productosf
 import Gastos from "../Componentes/Gastos/gastos";
 import CloseSesion from "../Componentes/Closesesion/closesesion";
 import RegistroUsuario from "../Componentes/RegistroUsuario/registrousuario";
+import HistorialIngresos from "../Componentes/HistorialIngresos/HistorialIngresos";
 import ComprobarStorage from "./verificarstorage";
 
 function App (){
@@ -57,6 +58,7 @@ return(
                     <Route path="/RegistroEgreso" element={<RegistroEgreso />} /> */}
                     <Route path="/Productos" element={<Productosfinancieros />} />
                     <Route path="/Gastos" element={<Gastos />} />
+                    <Route path="/HistorialIngresos" element={<HistorialIngresos />} />
                     <Route path="/Closesesion" element={<CloseSesion />} />
                     
                 </Routes>

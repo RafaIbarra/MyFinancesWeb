@@ -33,7 +33,7 @@ const { Text } = Typography;
 
 function ModalRegistroIngreso({
   openregistroingreso,setOpenregistroingreso,setDataingresos,setDataresumen,
-  detalleseleccioningreso,modoedicioningreso
+  detalleseleccioningreso,modoedicioningreso,setImgresumen,setImgingresos
 
 }){
 
@@ -211,15 +211,18 @@ function ModalRegistroIngreso({
           if (respuesta === 200) {
             await new Promise(resolve => setTimeout(resolve, 2000))
 
-            const registros=result['data']
+            const registros=result['data']['datos']
             
             const mes = registros['Ingresos'][0].MesIngreso;
             const año = registros['Ingresos'][0].AnnoIngreso;
 
             if(mes===mesprincipal && annoprincipal===año ){
-              
               setDataingresos(registros['Ingresos'])
               setDataresumen(registros['Resumen'])
+
+              const registros_imagenes=result['data']['graficos']
+              setImgresumen(registros_imagenes['imgResumen'])
+              setImgingresos(registros_imagenes['imgIngresos'])
             }
 
             

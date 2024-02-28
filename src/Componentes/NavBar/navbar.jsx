@@ -29,6 +29,7 @@ const navegaciones={
   'Egresos':'/RegistroEgreso',
   'ConceptosIngresos':'/Productos',
   'ConceptosEgresos':'/Gastos',
+  'MovimientosIngresos':'/HistorialIngresos'
   
 
 }

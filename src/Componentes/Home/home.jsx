@@ -19,6 +19,10 @@ function Home (){
     const[dataresumen,setDataresumen]=useState(null)
     const[dataingresos,setDataingresos]=useState(null)
     const[dataegresos,setDataegresos]=useState(null)
+
+    const[imgresumen,setImgresumen]=useState('')
+    const[imgegresos,setImgegresos]=useState('')
+    const[imgingresos,setImgingresos]=useState('')
     
 
     const[cargarresumen,setCargarresumen]=useState(false)
@@ -40,14 +44,19 @@ function Home (){
         
         const respuesta=result['resp']
         if (respuesta === 200) {
-            const registros=result['data']
+            
+            const registros=result['data']['datos']
            
 
             setDataresumen(registros['Resumen'])
             setDataingresos(registros['Ingresos'])
             setDataegresos(registros['Egresos'])
             
-            
+            const registros_imagenes=result['data']['graficos']
+            setImgresumen(registros_imagenes['imgResumen'])
+            setImgegresos(registros_imagenes['imgEgresos'])
+            setImgingresos(registros_imagenes['imgIngresos'])
+
             
         }else if(respuesta === 403 || respuesta === 401){
           
@@ -72,8 +81,8 @@ function Home (){
                 
                 
               ></HomeCabecera>
-          {
-            !spindatos &&(
+
+          {!spindatos &&(
 
             <div className='hometabs'>
 
@@ -85,31 +94,43 @@ function Home (){
                 >
                   <Tab eventKey="homeresumen" title="Resumen Movimientos" >
 
-                    {cargaconfirmada &&(<Resumen dataresumen={dataresumen}   ></Resumen>)}
+                    {cargaconfirmada &&(<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>)}
                   </Tab>
                   <Tab eventKey="homeingresos" title="Detalle de Ingresos">
                     {cargaconfirmada &&(<DetalleIngreso 
                                                         dataingresos={dataingresos} 
                                                         setDataingresos={setDataingresos} 
-                                                        setDataresumen={setDataresumen}>
+                                                        setDataresumen={setDataresumen}
+                                                        setImgresumen={setImgresumen}
+                                                        setImgingresos={setImgingresos}
+                                                        imgingresos={imgingresos}
+                                                        >
 
                                         </DetalleIngreso>
                                         )
                     }
                   </Tab>
                   <Tab eventKey="homeegresos" title="Detalle de Egresos" >
-                    {cargaconfirmada &&( <DetalleEgreso dataegresos={dataegresos} setDataegresos={setDataegresos} setDataresumen={setDataresumen} ></DetalleEgreso>)}
+                    {cargaconfirmada &&( <DetalleEgreso 
+                                                      dataegresos={dataegresos} 
+                                                      setDataegresos={setDataegresos} 
+                                                      setDataresumen={setDataresumen}
+                                                      setImgresumen={setImgresumen}
+                                                      setImgegresos={setImgegresos}
+                                                      imgegresos={imgegresos}>
+
+                                        </DetalleEgreso>)}
                   </Tab>
               </Tabs>
               
             </div>
-            )
-          }
+             )
+          } 
 
           
           
 
-          {spindatos &&(
+        {spindatos &&(
             <Cargadatos setSpindato={setSpindato}></Cargadatos>
           )
 
