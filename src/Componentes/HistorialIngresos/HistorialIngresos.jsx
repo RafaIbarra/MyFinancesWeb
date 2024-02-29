@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {  Table, Typography,Divider,Form,Input   } from 'antd';
+import { Navigate, useNavigate } from "react-router-dom";
 import Generarpeticion from '../../peticiones/apipeticiones';
+
 import './historialingreso.css'
 const { Text } = Typography;
 
 function HistorialIngresos(){
+    const navigate=useNavigate()
     const [dataingresosoriginal,setDataingresosoriginal]=useState([])
     const [dataingresos,setDataingresos]=useState([])
     const [dataagrupacion,setDataagrupacion]=useState([])
@@ -57,7 +60,7 @@ function HistorialIngresos(){
                       
                       elemento.key = elemento.id;
                     })
-                    console.log(registros)
+                    
                     setDataingresos(registros)
                     setDataingresosoriginal(registros)
                     const agrupacion=result['data']['agrupados']
