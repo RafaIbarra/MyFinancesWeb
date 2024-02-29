@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {  Table, Typography,Divider,Form,Input   } from 'antd';
+import {  Table, Typography,Divider,InputNumber,Input,Select } from 'antd';
+import FormItem from 'antd/es/form/FormItem';
 import { Navigate, useNavigate } from "react-router-dom";
 import Generarpeticion from '../../peticiones/apipeticiones';
 
@@ -13,6 +14,11 @@ function HistorialIngresos(){
     const [dataagrupacion,setDataagrupacion]=useState([])
     const [textobusqueda,setTextobusqueda]=useState('')
     const [customSize,setCustomSize]=useState('10')
+    const [cantidadresultado,setCantidadresultado]=useState(0)
+    const [montoresultado,setMontoresultado]=useState(0)
+    const [busquedaactiva,setBusquedaactiva]=useState(false)
+    const [annos,setAnnos]=useState([])
+    const [meses,setMeses]=useState([])
     const columns=[
       { title: 'Descripcion',dataIndex: 'NombreIngreso',key: 'Descripcion_i'},
       { title: 'Tipo',dataIndex: 'TipoIngreso',key: 'Tipo_i'},
@@ -36,7 +42,18 @@ function HistorialIngresos(){
       
       const arrayencontrado=dataingresosoriginal.filter(item=> item.NombreIngreso.toLowerCase().includes(valor_busqueda))
       // console.log(arrayencontrado)
+      let totalingreso=0
+      arrayencontrado.forEach(({ monto_ingreso }) => {totalingreso += monto_ingreso})
       setDataingresos(arrayencontrado)
+      setCantidadresultado(arrayencontrado.length)
+      if (valor_busqueda.length > 0){
+        
+        setBusquedaactiva(true)
+      }else{
+        
+        setBusquedaactiva(false)
+      }
+      setMontoresultado(totalingreso)
     }
 
     useEffect(() => {
@@ -64,7 +81,30 @@ function HistorialIngresos(){
                     setDataingresos(registros)
                     setDataingresosoriginal(registros)
                     const agrupacion=result['data']['agrupados']
+
                     console.log(agrupacion)
+                    const data_anos=[]
+                    const lista_anos = agrupacion.map(item => item.AnnoIngreso);
+                    
+                    lista_anos.forEach(item => {
+                    
+                      if(data_anos.length===0){
+                        data_anos.push({ anno: item });
+
+                      }else {
+                        const existeValor = data_anos.some(elemento => elemento.anno === item)
+                        if(!existeValor){
+                          data_anos.push({ anno: item });
+                        }
+                      }
+
+                      
+                      
+                      
+                    });
+                    setAnnos(data_anos)
+                  
+                    
                     if(Object.keys(agrupacion).length>0){
 
                       agrupacion.forEach((ele) => {
@@ -114,7 +154,44 @@ function HistorialIngresos(){
                 
                       <div className='contenedor-sub' key={x.key}>
                         <div className='texo-contenedor'>
-                          <h4 style={{marginLeft:'30px',marginBottom: '0.5px'}}>{x.AnnoIngreso} {x.MesIngreso}</h4>
+                          <h5 > {x.NombreMesIngreso} {x.AnnoIngreso} </h5>
+                          <FormItem label="Total Egreso"
+                          style={{marginBottom:'0px'}}
+                          >
+
+                            <InputNumber
+                                    
+                                    value={`Gs. ${Number(x.SumaMonto).toLocaleString('es-ES')}`}
+                                    disabled
+                                    
+                                    style={{
+                                      width: '100%',
+                                      height:'28px',
+                                      backgroundColor:' rgb(251, 249, 248)',
+                                      color:'black',
+                                      
+                                      }}
+                                />
+                          </FormItem>
+                          <FormItem label="Cantidad Registros"
+                          size="small"
+                          style={{marginBottom:'0px'}}
+                          >
+
+                            <InputNumber
+                                    
+                                    value={x.ConteoRegistros}
+                                    disabled
+                                    
+                                    style={{
+                                    width: '30%',
+                                    height:'28px',
+                                    backgroundColor:' rgb(251, 249, 248)',
+                                    color:'black',
+                                    
+                                    }}
+                                />
+                          </FormItem>
                         </div>
                           <div className='texo-tabla'> 
   
@@ -141,8 +218,61 @@ function HistorialIngresos(){
               })}
           </div>
 
-            <div>
-              <Input placeholder='ingreso busqueda' onChange={tomarbusqueda} style={{width:'100%'}} ></Input>
+            <div className='contenedor-busqueda'>
+            
+              <FormItem>
+
+                <Input placeholder='ingreso busqueda' onChange={tomarbusqueda} style={{width:'200px',height:'30px'}} ></Input>
+              </FormItem>
+
+
+
+                <FormItem label="Categoria">
+
+                  <Select name='listameses'
+                    style={{ width: 200 }}
+                  >
+                        
+                        {dataagrupacion &&  dataagrupacion.map((g) => (
+                            <Select.Option key={g.MesIngreso} value={g.MesIngreso}>
+                                {g.MesIngreso}
+                            </Select.Option>
+                        ))}
+                  </Select>
+                </FormItem>
+                <FormItem label="Categoria">
+
+                  <Select name='listameses'
+                    style={{ width: 200 }}
+                  >
+                        
+                        {annos &&  annos.map((g) => (
+                            <Select.Option key={g.anno} value={g.anno}>
+                                {g.anno}
+                            </Select.Option>
+                        ))}
+                  </Select>
+                </FormItem>
+                <FormItem label="Categoria">
+
+                  <Select name='listameses'
+                    style={{ width: 200 }}
+                  >
+                        
+                        {dataagrupacion &&  dataagrupacion.map((g) => (
+                            <Select.Option key={g.meses} value={g.meses}>
+                                {g.meses}
+                            </Select.Option>
+                        ))}
+                  </Select>
+                </FormItem>
+                {busquedaactiva &&(
+
+                  <p>
+                    La cantidad de coincidencias: {cantidadresultado} con un valore de {`Gs. ${Number(montoresultado).toLocaleString('es-ES')}`}
+                  </p>
+                )
+                }
             </div>
         </div>
       );

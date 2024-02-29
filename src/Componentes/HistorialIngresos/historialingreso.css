@@ -1,8 +1,28 @@
+.contenedor-principal{
+    height: calc(93vh - 10px);
+    width: 100%;
+    display: flex;
+    overflow-y: auto;
+}
+
+.contenedor-principal-datos{
+    background-color: rgb(244, 246, 248);
+    width: 70%;
+    padding: 10px;
+    border-right: 1px;
+    border-right-color: rgb(223, 216, 216);
+    border-right-style:solid; 
+    height: 100%;
+    overflow-y: auto;
+    
+}
+
 .contenedor-sub{
     width: 1000px;
     /* height: 300px;  */
     max-height: 300px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow: hidden; 
     margin-bottom: 15px;
     margin-left: 20px;
     margin-top: 10px;
@@ -20,24 +40,52 @@
     /* margin-left: 50px; */
     background-color:  rgb(251, 249, 248);
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    display: flex;
+    gap: 20px;
+    /* margin-top: 5px; */
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
 }
 
-.contenedor-principal-datos{
-    background-color: rgb(244, 246, 248);
-    padding: 10px;
-    border-right: 1px;
-    border-right-color: rgb(223, 216, 216);
-    border-right-style:solid; 
+
+.contenedor-principal-datos::-webkit-scrollbar {
+    width: 5px; /* Ancho de la barra de desplazamiento */
     
-}
+  }
+  
+  .contenedor-principal-datos:hover::-webkit-scrollbar {
+    opacity: 1; /* Hace visible la barra de desplazamiento al pasar el ratón sobre el contenedor */
+  }
+  
+  .contenedor-principal-datos::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color de la barra de desplazamiento */
+    border-radius: 6px; /* Borde redondeado de la barra de desplazamiento */
+  }
+  
+  .contenedor-principal-datos::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Cambia el color de la barra de desplazamiento al pasar el ratón */
+  }
+  
+  .contenedor-principal-datos::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Color del fondo de la barra de desplazamiento */
+  }
 
 .texo-tabla{
     padding-left: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
 }
-.contenedor-principal{
-    height: 1000px;
+
+.contenedor-busqueda{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border-width: 3px;
+    border-color: red;
+    border-style: dotted; */
+    width: 30%;
+    
 }
