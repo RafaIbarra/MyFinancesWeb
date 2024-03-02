@@ -36,6 +36,10 @@ function Gastos(){
 
     const [cargarcomponentesgasto,setCargarcomponentesgasto]=useState(false)
 
+    const [categoriasagrupadas,setCategoriasagrupadas]=useState([])
+
+    
+
     const columns=[
         { title: 'Codigo',
           dataIndex: 'id',
@@ -72,23 +76,15 @@ function Gastos(){
           onFilter: (value, record) => record.DescripcionTipoGasto.indexOf(value) === 0,
         },
 
-
-
         { title: 'Categoria',
           dataIndex: 'DescripcionCategoriaGasto',
           key: 'DescripcionCategoriaGasto',
-          filters: [
-            {
-              text: 'Productos',
-              value: 'Productos',
-            },
-            {
-              text: 'Servicios',
-              value: 'Servicios',
-            },
-            
-          ],
-
+          
+          filters: categoriasagrupadas.map(categoria => ({
+            text: categoria,
+            value: categoria,
+          })),
+          
           onFilter: (value, record) => record.DescripcionCategoriaGasto.indexOf(value) === 0,
           sorter: (a, b) => a.DescripcionCategoriaGasto.localeCompare(b.DescripcionCategoriaGasto),
 
@@ -199,11 +195,29 @@ function Gastos(){
                     
                     setGastos(registros)
                     
+                   
+                    const datos_categorias=[]
+                    const lista_categorias = registros.map(item => item.DescripcionCategoriaGasto);
+                    lista_categorias.forEach(item => {
                     
-                    }
-                    else{
+                      if(lista_categorias.length===0){
+                        datos_categorias.push(item);
+
+                      }else {
+                        const existeValor = datos_categorias.some(elemento => elemento === item)
+                        if(!existeValor){
+                          datos_categorias.push(item);
+                        }
+                      }
+                    })
+
+                    
+                    setCategoriasagrupadas(datos_categorias)
+
+                  }else{
                     
                       setGastos([])
+                      setCategoriasagrupadas([])
                     
                     }
                 

@@ -33,6 +33,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
     const [errorcantidadunica, setErrorcantidadunica]=useState(true)
     const [mesajecantidadunica, setMesajecantidadunica]=useState('')
     const [modoedicion,setModoedicion]=useState(false)
+    const [categoriasagrupadas,setCategoriasagrupadas]=useState([])
     
     
     const columns=[
@@ -62,17 +63,10 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
       { title: 'Categoria',
         dataIndex: 'CategoriaGasto', 
         key: 'DetalleEgreso_Categoria',
-        filters: [
-          {
-            text: 'Productos',
-            value: 'Productos',
-          },
-          {
-            text: 'Servicios',
-            value: 'Servicios',
-          },
-          
-        ],
+        filters: categoriasagrupadas.map(categoria => ({
+          text: categoria,
+          value: categoria,
+        })),
 
         onFilter: (value, record) => record.CategoriaGasto.indexOf(value) === 0,
         sorter: (a, b) => a.CategoriaGasto.localeCompare(b.CategoriaGasto),
@@ -122,12 +116,29 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
               registros.forEach(({ monto_gasto }) => {totalgasto += monto_gasto,cantgasto+=1})
               setMontototalegreso(totalgasto)
               setcanttotalegreso(cantgasto)
+              
               setDetalle(registros)
+              const datos_categorias=[]
+              const lista_categorias = registros.map(item => item.CategoriaGasto);
+              lista_categorias.forEach(item => {
+              
+                if(lista_categorias.length===0){
+                  datos_categorias.push(item);
+
+                }else {
+                  const existeValor = datos_categorias.some(elemento => elemento === item)
+                  if(!existeValor){
+                    datos_categorias.push(item);
+                  }
+                }
+              })
+              setCategoriasagrupadas(datos_categorias)
 
             }else{
               setDetalle([])
               setMontototalegreso(0)
               setcanttotalegreso(0)
+              setCategoriasagrupadas([])
               
             }
             setSelectedRowKeys([])

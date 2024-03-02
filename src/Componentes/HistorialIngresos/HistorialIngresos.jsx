@@ -27,7 +27,7 @@ function HistorialIngresos(){
     
     const [categoriasel,setCategoriasel]=useState("0")
     
-    const [textop,setTextop]=useState('busqueda')
+    const [textop,setTextop]=useState('')
     
     const columns=[
       { title: 'Descripcion',dataIndex: 'NombreIngreso',key: 'Descripcion_i'},
@@ -68,10 +68,11 @@ function HistorialIngresos(){
       setMontoresultado(totalingreso)
       setDataingresos(arrayencontrado)
       setCantidadresultado(arrayencontrado.length)
+      
       setBusquedaactiva(true)
 
       // const valordatos=`La cantidad de coincidencias: {cantidadresultado} con un valor de Gs. ${Number(montoresultado).toLocaleString('es-ES')}`}
-      const valordatos=`La cantidad de coincidencias: ${cantidadresultado} con un valor de Gs. ${Number(montoresultado).toLocaleString('es-ES')}`
+      const valordatos=`La cantidad de coincidencias: ${arrayencontrado.length} con un valor de Gs. ${Number(totalingreso).toLocaleString('es-ES')}`
       setTextop(valordatos)
 
 
