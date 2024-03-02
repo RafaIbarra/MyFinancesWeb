@@ -138,6 +138,7 @@ function ModalRegistroIngreso({
           if (respuesta === 200) {
             // setDatosgastos(result['data'])
             const lista=result['data']
+            
             const listafijos = lista.filter((fij) => fij.tipoproducto === 1);
             const listasocacionales = lista.filter((oca) => oca.tipoproducto === 2);
             setProductosfijos(listafijos)

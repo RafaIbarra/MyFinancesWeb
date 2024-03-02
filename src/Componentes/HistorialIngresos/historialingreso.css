@@ -87,5 +87,15 @@
     border-color: red;
     border-style: dotted; */
     width: 30%;
+    position: relative;
     
+}
+
+.contenedor-busqueda-opciones{
+  /* border-color: #555;
+  border-width: 3px;
+  border-style: dashed; */
+  display: flex;
+  flex-direction: column;
+  
 }

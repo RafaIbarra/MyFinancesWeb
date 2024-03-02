@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import { HomeOutlined,SwapOutlined,DiffOutlined,SoundOutlined,InteractionOutlined,BarChartOutlined,
-        FileUnknownOutlined,CheckOutlined,RightOutlined,UserOutlined,DownOutlined,FallOutlined,RiseOutlined
+        FileUnknownOutlined,CheckOutlined,RightOutlined,UserOutlined,DownOutlined,FallOutlined,RiseOutlined,
+        AlignLeftOutlined 
       } from '@ant-design/icons';
 
 import { Button,Menu,message, Space,Dropdown   } from 'antd';
@@ -30,7 +31,8 @@ const navegaciones={
   'ConceptosIngresos':'/Productos',
   'ConceptosEgresos':'/Gastos',
   'MovimientosIngresos':'/HistorialIngresos',
-  'EstadisticasEgresos':'/EstadisticasGasto'
+  'EstadisticasEgresos':'/EstadisticasGasto',
+  'CategoriaEgresos':'/CategoriaGastos'
   
 
 }
@@ -78,6 +80,7 @@ function NavBar({sesionname}){
         key: 'Inicio',
         icon:<HomeOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono,   color: keysel === 'Inicio' ? colorsel: colordefault }}/>,      
       },
+
       
       {
         label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'ConceptosIngresos' ? colorsel : colordefault }} >Conceptos Ingresos</p>),
@@ -85,9 +88,17 @@ function NavBar({sesionname}){
         
         key: 'ConceptosIngresos',
         icon:<RiseOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono , color: keysel === 'ConceptosIngresos' ? colorsel : colordefault }}/>,      
-       
+        
       },
       
+      {
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'CategoriaEgresos' ? colorsel : colordefault }} >Categoria Egresos</p>),
+        // label:'Inicio',
+        
+        key: 'CategoriaEgresos',
+        icon:<AlignLeftOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono , color: keysel === 'CategoriaEgresos' ? colorsel : colordefault }}/>,      
+       
+      },
       {
         label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'ConceptosEgresos' ? colorsel : colordefault}} >Conceptos Egresos</p>),
         // label:'Inicio',

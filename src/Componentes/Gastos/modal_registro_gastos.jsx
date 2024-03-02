@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button,Form,Input,InputNumber,Radio,Modal,Typography,notification } from 'antd';
+import {Button,Form,Input,InputNumber,Radio,Modal,Typography,notification,Select } from 'antd';
 import Generarpeticion from '../../peticiones/apipeticiones';
 import { Navigate, useNavigate } from "react-router-dom";
 import { WarningOutlined} from '@ant-design/icons';
@@ -36,9 +36,11 @@ function ModalRegistroGasto({
     const [categoriagasto,setCategoriagasto]=useState(0)
     const [nombregasto,setNombregasto]=useState('')
 
+    const [listacategorias,setListacategorias]=useState([])
+
     const [valoresdefaultgasto,setValoresdefaultgasto]=useState([])
     const [marcatipogasto,setMarcatipogasto]=useState('0')
-    const [marcacategoriagasto,setMarcacategoriagasto]=useState('0')
+    
 
     const [modoactualizaciongasto,setModoactualizaciongasto]=useState(false)
     const [ready, setReady]=useState(false)
@@ -46,7 +48,7 @@ function ModalRegistroGasto({
     const cargarvaloresdefault=()=>{
     
         if(Object.keys(detalleselecciongasto).length>0){
-  
+            
             setCodigogasto(detalleselecciongasto[0]['id'])
             setTipogasto(detalleselecciongasto[0]['tipogasto'])
             setCategoriagasto(detalleselecciongasto[0]['categoria'])
@@ -56,7 +58,7 @@ function ModalRegistroGasto({
             setModoactualizaciongasto(true)     
             setValoresdefaultgasto(detalleselecciongasto)
             setMarcatipogasto(detalleselecciongasto[0]['tipogasto'].toString())
-            setMarcacategoriagasto(detalleselecciongasto[0]['categoria'].toString())
+            
 
 
             
@@ -103,8 +105,8 @@ function ModalRegistroGasto({
             
         }
 
-    const seleccioncategoria=(event)=>{
-            const valor=parseInt(event.target.value)
+    const seleccioncategoria=(value)=>{
+            const valor=parseInt(value)
             setCategoriagasto(valor)
             
             
@@ -159,12 +161,24 @@ function ModalRegistroGasto({
 
     useEffect(() => {
 
-        const cargardatos =  () => {
+        const cargardatos = async () => {
             
             
+            const body = {};
+            const endpoint='MisCategorias/'
+            const result = await Generarpeticion(endpoint, 'POST', body);
+
+            const respuesta=result['resp']
+            if (respuesta === 200) {
+                
+                setListacategorias(result['data'])
+                cargarvaloresdefault()
+                setReady(true)
+            } else if(respuesta === 403 || respuesta === 401){
             
-            cargarvaloresdefault()
-            setReady(true)
+                navigate('/')
+    
+                }
             
         };
     
@@ -214,12 +228,30 @@ function ModalRegistroGasto({
                             </Radio.Group>
                         </Form.Item>
 
-                        <Form.Item label="Categoria Gasto">
-                            <Radio.Group onChange={seleccioncategoria} defaultValue={marcacategoriagasto}>
-                            <Radio value="1" disabled={modoediciongasto}> Productos </Radio>
-                            <Radio value="2" disabled={modoediciongasto} > Servicios </Radio>
-                            </Radio.Group>
-                        </Form.Item>
+                        <Form.Item label="Categorias"name="Categorias"
+                                   rules={[
+                                       {
+                                       required: true,
+                                       message: 'Favor seleccione!',
+                                       },
+                                   ]}
+                       >
+                           <Select 
+                                name="listacategoria" 
+                                // value={categoriasel}
+                                disabled={modoediciongasto}
+                                defaultValue={modoactualizaciongasto ? valoresdefaultgasto[0]['DescripcionCategoriaGasto'] : ''} 
+                                onChange={seleccioncategoria}
+                                >
+                               <Select.Option  value="">Seleccionar categoria</Select.Option>
+                               {listacategorias &&  listacategorias.map((g) => (
+                                   <Select.Option key={g.nombre_categoria+g.id } value={g.id}>
+                                       {g.nombre_categoria}
+                                   </Select.Option>
+                               ))}
+                           </Select>
+                           
+                       </Form.Item>
 
                         
                         <Form.Item label="Nombre Gastos" name="NombreGasto"

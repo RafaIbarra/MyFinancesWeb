@@ -90,7 +90,7 @@ function Gastos(){
           ],
 
           onFilter: (value, record) => record.DescripcionCategoriaGasto.indexOf(value) === 0,
-
+          sorter: (a, b) => a.DescripcionCategoriaGasto.localeCompare(b.DescripcionCategoriaGasto),
 
         },
 

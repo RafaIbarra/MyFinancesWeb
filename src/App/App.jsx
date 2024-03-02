@@ -11,6 +11,7 @@ import CloseSesion from "../Componentes/Closesesion/closesesion";
 import RegistroUsuario from "../Componentes/RegistroUsuario/registrousuario";
 import HistorialIngresos from "../Componentes/HistorialIngresos/HistorialIngresos";
 import EstadisticasGasto from "../Componentes/Estadisticas/EstadisticasGastos/EstadisticaGasto";
+import CategoriaGasto from "../Componentes/CategoriaGastos/CategoriaGastos";
 import ComprobarStorage from "./verificarstorage";
 
 function App (){
@@ -59,6 +60,7 @@ return(
                     <Route path="/RegistroEgreso" element={<RegistroEgreso />} /> */}
                     <Route path="/Productos" element={<Productosfinancieros />} />
                     <Route path="/Gastos" element={<Gastos />} />
+                    <Route path="/CategoriaGastos" element={<CategoriaGasto />} />
                     <Route path="/HistorialIngresos" element={<HistorialIngresos />} />
                     <Route path="/EstadisticasGasto" element={<EstadisticasGasto />} />
                     

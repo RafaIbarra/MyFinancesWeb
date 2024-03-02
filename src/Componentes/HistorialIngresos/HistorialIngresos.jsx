@@ -1,24 +1,34 @@
-import React, {useEffect, useState} from 'react';
-import {  Table, Typography,Divider,InputNumber,Input,Select } from 'antd';
+import React, {useEffect, useState } from 'react';
+import {  Table, Typography,Divider,InputNumber,Input,Select,Radio,Button,Tooltip  } from 'antd';
+import { AudioOutlined,SearchOutlined,RetweetOutlined  } from '@ant-design/icons';
 import FormItem from 'antd/es/form/FormItem';
 import { Navigate, useNavigate } from "react-router-dom";
 import Generarpeticion from '../../peticiones/apipeticiones';
 
 import './historialingreso.css'
 const { Text } = Typography;
-
+const { Search } = Input;
 function HistorialIngresos(){
     const navigate=useNavigate()
     const [dataingresosoriginal,setDataingresosoriginal]=useState([])
     const [dataingresos,setDataingresos]=useState([])
     const [dataagrupacion,setDataagrupacion]=useState([])
-    const [textobusqueda,setTextobusqueda]=useState('')
+    
     const [customSize,setCustomSize]=useState('10')
     const [cantidadresultado,setCantidadresultado]=useState(0)
     const [montoresultado,setMontoresultado]=useState(0)
     const [busquedaactiva,setBusquedaactiva]=useState(false)
     const [annos,setAnnos]=useState([])
     const [meses,setMeses]=useState([])
+
+    const [textobusqueda,setTextobusqueda]=useState('')
+    const [messel,setMessel]=useState(0)
+    const [annosel,setAnnosel]=useState(0)
+    
+    const [categoriasel,setCategoriasel]=useState("0")
+    
+    const [textop,setTextop]=useState('busqueda')
+    
     const columns=[
       { title: 'Descripcion',dataIndex: 'NombreIngreso',key: 'Descripcion_i'},
       { title: 'Tipo',dataIndex: 'TipoIngreso',key: 'Tipo_i'},
@@ -36,26 +46,73 @@ function HistorialIngresos(){
       { title: 'Anotacion',dataIndex: 'anotacion',key: 'Anotacion_i'},
     ]
 
-    const tomarbusqueda=(event)=>{
-      const valor=event.target.value;
-      const valor_busqueda=valor.toLowerCase()
+    const realizarbusqueda =(palabra,anno_ver,mes_ver,cat_vert)=>{
+      let arrayencontrado=dataingresosoriginal.filter(item=> item.NombreIngreso.toLowerCase().includes(palabra))
       
-      const arrayencontrado=dataingresosoriginal.filter(item=> item.NombreIngreso.toLowerCase().includes(valor_busqueda))
-      // console.log(arrayencontrado)
+      if(mes_ver>0){
+        arrayencontrado=arrayencontrado.filter(item=> item.MesIngreso===mes_ver)
+      }
+      if(anno_ver>0){
+        arrayencontrado=arrayencontrado.filter(item=> item.AnnoIngreso===anno_ver)
+      }
+      if(cat_vert==="1"){
+        
+        arrayencontrado=arrayencontrado.filter(item=> item.TipoIngreso==="Fijo")
+      }
+      if(cat_vert==="2"){
+        
+        arrayencontrado=arrayencontrado.filter(item=> item.TipoIngreso==="Ocasionales")
+      }
       let totalingreso=0
       arrayencontrado.forEach(({ monto_ingreso }) => {totalingreso += monto_ingreso})
+      setMontoresultado(totalingreso)
       setDataingresos(arrayencontrado)
       setCantidadresultado(arrayencontrado.length)
-      if (valor_busqueda.length > 0){
-        
-        setBusquedaactiva(true)
-      }else{
-        
-        setBusquedaactiva(false)
-      }
-      setMontoresultado(totalingreso)
-    }
+      setBusquedaactiva(true)
 
+      // const valordatos=`La cantidad de coincidencias: {cantidadresultado} con un valor de Gs. ${Number(montoresultado).toLocaleString('es-ES')}`}
+      const valordatos=`La cantidad de coincidencias: ${cantidadresultado} con un valor de Gs. ${Number(montoresultado).toLocaleString('es-ES')}`
+      setTextop(valordatos)
+
+
+    }
+   
+    const reestablecer_busqueda=()=>{
+      
+      realizarbusqueda('',0,0,0)
+      setTextobusqueda('')
+      setMessel(0)
+      setAnnosel(0)
+      setCategoriasel("0")
+      setBusquedaactiva(false)
+      setTextop('')
+
+    }
+    const textosel=(event)=>{
+      const valor=event.target.value;
+      const valor_busqueda=valor.toLowerCase()
+      setTextobusqueda(valor_busqueda)
+      realizarbusqueda(valor_busqueda,annosel,messel,categoriasel)
+    }
+    const seleccionarmes=(value)=>{
+      
+      setMessel(value)
+      realizarbusqueda(textobusqueda,annosel,value,categoriasel)
+
+    }
+    const seleccionaranno= (value)=>{
+      
+      setAnnosel(value)
+      
+      realizarbusqueda(textobusqueda,value,messel,categoriasel)
+    }
+    const seleccionarcategoria=(event)=>{
+
+      const valor=event.target.value
+      setCategoriasel(event.target.value)
+      realizarbusqueda(textobusqueda,annosel,messel,valor)
+      
+    }
     useEffect(() => {
         
         const cargardatos = async () => {
@@ -70,7 +127,7 @@ function HistorialIngresos(){
 
                 const registros=result['data']['detalles']
                 
-                
+               
                 
                 if(Object.keys(registros).length>0){
                     registros.forEach((elemento) => {
@@ -82,7 +139,7 @@ function HistorialIngresos(){
                     setDataingresosoriginal(registros)
                     const agrupacion=result['data']['agrupados']
 
-                    console.log(agrupacion)
+                    
                     const data_anos=[]
                     const lista_anos = agrupacion.map(item => item.AnnoIngreso);
                     
@@ -103,7 +160,7 @@ function HistorialIngresos(){
                       
                     });
                     setAnnos(data_anos)
-                  
+                    setMeses(result['data']['datosmeses'])
                     
                     if(Object.keys(agrupacion).length>0){
 
@@ -138,6 +195,7 @@ function HistorialIngresos(){
           
     
         cargardatos();
+        
       }, []);
 
       return (
@@ -218,62 +276,81 @@ function HistorialIngresos(){
               })}
           </div>
 
-            <div className='contenedor-busqueda'>
-            
+          <div className='contenedor-busqueda'>
+
+            <div className='contenedor-busqueda-opciones'>
               <FormItem>
 
-                <Input placeholder='ingreso busqueda' onChange={tomarbusqueda} style={{width:'200px',height:'30px'}} ></Input>
+                {/* <Input placeholder='ingreso busqueda' onChange={textosel} style={{width:'100%',height:'30px'}} ></Input> */}
+                <Search
+                  placeholder="Concepto busqueda"
+                  onChange={textosel} style={{width:'100%',height:'30px'}}
+                  
+                  value={textobusqueda}
+                />
               </FormItem>
 
+              <FormItem label="Categoria"  >
+                  <Radio.Group onChange={seleccionarcategoria} value={categoriasel}>
+                    <Radio value='1'> Fijo </Radio>
+                    <Radio value='2'> Ocasionales </Radio>
+                    <Radio value='0'> Todas </Radio>
+                  </Radio.Group>
+              </FormItem>
+              
+              <FormItem label="Años">
 
+                <Select name='listaanos'
+                  style={{ width: '100%' }}
+                  onChange={seleccionaranno}
+                  value={annosel}
+                >
+                      <Select.Option key='anno0' value={0}>
+                              {'Todos'}
+                      </Select.Option>
+                      {annos &&  annos.map((g) => (
+                          <Select.Option key={g.anno} value={g.anno}>
+                              {g.anno}
+                          </Select.Option>
+                      ))}
+                </Select>
+              </FormItem>
 
-                <FormItem label="Categoria">
+              <FormItem label="Mes" style={{marginBottom:'10px'}}>
 
-                  <Select name='listameses'
-                    style={{ width: 200 }}
-                  >
-                        
-                        {dataagrupacion &&  dataagrupacion.map((g) => (
-                            <Select.Option key={g.MesIngreso} value={g.MesIngreso}>
-                                {g.MesIngreso}
-                            </Select.Option>
-                        ))}
-                  </Select>
-                </FormItem>
-                <FormItem label="Categoria">
-
-                  <Select name='listameses'
-                    style={{ width: 200 }}
-                  >
-                        
-                        {annos &&  annos.map((g) => (
-                            <Select.Option key={g.anno} value={g.anno}>
-                                {g.anno}
-                            </Select.Option>
-                        ))}
-                  </Select>
-                </FormItem>
-                <FormItem label="Categoria">
-
-                  <Select name='listameses'
-                    style={{ width: 200 }}
-                  >
-                        
-                        {dataagrupacion &&  dataagrupacion.map((g) => (
-                            <Select.Option key={g.meses} value={g.meses}>
-                                {g.meses}
-                            </Select.Option>
-                        ))}
-                  </Select>
-                </FormItem>
-                {busquedaactiva &&(
-
-                  <p>
-                    La cantidad de coincidencias: {cantidadresultado} con un valore de {`Gs. ${Number(montoresultado).toLocaleString('es-ES')}`}
-                  </p>
-                )
-                }
+                <Select name='listameses'
+                  style={{ width: '100%' }}
+                  onChange={seleccionarmes}
+                  value={messel}
+                >
+                      <Select.Option key='mes0' value={0}>
+                              {'Todos'}
+                      </Select.Option>
+                      {meses &&  meses.map((g) => (
+                          <Select.Option key={g.numero_mes} value={g.numero_mes}>
+                              {g.nombre_mes}
+                          </Select.Option>
+                      ))}
+                </Select>
+              </FormItem>
             </div>
+              <Tooltip title="Reestablecer busqueda">
+                <Button type="primary" 
+                      style={{width:'50px',height:'50px',marginBottom:'10px',marginTop:'0px'}} 
+                      shape="circle" 
+                      onClick={reestablecer_busqueda}
+                      icon={<RetweetOutlined style={{fontSize:'30px'}} />} />
+              </Tooltip>
+          
+
+              
+
+                <p>
+                  {textop}
+                </p>
+              
+             
+          </div>
         </div>
       );
 

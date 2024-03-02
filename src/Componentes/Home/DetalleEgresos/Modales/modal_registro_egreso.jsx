@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button,Form,Input,InputNumber,Select,Radio,Modal,Typography,notification } from 'antd';
+import {Button,Form,Input,InputNumber,Select,Modal,Typography,notification } from 'antd';
 import {DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import { WarningOutlined} from '@ant-design/icons';
@@ -45,8 +45,8 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
   const [annoprincipal,setAnnoprincipal]=useState(0)
   const [fechaegreso, setFechaegreso] = useState(null);
   const[datosgastos,setDatosgastos]=useState(null)
-  const[gastosproductos,setGastosproductos]=useState(null)
-  const[gastosservicios,setGastosservicios]=useState(null)
+  
+  const [categoriasel,setCategoriasel]=useState(0)
   const[gasttosel,setGastosel]=useState(0)
   const[monto,setMonto]=useState(0)
   const[anotacion,setAnotacion]=useState('')
@@ -55,11 +55,14 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
   const [ready, setReady]=useState(false)
   const [valoresdefault,setValoresdefault]=useState([])
   const [modoactualizacion,setModoactualizacion]=useState(false)
-  const [marcaradiobutton,serMarcaradiobutton]=useState('0')
-  const [titulo,setTitulo]=useState('')
   
+  const [titulo,setTitulo]=useState('')
 
-  const cargarvaloresdefault=(listproduc,listserv)=>{
+  const [listacategorias,setListacategorias]=useState([])
+  const [listagastos,setListagastos]=useState([])
+  
+  
+  const cargarvaloresdefault=(lista_datos_gastos)=>{
     
     if(Object.keys(detalleseleccion).length>0){
       setCodigoegreso(detalleseleccion[0]['id'])
@@ -67,17 +70,16 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
       setAnotacion(detalleseleccion[0]['anotacion'])
       setFechaegreso(detalleseleccion[0]['fecha_gasto'])
       setGastosel(detalleseleccion[0]['gasto'])
+      setCategoriasel(detalleseleccion[0]['CodigoCategoriaGasto'])
       setModoactualizacion(true)     
       setValoresdefault(detalleseleccion)
 
-      if(detalleseleccion[0]['CategoriaGasto']==='Servicios'){
-        serMarcaradiobutton('2')
-        setDatosgastos(listserv)
-      }else{
-        serMarcaradiobutton('1')
-        setDatosgastos(listproduc)
-      }
       
+      const valor=detalleseleccion[0]['CodigoCategoriaGasto']
+      const lista_gastos_categoria = lista_datos_gastos.filter((pro) => pro.categoria === valor)
+      setDatosgastos(lista_gastos_categoria)
+      
+
       if(modoedicion===false){
         
         setTitulo('ACTUALIZAR EL EGRESO')
@@ -124,19 +126,17 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
           setAnnoprincipal(anno_storage)
 
           const body = {};
-          const endpoint='MisGastos/'
+          const endpoint='MisDatosRegistroEgreso/'
           const result = await Generarpeticion(endpoint, 'POST', body);
           
           const respuesta=result['resp']
           if (respuesta === 200) {
-            // setDatosgastos(result['data'])
-            const lista=result['data']
-            const listaproductos = lista.filter((pro) => pro.categoria === 1);
-            const listaservicios = lista.filter((ser) => ser.categoria === 2);
             
-            setGastosproductos(listaproductos)
-            setGastosservicios(listaservicios)
-            cargarvaloresdefault(listaproductos,listaservicios)
+            setListacategorias(result['data']['datoscategorias'])
+            setListagastos(result['data']['datosgastos'])
+            const lista_datos_gastos=result['data']['datosgastos']
+            
+            cargarvaloresdefault(lista_datos_gastos)
             setReady(true)
             
           } else if(respuesta === 403 || respuesta === 401){
@@ -150,18 +150,14 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
       }, []);
 
 
-  const tipocategoria=(event)=>{
+  const tipocategoria=(value)=>{
         setDatosgastos(null)
         setGastosel(0)
         
-        const valor=parseInt(event.target.value)
-        if (valor===1){
-          
-          setDatosgastos(gastosproductos)
-        }else if(valor===2){
-          
-          setDatosgastos(gastosservicios)
-        }
+        const valor=parseInt(value)
+        
+      const lista_gastos_categoria = listagastos.filter((pro) => pro.categoria === valor)
+      setDatosgastos(lista_gastos_categoria)
         
       }
   const seleccionargasto=(value)=>{
@@ -300,14 +296,31 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
                               defaultValue={modoactualizacion ? valoresdefault[0]['id'] : 0} 
                               style={{width: '100%',}} disabled /> 
                       </Form.Item>
- 
- 
-                      <Form.Item label="Categoria" >
-                         <Radio.Group onChange={tipocategoria} defaultValue={marcaradiobutton}>
-                           <Radio value="1" disabled={modoedicion}> Productos </Radio>
-                           <Radio value="2" disabled={modoedicion}> Servicios </Radio>
-                         </Radio.Group>
-                      </Form.Item>
+
+                      <Form.Item label="Categorias"name="Categorias"
+                                   rules={[
+                                       {
+                                       required: true,
+                                       message: 'Favor seleccione!',
+                                       },
+                                   ]}
+                       >
+                           <Select 
+                                name="listacategoria" 
+                                value={categoriasel}
+                                disabled={modoedicion}
+                                defaultValue={modoactualizacion ? valoresdefault[0]['CategoriaGasto'] : ''} 
+                                onChange={tipocategoria}
+                                >
+                               <Select.Option  value="">Seleccionar categoria</Select.Option>
+                               {listacategorias &&  listacategorias.map((g) => (
+                                   <Select.Option key={g.nombre_categoria+g.id } value={g.id}>
+                                       {g.nombre_categoria}
+                                   </Select.Option>
+                               ))}
+                           </Select>
+                           
+                       </Form.Item>
  
                        
                        <Form.Item label="Gasto"name="Gasto"
@@ -392,7 +405,8 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
                                 disabled={modoedicion}
                                 />
                        </Form.Item>
-
+                        
+                        
 
 
                       {modoactualizacion && (

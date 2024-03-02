@@ -75,6 +75,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
         ],
 
         onFilter: (value, record) => record.CategoriaGasto.indexOf(value) === 0,
+        sorter: (a, b) => a.CategoriaGasto.localeCompare(b.CategoriaGasto),
 
       },
 
@@ -211,6 +212,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
         const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
         
         const detallesel=detalle.filter((item) => item.id ===ultimoElemento)
+        
         setDetalleseleccion(detallesel)
         setOpenregistroegreso(true)
         setModoedicion(false)
@@ -224,6 +226,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
         const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
         
         const detallesel=detalle.filter((item) => item.id ===ultimoElemento)
+        console.log(detallesel)
         setDetalleseleccion(detallesel)
         setOpenregistroegreso(true)
         setModoedicion(true)
