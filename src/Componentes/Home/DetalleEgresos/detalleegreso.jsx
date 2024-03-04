@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { Button, Table,Typography,notification,Space    } from 'antd';
 import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone,WarningOutlined,InfoOutlined,CheckOutlined } from '@ant-design/icons';
 import FormItem from 'antd/es/form/FormItem';
-import './detalleegreso.css'
+import numeral from 'numeral';
 
+import './detalleegreso.css'
 import ModalEliminarEgreso from './Modales/modal_eliminar_egreso'
 import ModalRegistroEgreso from './Modales/modal_registro_egreso';
 import GraficoEgresoso from './Grafico/graficoegresos';
@@ -34,6 +35,8 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
     const [mesajecantidadunica, setMesajecantidadunica]=useState('')
     const [modoedicion,setModoedicion]=useState(false)
     const [categoriasagrupadas,setCategoriasagrupadas]=useState([])
+    const [valoresseleccion,setValoresseleccion]=useState(0)
+    const [cantidadseleccion,setCantidadseleccion]=useState(0)
     
     
     const columns=[
@@ -76,13 +79,21 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
       { title: 'Egreso',
         dataIndex: 'monto_gasto',
         key: 'DetalleEgreso_Egreso',
+        sorter: (a, b) => a.monto_gasto - b.monto_gasto,
         render: (monto_gasto) => (
           <span>
-            Gs. {Number(monto_gasto).toLocaleString('es-ES')}
+            {/* Gs. {Number(monto_gasto).toLocaleString('es-ES')} */}
+            Gs. {numeral(monto_gasto).format('0,0')}
           </span>
         ),
       },
-      { title: 'Fecha Gasto',dataIndex: 'fecha_gasto',key: 'DetalleEgreso_FechaGasto'},
+      { title: 'Fecha Gasto',
+        dataIndex: 'fecha_gasto',
+        key: 'DetalleEgreso_FechaGasto',
+        sorter: (a, b) => new Date(a.fecha_gasto) - new Date(b.fecha_gasto),
+      }
+      ,
+
       { title: 'Fecha Registro',
         dataIndex: 'fecha_registro',
         key: 'DetalleEgreso_FechaRegistro',
@@ -179,8 +190,15 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
               setMesajecantidadunica('seleccionar el registro')
             }
          }
-
+        const resultadoFiltrado = detalle.filter(item => newSelectedRowKeys.includes(item.id))
+        
+        let totalgastosel=0
+        let cantgastosel=0
+        resultadoFiltrado.forEach(({ monto_gasto }) => {totalgastosel += monto_gasto,cantgastosel+=1})
+        
         setSelectedRowKeys(newSelectedRowKeys);
+        setValoresseleccion(totalgastosel)
+        setCantidadseleccion(cantgastosel)
         
       };
 
@@ -282,14 +300,26 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                   bordered 
               />
           
-              <div className='contenedor-resumen'>
-                  <FormItem >
+              <div className='contenedor-resumen-egreso'>
+                  <div>
+                    <p style={{fontSize:'12px',fontStyle:'italic', fontWeight:'bold',marginBottom:'0px' }}>
+                    {valoresseleccion > 0 ? `Total valor seleccionado Gs. ${Number(valoresseleccion).toLocaleString('es-ES')}` : ""}
+                    </p>
+
+                    <p style={{fontSize:'12px',fontStyle:'italic', fontWeight:'bold' }}>
+                    {valoresseleccion > 0 ? `Cant Registros: ${Number(cantidadseleccion).toLocaleString('es-ES')}` : ""}
+                    </p>
+
+                  </div>
+                 
+
+                  <FormItem style={{marginLeft:'25%',position: 'absolute'}}>
                     <Text strong>CANTIDAD REGISTROS: </Text>
                     <Text strong>   {Number(canttotalegreso).toLocaleString('es-ES')}</Text>
                       
                   </FormItem>
 
-                  <FormItem >
+                  <FormItem style={{marginLeft:'35%',position: 'absolute'}}>
                       <Text strong>TOTAL EGRESOS: </Text>
                       <Text strong>GS. {Number(montototalegreso).toLocaleString('es-ES')}</Text>
                       
