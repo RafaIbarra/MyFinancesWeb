@@ -32,7 +32,8 @@ const navegaciones={
   'ConceptosEgresos':'/Gastos',
   'MovimientosIngresos':'/HistorialIngresos',
   'EstadisticasEgresos':'/EstadisticasGasto',
-  'CategoriaEgresos':'/CategoriaGastos'
+  'CategoriaEgresos':'/CategoriaGastos',
+  'MovimientosEgresos':'/HistorialEgresos',
   
 
 }

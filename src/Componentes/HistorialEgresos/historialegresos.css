@@ -87,7 +87,7 @@
     border-color: red;
     border-style: dotted; */
     width: 30%;
-    position: relative;
+    /* position: relative; */
     
 }
 
@@ -97,5 +97,6 @@
   border-style: dashed; */
   display: flex;
   flex-direction: column;
+  width: 350px;
   
 }
