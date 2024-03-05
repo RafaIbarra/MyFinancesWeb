@@ -10,8 +10,12 @@ const Handelstorage=(opcion,item,valor)=>{
           datames:mesactual,
           dataanno:añoActual
         }
+        const datastats={
+          dataanno:añoActual
+        }
         
         localStorage.setItem('userdate', JSON.stringify(datadate))
+        localStorage.setItem('userstats', JSON.stringify(datastats))
 
     }
     const obtener=()=>{
@@ -55,10 +59,31 @@ const Handelstorage=(opcion,item,valor)=>{
       }
     }
 
+    const obtenerstats=()=>{
+        
+      const userLocalStorageStats = JSON.parse(localStorage.getItem('userstats'));
+      
+      if (userLocalStorageStats !== null){
+        return {
+          
+          dataanno: userLocalStorageStats.dataanno,
+          
+          
+        };
+      }else{
+        return {
+          
+          dataanno: 0,
+          
+        };
+      }
+    }
+
     const borrar=()=>{
       
       localStorage.removeItem("userdate")
       localStorage.removeItem("userData")
+      localStorage.removeItem("userstats")
     }
 
     const actualizardate =(item,valor)=>{
@@ -66,6 +91,13 @@ const Handelstorage=(opcion,item,valor)=>{
       datosActuales[item]=valor
       
       localStorage.setItem('userdate', JSON.stringify(datosActuales));
+    }
+
+    const actualizarstats =(item,valor)=>{
+      const datosActuales = JSON.parse(localStorage.getItem('userstats'))
+      datosActuales[item]=valor
+      
+      localStorage.setItem('userstats', JSON.stringify(datosActuales));
     }
     
     if (opcion === 'agregar') {
@@ -79,8 +111,15 @@ const Handelstorage=(opcion,item,valor)=>{
         let resultado=obtenerdate()
         return resultado
       }
+    else if(opcion === 'obtenerstats') {
+      let resultado=obtenerstats()
+      return resultado
+      }
     else if(opcion === 'actualizardate') {
           actualizardate(item,valor)
+      }
+    else if(opcion === 'actualizarstats') {
+      actualizarstats(item,valor)
       }
     else if(opcion === 'borrar') {
       borrar()

@@ -37,9 +37,13 @@ function PeriodosMaximos({datosperiodomaximos}){
             <div className='contenedor-estadistica-periodo-texto'>
 
                 <p style={{width: '100%'}}>
-                    {montomaximo > 0 ? `El monto maximo gastado en un periodo fue de Gs.  ${Number(montomaximo).toLocaleString('es-ES')}. 
-                    Se dio en el periododo ${periodomax}. Registrandose el gasto por ${cantregistromax} conceptos.
-                    Con un gasto promedio de Gs. ${Number(promediomaximo).toLocaleString('es-ES')} en estos ${cantidadperiodos} periodos.` : ""}
+                    { `El monto maximo gastado en un periodo fue de `}
+                    <strong><em>{` Gs. ${Number(montomaximo).toLocaleString('es-ES')}`}. </em></strong>
+                    { `Se dio en el periodo `}
+                    <strong><em>{`${periodomax}. `}</em></strong>
+                    { `Registrandose el gasto por ${cantregistromax} conceptos. Con un gasto promedio de `}
+                    <strong><em>{`Gs. ${Number(promediomaximo).toLocaleString('es-ES')}`} </em></strong>
+                    {`en estos ${cantidadperiodos} periodos.` }
                </p>
             </div>
             <div className='contenedor-imagen-periodo'>

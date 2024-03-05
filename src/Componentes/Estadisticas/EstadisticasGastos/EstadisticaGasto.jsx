@@ -2,17 +2,29 @@ import React, {useEffect, useState} from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
 import Generarpeticion from '../../../peticiones/apipeticiones';
 import PeriodosMaximos from './PeriodosMaximos/PeriodosMaximos';
+import Comportamiento from './Comportamiento/Comportamiento';
+import EstadisticasCabecera from '../EstaditicasCabecera';
+import Handelstorage from '../../../Storage/handelstorage';
+import Cargadatos
+ from '../../Home/Cargadatos';
+import {  Space,Divider,Button } from 'antd'
 function EstadisticasGasto(){
     const navigate=useNavigate()
-    const [imagen15, setImagen15] = useState(null);
+    // const [imagen15, setImagen15] = useState(null);
     const [datosperiodomaximos,setDatosperiodomaximos]=useState([])
+    const [datos15dias,setDatos15dias]=useState([])
     const [cargacompleta,setCargacompleta]=useState(false)
+    const [spindatos,setSpindato]=useState(false)
+    const [cargarestadisticas,setCargarestadisticas]=useState(false)
     useEffect(() => {
         
         const cargardatos = async () => {
-        
+            const datestorage=Handelstorage('obtenerstats');
+            
+            const anno_stats=datestorage['dataanno']
+            
             const body = {};
-            const endpoint='EstadisticasEgresos/0/0/'
+            const endpoint='EstadisticasEgresos/'+anno_stats+'/0/'
             const result = await Generarpeticion(endpoint, 'POST', body);
             
             const respuesta=result['resp']
@@ -30,14 +42,22 @@ function EstadisticasGasto(){
                 setDatosperiodomaximos(datos)
 
                 // -----DATOS PARA 15 dias---
+
                 // console.log(result['data'])
                 // console.log(result['data']['DataComportamientoGasto'][2]['grafico'])
-                setImagen15(result['data']['DataComportamientoGasto'][2]['grafico'])
-
-
-
-
-
+                // console.log(result['data']['DataComportamientoGasto'])
+                // console.log(result['data']['DataComportamientoGasto'][0]['DatosMayoCategoria'][0])
+                const datosmayoria=result['data']['DataComportamientoGasto'][0]['DatosMayoCategoria'][0]
+                const detalles=result['data']['DataComportamientoGasto'][1]['DetallePeriodo']
+                const grafico=result['data']['DataComportamientoGasto'][2]['grafico']
+                const data15={
+                    DatosMayorCategoria:datosmayoria,
+                    detalles:detalles,
+                    grafico:grafico
+                }
+                
+                setDatos15dias(data15)
+        
                 setCargacompleta(true)
 
                 
@@ -53,19 +73,33 @@ function EstadisticasGasto(){
           
     
         cargardatos();
-      }, []);
+      }, [cargarestadisticas]);
 
     return(
-        <div>
-            {cargacompleta &&(
-            <img 
-                    src={`data:image/png;base64,${imagen15}`}
-                    alt="Descripción de la imagen"
-                    className='imagen-periodo'
-                />)}
 
-            {cargacompleta &&(<PeriodosMaximos datosperiodomaximos={datosperiodomaximos}></PeriodosMaximos>)}
+        <div style={{width:'100%'}}>
+            
+            <EstadisticasCabecera cargarestadisticas={cargarestadisticas}
+            setCargarestadisticas={setCargarestadisticas} setSpindato={setSpindato}
+            ></EstadisticasCabecera>
+
+            <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
+            Comportamiento Gastos cada 15 primeros dias</Divider>
+
+            {!spindatos && cargacompleta &&(<Comportamiento datos15dias={datos15dias}></Comportamiento>
+            )}
+            
+            <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
+            Gastos por periodos</Divider>
+
+            {!spindatos && cargacompleta &&(<PeriodosMaximos datosperiodomaximos={datosperiodomaximos}></PeriodosMaximos>)}
+        
            
+            {spindatos &&(
+                <Cargadatos setSpindato={setSpindato}></Cargadatos>
+              )
+    
+              }
         </div>
     )
 
