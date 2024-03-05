@@ -1,0 +1,30 @@
+.contenedor-flex-estadistica-periodo {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+    margin-left: 50px;
+    justify-content: center;
+    /* align-items: center;  */
+    width: '100%';
+    height: 400px;
+  }
+
+  .contenedor-estadistica-periodo-texto{
+    width: 480px;
+    margin-top: 10%;
+  }
+
+
+  .contenedor-imagen-periodo {
+    
+    width: 500px; /* Puedes ajustar el valor según tus necesidades */
+    height: 400px; /* Puedes ajustar el valor según tus necesidades */
+    border: 1px solid #ccc;
+    overflow: hidden; /* Asegura que la imagen no se desborde si es más grande que el contenedor */
+  }
+
+  .imagen-periodo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
