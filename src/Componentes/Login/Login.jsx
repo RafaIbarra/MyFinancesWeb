@@ -5,7 +5,7 @@ import Iniciarsesion from '../../peticiones/apiiniciosesion'
 import Handelstorage from '../../Storage/handelstorage'
 
 import { Navigate, useNavigate } from "react-router-dom"
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined,CloseOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 
 import ComprobarStorage from "../../App/verificarstorage";
@@ -26,6 +26,8 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
     const navigate=useNavigate()
     const [existecookie,setexistecookie]=useState()
     const [datosinicio,setDatosinicio]=useState('')
+    const [errorinicio,setErrorinicio]=useState(false)
+    const [mensajeerror,setMensajeerror]=useState('')
     
     const navegar=()=>{
         activarsesion()
@@ -36,14 +38,18 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
 
     }
     const cargarusuario = (event) => {
+        setMensajeerror('')
+        setErrorinicio(false)
         setUsername(event.target.value);
       };
       
     const cargarcontrasena = (event) => {
+        setMensajeerror('')
+        setErrorinicio(false)
         setPassword(event.target.value);
       };
 
-    const ingresar =async (event)=>{
+    const ingresar =async (values)=>{
         
         const datos =await Iniciarsesion(username, password)
         
@@ -62,6 +68,8 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
             navegar()
         }else{
             console.log(datos['data']['error'])
+            setErrorinicio(true)
+            setMensajeerror(datos['data']['error'])
         }
         
     }
@@ -93,7 +101,9 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
                     initialValues={{
                         remember: true,
                     }}
-                    onFinish={onFinish}
+                    
+                    onFinish={ingresar}
+                    
                     >
                     <Form.Item>
                     <div className="d-flex justify-content-center">
@@ -105,6 +115,7 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
                                     />
                                 </div>
                     </Form.Item>
+                   
                     <Form.Item name="username"
                         rules={[{
                             required: true,
@@ -113,6 +124,7 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
                     >
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" onChange={cargarusuario} />
                     </Form.Item>
+                    
                     <Form.Item name="password"
                         rules={[{
                             required: true,
@@ -125,6 +137,7 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
                                 onChange={cargarcontrasena}
                         />
                     </Form.Item>
+                    
                     <Form.Item>
                         <Form.Item name="remember" valuePropName="checked" noStyle>
                         <Checkbox>Recordarme</Checkbox>
@@ -136,17 +149,29 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary"  className="login-form-button" onClick={ingresar}>
-                        Iniciar Sesion
+                        <Button type="primary"   className="login-form-button" htmlType="submit">
+                                Iniciar Sesion
                         </Button>
                         {/* O <a onClick={registrarse}>Registrarse!</a> */}
                         O <a href="" onClick={registrarse}>Registrarse!</a>
+                        {errorinicio &&(
+
+                            <p style={{color:'red',fontWeight: 'bold',fontStyle: 'italic',width:'400px'}} >
+                                <CloseOutlined style={{marginRight:'5px',marginTop:'5px'}}></CloseOutlined>
+                                {mensajeerror}
+                                
+                            </p>
+                        )
+                        }
                         
                     </Form.Item>
+
+                    
                 </Form>
 
 
             </div>
+            
         </div>
 
         

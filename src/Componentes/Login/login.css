@@ -10,7 +10,7 @@
     height: 100vh;
     /* margin: 5px 0;  */
     background-color: var(--color-contenedores);
-    width: '100%';
+    width: 100%;
   }
 
 .login-form {
@@ -37,8 +37,9 @@
 
 
 .login-box {
-    max-width: 400px;
-    max-height: 440px;
+    width: 400px;
+    height: 440px;
+    max-height: 500px;
     padding: 50px;
     border: 1px solid #ccc;
     border-radius: 20px;

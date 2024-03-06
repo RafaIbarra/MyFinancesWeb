@@ -136,9 +136,9 @@ function NavBar({sesionname}){
       ,
 
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Estadisticas', 'EstadisticasIngresos','EstadisticasIngresos'].includes(keysel) ? colorsel : colordefault}} >Estadisticas</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Estadisticas', 'EstadisticasIngresos','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault}} >Estadisticas</p>),
         key:"Estadisticas",
-        icon:<BarChartOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono, color: ['Estadisticas', 'EstadisticasIngresos','EstadisticasIngresos'].includes(keysel) ? colorsel : colordefault }}/>,  
+        icon:<BarChartOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono, color: ['Estadisticas', 'EstadisticasIngresos','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault }}/>,  
         children:[
           
           {
