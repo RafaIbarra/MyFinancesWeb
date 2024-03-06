@@ -10,6 +10,7 @@ import Cargadatos
 import {  Space,Divider,Button } from 'antd'
 function EstadisticasGasto(){
     const navigate=useNavigate()
+    // const [imagen, setImagen] = useState(null);
     // const [imagen15, setImagen15] = useState(null);
     const [datosperiodomaximos,setDatosperiodomaximos]=useState([])
     const [datos15dias,setDatos15dias]=useState([])
@@ -40,6 +41,8 @@ function EstadisticasGasto(){
                 const cantidadper=datosperiodo[0]['DatosMaximoGasto'][0]['CantidadPeriodos']
                 const datos={periodo:periodo,promedio:promedio,monto:monto,cantidad:cantidad,cantidadper:cantidadper,imagen:img}
                 setDatosperiodomaximos(datos)
+                // setImagen(img)
+                // console.log(datos.imagen)
 
                 // -----DATOS PARA 15 dias---
 
@@ -76,12 +79,20 @@ function EstadisticasGasto(){
       }, [cargarestadisticas]);
 
     return(
-
+        // <img 
+        // src={`data:image/png;base64,${imagen}`}
+        // alt="Descripción de la imagen"
+        
+        //      />
         <div style={{width:'100%'}}>
             
             <EstadisticasCabecera cargarestadisticas={cargarestadisticas}
             setCargarestadisticas={setCargarestadisticas} setSpindato={setSpindato}
             ></EstadisticasCabecera>
+
+
+
+
 
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Comportamiento Gastos cada 15 primeros dias</Divider>
@@ -89,6 +100,11 @@ function EstadisticasGasto(){
             {!spindatos && cargacompleta &&(<Comportamiento datos15dias={datos15dias}></Comportamiento>
             )}
             
+
+
+
+
+
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Gastos por periodos</Divider>
 
