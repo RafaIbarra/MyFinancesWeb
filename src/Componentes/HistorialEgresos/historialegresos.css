@@ -5,15 +5,22 @@
     overflow-y: auto;
 }
 
+.contenedor-izquierdo-egreso{
+  background-color: rgb(244, 246, 248);
+  width: 70%;  
+  height: calc(93vh - 65px);
+  padding-left: 20px;
+}
+
 .contenedor-principal-datos-egreso{
-    background-color: rgb(244, 246, 248);
-    width: 70%;
-    padding: 10px;
-    border-right: 1px;
-    border-right-color: rgb(223, 216, 216);
-    border-right-style:solid; 
-    height: 100%;
-    overflow-y: auto;
+  background-color: rgb(244, 246, 248);
+  width: 100%;
+  /* padding: 10px; */
+  border-right: 1px;
+  border-right-color: rgb(223, 216, 216);
+  border-right-style:solid; 
+  height: 100%;
+  overflow-y: auto;
     
 }
 

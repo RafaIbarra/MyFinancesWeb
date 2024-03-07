@@ -1,0 +1,11 @@
+.contenedor-flex-cabecera {
+    display: flex;
+    gap: 20px;
+    padding-top: 5px;
+    /* padding-left: 50px; */
+    padding-bottom: 0px;
+    justify-content:center;
+
+    /* align-items: center;  */
+    width: 100%;
+  }

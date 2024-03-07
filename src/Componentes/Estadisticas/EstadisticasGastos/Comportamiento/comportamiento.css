@@ -3,11 +3,14 @@
     display: flex;
     gap: 20px;
     margin-top: 5px;
-    margin-left: 50px;
+    padding-left: 50px;
+    /* margin-left: 50px; */
     /* justify-content: center; */
     /* align-items: center;  */
-    width:90%;
+    width:100%;
     height: 400px;
+    background-color:rgb(251, 248,244);
+    
   }
 
 .contenedor-estadistica-dias-texto{
@@ -27,4 +30,5 @@
     /* width: 100%;
     height: 100%; */
     object-fit: cover;
+    mix-blend-mode: multiply;
   }

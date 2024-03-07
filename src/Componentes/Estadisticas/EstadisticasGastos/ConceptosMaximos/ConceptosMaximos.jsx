@@ -21,8 +21,8 @@ function ConceptosMaximos({datosconceptos}){
             console.log(datosconceptos)
             setImagen(datosconceptos.imagenconceptomaximo)
             setConceptomax(datosconceptos.datosconceptomaximo[0]['Concepto'])
-            setCantregistromax(datosconceptos.datosconceptomaximo[0]['Monto'])
-            setMontomaximo(datosconceptos.datosconceptomaximo[0]['cantidad'])
+            setCantregistromax(datosconceptos.datosconceptomaximo[0]['cantidad']) 
+            setMontomaximo(datosconceptos.datosconceptomaximo[0]['Monto'])
 
             console.log(datosconceptos.detalleconceptomaximo[0]['Monto'])
             setDetallemonto(datosconceptos.detalleconceptomaximo[0]['Monto'])
@@ -45,16 +45,31 @@ function ConceptosMaximos({datosconceptos}){
         cargardatos();
       }, []);
     return(
-        <div>
-            <div>
-                <p>detalle</p>
+        // conceptomax
+        <div className='contenedor-flex-estadistica-concepto'>
+            
+            <div className='contenedor-estadistica-concepto-texto'>
+                <p style={{width: '100%'}}>
+                    { `El concepto en el que mas gasto se ha registrado fue `}
+                    <strong><em>{`${conceptomax}. `}</em></strong>
+                    { `Con un total de:  `}
+                    <strong><em>{` Gs. ${Number(montomaximo).toLocaleString('es-ES')}, `} </em></strong>
+                    { `con  ${cantregistromax} registros. `}
+                    { `En el periodo en el que mas se ha gastado por este concepto fue `}
+                    <strong><em>{`${detalleperiodo}. `}</em></strong>
+                    { `, en fecha : `} <strong><em>{`${detallefecha}, `}</em></strong>
+                    { `cargado el  ${detallefecharegistro} . El monto registrado fue  `}
+                    <strong><em>{`Gs. ${Number(detallemonto).toLocaleString('es-ES')}.`} </em></strong>
+                
+                </p>
             </div>
-            <div>
-            <img 
-                    src={`data:image/png;base64,${imagen}`}
-                    alt="Descripción de la imagen"
-                    className='imagen-periodo'
-                />
+            <div className='contenedor-imagen-concepto'>
+
+                    <img 
+                        src={`data:image/png;base64,${imagen}`}
+                        alt="Descripción de la imagen"
+                        className='imagen-concepto'
+                    />
             </div>
         </div>
     )

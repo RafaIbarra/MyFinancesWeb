@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { HomeOutlined,SwapOutlined,DiffOutlined,SoundOutlined,InteractionOutlined,BarChartOutlined,
         FileUnknownOutlined,CheckOutlined,RightOutlined,UserOutlined,DownOutlined,FallOutlined,RiseOutlined,
-        AlignLeftOutlined 
+        AlignLeftOutlined,SettingOutlined,SolutionOutlined 
       } from '@ant-design/icons';
 
 import { Button,Menu,message, Space,Dropdown   } from 'antd';
@@ -51,12 +51,14 @@ function NavBar({sesionname}){
     }
     const items = [
       {
-        label: <a href="https://www.antgroup.com">1st menu item</a>,
+        label: <a href="https://www.antgroup.com">Datos Personales</a>,
         key: '0000',
+        icon:<SolutionOutlined style={{fontSize:'20px'}} />
       },
       {
-        label: <a href="https://www.aliyun.com">2nd menu item</a>,
+        label: <a href="https://www.aliyun.com">Configuracion</a>,
         key: '11111',
+        icon:<SettingOutlined style={{fontSize:'20px'}}/>
       },
       {
         type: 'divider',

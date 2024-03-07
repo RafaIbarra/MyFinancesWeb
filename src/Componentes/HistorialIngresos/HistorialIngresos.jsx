@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import {  Table, Typography,Divider,InputNumber,Input,Select,Radio,Button,Tooltip  } from 'antd';
-import { AudioOutlined,SearchOutlined,RetweetOutlined  } from '@ant-design/icons';
+import { AudioOutlined,SearchOutlined,RetweetOutlined,RiseOutlined  } from '@ant-design/icons';
 import FormItem from 'antd/es/form/FormItem';
 import { Navigate, useNavigate } from "react-router-dom";
 import Generarpeticion from '../../peticiones/apipeticiones';
@@ -201,157 +201,160 @@ function HistorialIngresos(){
 
       return (
         <div className='contenedor-principal'>
+          
+              <div className='contenedor-izquierdo'>
 
-          <div className='contenedor-principal-datos'>
 
-            {dataagrupacion && dataagrupacion.map((x, index) => {
-                // Filtrar detalles de ingresos
-                const lista = dataingresos.filter((pro) => pro.AnnoIngreso === x.AnnoIngreso && pro.MesIngreso === x.MesIngreso);
-                if(lista.length>0){
+                <div style={{paddingBottom:'10px',paddingTop:'5px'}}>
 
-                  return (
+                    <h4> <RiseOutlined style={{color:'red'}} /> Historial de Ingresos</h4>
+                    <div class="linea-vertical"></div>
+                </div>
+                <div className='contenedor-principal-datos' >
+
+                  {dataagrupacion && dataagrupacion.map((x, index) => {
+                      // Filtrar detalles de ingresos
+                      const lista = dataingresos.filter((pro) => pro.AnnoIngreso === x.AnnoIngreso && pro.MesIngreso === x.MesIngreso);
+                      if(lista.length>0){
+
+                        return (
+                      
+                            <div className='contenedor-sub' key={x.key}>
+                              <div className='texo-contenedor'>
+                                <h5 > {x.NombreMesIngreso} {x.AnnoIngreso} </h5>
+                                <FormItem label="Total Egreso"
+                                  style={{marginBottom:'0px'}}
+                                  >
+
+                                  <InputNumber
+                                          
+                                          value={`Gs. ${Number(x.SumaMonto).toLocaleString('es-ES')}`}
+                                          disabled
+                                          
+                                          style={{
+                                            width: '100%',
+                                            height:'28px',
+                                            backgroundColor:' rgb(251, 249, 248)',
+                                            color:'black',
+                                            
+                                            }}
+                                      />
+                                </FormItem>
+                                <FormItem label="Cantidad Registros"
+                                  size="small"
+                                  style={{marginBottom:'0px'}}
+                                  >
+
+                                  <InputNumber value={x.ConteoRegistros}
+                                          disabled
+                                          
+                                          style={{
+                                          width: '30%',
+                                          height:'28px',
+                                          backgroundColor:' rgb(251, 249, 248)',
+                                          color:'black',
+                                          
+                                          }}
+                                      />
+                                </FormItem>
+                              </div>
+                              <div className='texo-tabla'> 
+      
+                                  <Table size="small"
+                                    columns={columns} 
+                                    dataSource={lista} 
+                                    pagination={false}
+                                    scroll={{x: 300,y: 200,}}
+                                    bordered={true}
+                                  />
+                              </div>
+                              <Divider type="horizontal" />
+                                
+                                
+                            </div>
+                          
+                          
+                        );
+                      }
+                    })}
+                </div>
                 
-                      <div className='contenedor-sub' key={x.key}>
-                        <div className='texo-contenedor'>
-                          <h5 > {x.NombreMesIngreso} {x.AnnoIngreso} </h5>
-                          <FormItem label="Total Egreso"
-                          style={{marginBottom:'0px'}}
-                          >
-
-                            <InputNumber
-                                    
-                                    value={`Gs. ${Number(x.SumaMonto).toLocaleString('es-ES')}`}
-                                    disabled
-                                    
-                                    style={{
-                                      width: '100%',
-                                      height:'28px',
-                                      backgroundColor:' rgb(251, 249, 248)',
-                                      color:'black',
-                                      
-                                      }}
-                                />
-                          </FormItem>
-                          <FormItem label="Cantidad Registros"
-                          size="small"
-                          style={{marginBottom:'0px'}}
-                          >
-
-                            <InputNumber
-                                    
-                                    value={x.ConteoRegistros}
-                                    disabled
-                                    
-                                    style={{
-                                    width: '30%',
-                                    height:'28px',
-                                    backgroundColor:' rgb(251, 249, 248)',
-                                    color:'black',
-                                    
-                                    }}
-                                />
-                          </FormItem>
-                        </div>
-                          <div className='texo-tabla'> 
-  
-                              <Table size="small"
-                                columns={columns} 
-                                dataSource={lista} 
-                                pagination={false}
-                                scroll={{x: 300,y: 200,}}
-                                bordered={true}
-                              />
-                          </div>
-                          <Divider type="horizontal" />
-                          
-                          
-                      </div>
-                    
-                    
-                  );
-                }
-
-
-
-
-              })}
-          </div>
-
-          <div className='contenedor-busqueda'>
-
-            <div className='contenedor-busqueda-opciones'>
-              <FormItem>
-
-                {/* <Input placeholder='ingreso busqueda' onChange={textosel} style={{width:'100%',height:'30px'}} ></Input> */}
-                <Search
-                  placeholder="Concepto busqueda"
-                  onChange={textosel} style={{width:'100%',height:'30px'}}
-                  
-                  value={textobusqueda}
-                />
-              </FormItem>
-
-              <FormItem label="Categoria"  >
-                  <Radio.Group onChange={seleccionarcategoria} value={categoriasel}>
-                    <Radio value='1'> Fijo </Radio>
-                    <Radio value='2'> Ocasionales </Radio>
-                    <Radio value='0'> Todas </Radio>
-                  </Radio.Group>
-              </FormItem>
-              
-              <FormItem label="Años">
-
-                <Select name='listaanos'
-                  style={{ width: '100%' }}
-                  onChange={seleccionaranno}
-                  value={annosel}
-                >
-                      <Select.Option key='anno0' value={0}>
-                              {'Todos'}
-                      </Select.Option>
-                      {annos &&  annos.map((g) => (
-                          <Select.Option key={g.anno} value={g.anno}>
-                              {g.anno}
-                          </Select.Option>
-                      ))}
-                </Select>
-              </FormItem>
-
-              <FormItem label="Mes" style={{marginBottom:'10px'}}>
-
-                <Select name='listameses'
-                  style={{ width: '100%' }}
-                  onChange={seleccionarmes}
-                  value={messel}
-                >
-                      <Select.Option key='mes0' value={0}>
-                              {'Todos'}
-                      </Select.Option>
-                      {meses &&  meses.map((g) => (
-                          <Select.Option key={g.numero_mes} value={g.numero_mes}>
-                              {g.nombre_mes}
-                          </Select.Option>
-                      ))}
-                </Select>
-              </FormItem>
-            </div>
-              <Tooltip title="Reestablecer busqueda">
-                <Button type="primary" 
-                      style={{width:'50px',height:'50px',marginBottom:'10px',marginTop:'0px'}} 
-                      shape="circle" 
-                      onClick={reestablecer_busqueda}
-                      icon={<RetweetOutlined style={{fontSize:'30px'}} />} />
-              </Tooltip>
+              </div>
           
 
-              
+              <div className='contenedor-busqueda'>
+                  
+                <div className='contenedor-busqueda-opciones'>
+                  <FormItem>
 
-                <p>
-                  {textop}
-                </p>
-              
-             
-          </div>
+                    {/* <Input placeholder='ingreso busqueda' onChange={textosel} style={{width:'100%',height:'30px'}} ></Input> */}
+                    <Search
+                      placeholder="Concepto busqueda"
+                      onChange={textosel} style={{width:'100%',height:'30px'}}
+                      
+                      value={textobusqueda}
+                    />
+                  </FormItem>
+
+                  <FormItem label="Categoria"  >
+                      <Radio.Group onChange={seleccionarcategoria} value={categoriasel}>
+                        <Radio value='1'> Fijo </Radio>
+                        <Radio value='2'> Ocasionales </Radio>
+                        <Radio value='0'> Todas </Radio>
+                      </Radio.Group>
+                  </FormItem>
+                  
+                  <FormItem label="Años">
+
+                    <Select name='listaanos'
+                      style={{ width: '100%' }}
+                      onChange={seleccionaranno}
+                      value={annosel}
+                    >
+                          <Select.Option key='anno0' value={0}>
+                                  {'Todos'}
+                          </Select.Option>
+                          {annos &&  annos.map((g) => (
+                              <Select.Option key={g.anno} value={g.anno}>
+                                  {g.anno}
+                              </Select.Option>
+                          ))}
+                    </Select>
+                  </FormItem>
+
+                  <FormItem label="Mes" style={{marginBottom:'10px'}}>
+
+                    <Select name='listameses'
+                      style={{ width: '100%' }}
+                      onChange={seleccionarmes}
+                      value={messel}
+                    >
+                          <Select.Option key='mes0' value={0}>
+                                  {'Todos'}
+                          </Select.Option>
+                          {meses &&  meses.map((g) => (
+                              <Select.Option key={g.numero_mes} value={g.numero_mes}>
+                                  {g.nombre_mes}
+                              </Select.Option>
+                          ))}
+                    </Select>
+                  </FormItem>
+                </div>
+                  <Tooltip title="Reestablecer busqueda">
+                    <Button type="primary" 
+                          style={{width:'50px',height:'50px',marginBottom:'10px',marginTop:'0px'}} 
+                          shape="circle" 
+                          onClick={reestablecer_busqueda}
+                          icon={<RetweetOutlined style={{fontSize:'30px'}} />} />
+                  </Tooltip>
+                  <p>
+                    {textop}
+                  </p>
+              </div>
+
+          
+
+
         </div>
       );
 

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Handelstorage from '../../Storage/handelstorage';
 import {Button,InputNumber,Select } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
-
+import './estadisticacabecera.css'
 function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpindato}){
     const[anno,Setanno]=useState(0)
     const[anno_seleccion,setAnno_selecion]=useState(0)
@@ -61,9 +61,9 @@ function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpind
     if(terminacarga){return(
         <div>
 
-          <div className='contenedor-flex'>
+          <div className='contenedor-flex-cabecera'>
 
-              <FormItem label="Año">
+              <FormItem label="Año" style={{marginBottom:'0px'}}>
 
                 <InputNumber
                         
@@ -71,13 +71,14 @@ function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpind
                         onChange={seleccionaranno}
                         style={{
                         width: '100%',
+                        marginBottom:'0px'
                         }}
                     />
               </FormItem>
 
               
               
-              <Button type="primary" onClick={procesar}>Cargar Datos</Button>    
+              <Button type="primary" onClick={procesar} style={{marginBottom:'0px'}}>Cargar Datos</Button>    
                   
               
           

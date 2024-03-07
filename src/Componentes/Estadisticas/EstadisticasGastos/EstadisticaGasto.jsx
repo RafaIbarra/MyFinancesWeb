@@ -99,24 +99,26 @@ function EstadisticasGasto(){
 
 
 
-        <div style={{width:'100%'}}>
+        <div style={{width:'100%',backgroundColor:'rgb(244, 246, 248)'}}>
             
             <EstadisticasCabecera cargarestadisticas={cargarestadisticas}
             setCargarestadisticas={setCargarestadisticas} setSpindato={setSpindato}
             ></EstadisticasCabecera>
 
-            {/* <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
+            <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Comportamiento Gastos cada 15 primeros dias</Divider>
 
             {!spindatos && cargacompleta &&(<Comportamiento datos15dias={datos15dias}></Comportamiento>
             )}
             
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
-            Gastos por periodos</Divider>
+            Gastos por Meses</Divider>
 
             {!spindatos && cargacompleta &&(<PeriodosMaximos datosperiodomaximos={datosperiodomaximos}></PeriodosMaximos>)}
-         */}
-
+        
+            
+            <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
+            Gastos por Conceptos</Divider>
 
             {!spindatos && cargacompleta &&(<ConceptosMaximos datosconceptos={datosconceptos}></ConceptosMaximos>)}
 

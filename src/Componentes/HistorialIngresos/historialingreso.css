@@ -4,16 +4,23 @@
     display: flex;
     overflow-y: auto;
 }
+.contenedor-izquierdo{
+  background-color: rgb(244, 246, 248);
+  width: 70%;  
+  height: calc(93vh - 65px);
+  padding-left: 20px;
+}
 
 .contenedor-principal-datos{
     background-color: rgb(244, 246, 248);
-    width: 70%;
-    padding: 10px;
+    width: 100%;
+    /* padding: 10px; */
     border-right: 1px;
     border-right-color: rgb(223, 216, 216);
     border-right-style:solid; 
     height: 100%;
     overflow-y: auto;
+    
     
 }
 
@@ -98,4 +105,15 @@
   display: flex;
   flex-direction: column;
   
+}
+
+
+.linea-vertical {
+  
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 2px; /* Altura de la línea */
+      background-color:rgb(182, 212, 212);
+      transform: translateY(-50%);
 }

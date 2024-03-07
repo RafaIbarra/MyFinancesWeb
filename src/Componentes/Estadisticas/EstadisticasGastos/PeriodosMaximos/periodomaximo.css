@@ -2,17 +2,18 @@
     display: flex;
     gap: 20px;
     margin-top: 5px;
-    margin-left: 50px;
+    padding-left: 50px;
     /* justify-content: center; */    
-    width: 90%;
+    width: 100%;
     height: 400px;
+    background-color:rgb(250, 248,244);
     
   }
 
   .contenedor-estadistica-periodo-texto{
     width: 30%;
-    margin-top: 10%;
-    margin-left: 20px;
+    padding-top: 10%;
+    
     height: 300px;
   }
 
@@ -30,5 +31,6 @@
     width: 100%;
     height: 100%;
     object-fit:contain;
-    margin-left: -10%;
+    mix-blend-mode: multiply;
+    /* margin-left: -10%; */
   }
