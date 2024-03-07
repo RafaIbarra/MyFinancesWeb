@@ -4,16 +4,18 @@ import Generarpeticion from '../../../peticiones/apipeticiones';
 import PeriodosMaximos from './PeriodosMaximos/PeriodosMaximos';
 import Comportamiento from './Comportamiento/Comportamiento';
 import EstadisticasCabecera from '../EstaditicasCabecera';
+import ConceptosMaximos from './ConceptosMaximos/ConceptosMaximos';
 import Handelstorage from '../../../Storage/handelstorage';
 import Cargadatos
  from '../../Home/Cargadatos';
 import {  Space,Divider,Button } from 'antd'
 function EstadisticasGasto(){
     const navigate=useNavigate()
-    // const [imagen, setImagen] = useState(null);
+    const [imagen, setImagen] = useState(null);
     // const [imagen15, setImagen15] = useState(null);
     const [datosperiodomaximos,setDatosperiodomaximos]=useState([])
     const [datos15dias,setDatos15dias]=useState([])
+    const [datosconceptos,setDatosconceptos]=useState([])
     const [cargacompleta,setCargacompleta]=useState(false)
     const [spindatos,setSpindato]=useState(false)
     const [cargarestadisticas,setCargarestadisticas]=useState(false)
@@ -60,7 +62,16 @@ function EstadisticasGasto(){
                 }
                 
                 setDatos15dias(data15)
-        
+
+                //---- FATOS POR CONCEPTOS MAXIMOS----
+             
+                const dataconceptosmaximo={
+                    datosconceptomaximo:result['data']['DatosConceptoGasto'][0].DatosConceptoGastoMaximo,
+                    detalleconceptomaximo:result['data']['DatosConceptoGasto'][1].DetalleConceptoGastoMaximo,
+                    imagenconceptomaximo:result['data']['DatosConceptoGasto'][2].grafico
+                }
+                setDatosconceptos(dataconceptosmaximo)
+                // setImagen(result['data']['DatosConceptoGasto'][2].grafico)
                 setCargacompleta(true)
 
                 
@@ -82,35 +93,33 @@ function EstadisticasGasto(){
         // <img 
         // src={`data:image/png;base64,${imagen}`}
         // alt="Descripción de la imagen"
-        
-        //      />
+        // style={{marginLeft:'100px'}}
+        // />
+
+
+
+
         <div style={{width:'100%'}}>
             
             <EstadisticasCabecera cargarestadisticas={cargarestadisticas}
             setCargarestadisticas={setCargarestadisticas} setSpindato={setSpindato}
             ></EstadisticasCabecera>
 
-
-
-
-
-            <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
+            {/* <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Comportamiento Gastos cada 15 primeros dias</Divider>
 
             {!spindatos && cargacompleta &&(<Comportamiento datos15dias={datos15dias}></Comportamiento>
             )}
             
-
-
-
-
-
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Gastos por periodos</Divider>
 
             {!spindatos && cargacompleta &&(<PeriodosMaximos datosperiodomaximos={datosperiodomaximos}></PeriodosMaximos>)}
-        
-           
+         */}
+
+
+            {!spindatos && cargacompleta &&(<ConceptosMaximos datosconceptos={datosconceptos}></ConceptosMaximos>)}
+
             {spindatos &&(
                 <Cargadatos setSpindato={setSpindato}></Cargadatos>
               )
