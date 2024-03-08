@@ -12,6 +12,7 @@ import RegistroUsuario from "../Componentes/RegistroUsuario/registrousuario";
 import HistorialIngresos from "../Componentes/HistorialIngresos/HistorialIngresos";
 import HistorialEgresos from "../Componentes/HistorialEgresos/HistorialEgresos";
 import EstadisticasGasto from "../Componentes/Estadisticas/EstadisticasGastos/EstadisticaGasto";
+import EstadisticasIngreso from "../Componentes/Estadisticas/EstadisticasIngresos/EstadisticaIngreso";
 import CategoriaGasto from "../Componentes/CategoriaGastos/CategoriaGastos";
 import ComprobarStorage from "./verificarstorage";
 
@@ -65,6 +66,7 @@ return(
                     <Route path="/HistorialIngresos" element={<HistorialIngresos />} />
                     <Route path="/HistorialEgresos" element={<HistorialEgresos />} />
                     <Route path="/EstadisticasGasto" element={<EstadisticasGasto />} />
+                    <Route path="/EstadisticasIngreso" element={<EstadisticasIngreso />} />
                     
                     <Route path="/Closesesion" element={<CloseSesion />} />
                     

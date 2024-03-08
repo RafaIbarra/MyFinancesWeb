@@ -63,7 +63,7 @@ function EstadisticasGasto(){
                 
                 setDatos15dias(data15)
 
-                //---- FATOS POR CONCEPTOS MAXIMOS----
+                //---- DATOS POR CONCEPTOS MAXIMOS----
              
                 const dataconceptosmaximo={
                     datosconceptomaximo:result['data']['DatosConceptoGasto'][0].DatosConceptoGastoMaximo,
@@ -72,6 +72,18 @@ function EstadisticasGasto(){
                 }
                 setDatosconceptos(dataconceptosmaximo)
                 // setImagen(result['data']['DatosConceptoGasto'][2].grafico)
+                
+
+                //---- DATOS POR CATEGORIAS MAXIMAS----
+                // console.log(result['data']['DatosCategoriaGasto'])
+                setImagen(result['data']['DatosCategoriaGasto'][2].grafico)
+
+                const datacategoriamaximo={
+                    datoscategoriamaxima:result['data']['DatosCategoriaGasto'][0].DatosCategoriaGastoMaximo,
+                    detallecategoriamaximo:result['data']['DatosCategoriaGasto'][1].DetalleCategoriaGastoMaximo,
+                    imagencategoriamaximo:result['data']['DatosCategoriaGasto'][2].grafico
+                }
+                console.log(datacategoriamaximo)
                 setCargacompleta(true)
 
                 
@@ -121,6 +133,14 @@ function EstadisticasGasto(){
             Gastos por Conceptos</Divider>
 
             {!spindatos && cargacompleta &&(<ConceptosMaximos datosconceptos={datosconceptos}></ConceptosMaximos>)}
+
+
+            <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
+            Gastos por Categorias</Divider>
+
+           
+
+
 
             {spindatos &&(
                 <Cargadatos setSpindato={setSpindato}></Cargadatos>

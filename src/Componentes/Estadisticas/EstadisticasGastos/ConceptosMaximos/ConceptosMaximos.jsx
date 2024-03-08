@@ -18,13 +18,13 @@ function ConceptosMaximos({datosconceptos}){
         const cargardatos =  () => {
             
             
-            console.log(datosconceptos)
+            
             setImagen(datosconceptos.imagenconceptomaximo)
             setConceptomax(datosconceptos.datosconceptomaximo[0]['Concepto'])
             setCantregistromax(datosconceptos.datosconceptomaximo[0]['cantidad']) 
             setMontomaximo(datosconceptos.datosconceptomaximo[0]['Monto'])
 
-            console.log(datosconceptos.detalleconceptomaximo[0]['Monto'])
+            
             setDetallemonto(datosconceptos.detalleconceptomaximo[0]['Monto'])
             setDetalleperiodo(datosconceptos.detalleconceptomaximo[0]['Periodo'])
             setDetallefecha(datosconceptos.detalleconceptomaximo[0]['fecha_gasto'])

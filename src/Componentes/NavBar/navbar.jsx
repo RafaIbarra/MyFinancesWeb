@@ -32,6 +32,7 @@ const navegaciones={
   'ConceptosEgresos':'/Gastos',
   'MovimientosIngresos':'/HistorialIngresos',
   'EstadisticasEgresos':'/EstadisticasGasto',
+  'EstadisticasIngreso':'/EstadisticasIngreso',
   'CategoriaEgresos':'/CategoriaGastos',
   'MovimientosEgresos':'/HistorialEgresos',
   
@@ -138,14 +139,14 @@ function NavBar({sesionname}){
       ,
 
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Estadisticas', 'EstadisticasIngresos','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault}} >Estadisticas</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Estadisticas', 'EstadisticasIngreso','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault}} >Estadisticas</p>),
         key:"Estadisticas",
-        icon:<BarChartOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono, color: ['Estadisticas', 'EstadisticasIngresos','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault }}/>,  
+        icon:<BarChartOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono, color: ['Estadisticas', 'EstadisticasIngreso','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault }}/>,  
         children:[
           
           {
             label: 'Estadisticas de Ingresos',
-            key: 'EstadisticasIngresos',
+            key: 'EstadisticasIngreso',
             icon: <RightOutlined style={{ fontSize: tamañosubicono }}/>, 
           
           },
