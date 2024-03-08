@@ -5,6 +5,7 @@ import PeriodosMaximos from './PeriodosMaximos/PeriodosMaximos';
 import Comportamiento from './Comportamiento/Comportamiento';
 import EstadisticasCabecera from '../EstaditicasCabecera';
 import ConceptosMaximos from './ConceptosMaximos/ConceptosMaximos';
+import CategoriaMaxima from './CategoriaMaxima/CategoriaMaxima';
 import Handelstorage from '../../../Storage/handelstorage';
 import Cargadatos
  from '../../Home/Cargadatos';
@@ -16,6 +17,7 @@ function EstadisticasGasto(){
     const [datosperiodomaximos,setDatosperiodomaximos]=useState([])
     const [datos15dias,setDatos15dias]=useState([])
     const [datosconceptos,setDatosconceptos]=useState([])
+    const [datoscategoriamaximo,setDatoscategoriamaximo]=useState([])
     const [cargacompleta,setCargacompleta]=useState(false)
     const [spindatos,setSpindato]=useState(false)
     const [cargarestadisticas,setCargarestadisticas]=useState(false)
@@ -83,7 +85,7 @@ function EstadisticasGasto(){
                     detallecategoriamaximo:result['data']['DatosCategoriaGasto'][1].DetalleCategoriaGastoMaximo,
                     imagencategoriamaximo:result['data']['DatosCategoriaGasto'][2].grafico
                 }
-                console.log(datacategoriamaximo)
+                setDatoscategoriamaximo(datacategoriamaximo)
                 setCargacompleta(true)
 
                 
@@ -137,6 +139,8 @@ function EstadisticasGasto(){
 
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Gastos por Categorias</Divider>
+
+            {!spindatos && cargacompleta &&(<CategoriaMaxima datoscategoriamaximo={datoscategoriamaximo}></CategoriaMaxima>)}
 
            
 
