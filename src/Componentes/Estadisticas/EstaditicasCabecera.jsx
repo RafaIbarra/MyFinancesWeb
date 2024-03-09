@@ -42,6 +42,7 @@ function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpind
       }
     
     useEffect(() => {
+        console.log(titulocabecera)
         const datestorage=Handelstorage('obtenerstats');
         
         const anno_control=datestorage['dataanno']
@@ -65,23 +66,28 @@ function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpind
                   <h5 style={{paddingLeft:'10px',paddingTop:'10px'}}> <FallOutlined style={{color:'red'}} /> {titulocabecera}</h5>
               )
               }  
+              {titulocabecera!=='ESTADISTICAS DE GASTOS' &&(
+                  <h5 style={{paddingLeft:'10px',paddingTop:'10px'}}> <RiseOutlined style={{color:'red'}} /> {titulocabecera}</h5>
+              )
+              } 
+              
+              <div className='contenedor-flex-cabecera'>
+                  <FormItem label="Año" style={{marginBottom:'0px'}}>
 
+                    <InputNumber
+                            
+                            defaultValue={anno}
+                            onChange={seleccionaranno}
+                            style={{
+                            width: '100%',
+                            marginBottom:'0px'
+                            }}
+                        />
+                  </FormItem>
+                  <Button type="primary" onClick={procesar} style={{marginBottom:'0px'}}>Cargar Datos</Button>    
+              </div>
 
-                <div className='contenedor-flex-cabecera'>
-                    <FormItem label="Año" style={{marginBottom:'0px'}}>
-
-                      <InputNumber
-                              
-                              defaultValue={anno}
-                              onChange={seleccionaranno}
-                              style={{
-                              width: '100%',
-                              marginBottom:'0px'
-                              }}
-                          />
-                    </FormItem>
-                    <Button type="primary" onClick={procesar} style={{marginBottom:'0px'}}>Cargar Datos</Button>    
-                </div>
+              
             </div>
                 <div className="linea-vertical"></div>
 
