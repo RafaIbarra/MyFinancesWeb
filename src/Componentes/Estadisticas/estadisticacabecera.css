@@ -1,11 +1,25 @@
 .contenedor-flex-cabecera {
     display: flex;
     gap: 20px;
-    padding-top: 5px;
+    padding-top: 10px;
     /* padding-left: 50px; */
     padding-bottom: 0px;
     justify-content:center;
 
     /* align-items: center;  */
-    width: 100%;
+    width: 70%;
   }
+
+  .linea-vertical {
+  
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px; /* Altura de la línea */
+    background-color:rgb(182, 212, 212);
+    transform: translateY(-50%);
+}
+
+.contenedor-titulo{
+  display: flex;
+}

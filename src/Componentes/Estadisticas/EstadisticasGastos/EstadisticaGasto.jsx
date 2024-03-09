@@ -21,6 +21,7 @@ function EstadisticasGasto(){
     const [cargacompleta,setCargacompleta]=useState(false)
     const [spindatos,setSpindato]=useState(false)
     const [cargarestadisticas,setCargarestadisticas]=useState(false)
+    const [titulocabecera,setTitulocabecera]=useState('ESTADISTICAS DE GASTOS')
     useEffect(() => {
         
         const cargardatos = async () => {
@@ -35,6 +36,7 @@ function EstadisticasGasto(){
             const respuesta=result['resp']
             
             if (respuesta === 200) {
+                console.log(result['data'])
                 // -----DATOS PARA PERIODOS MAXIMOS---
                 const datosperiodo=result['data']['DatosPeriodoGasto']
                 const img=datosperiodo[0]['DatosMaximoGasto'][0]['grafico']
@@ -115,8 +117,12 @@ function EstadisticasGasto(){
 
         <div style={{width:'100%',backgroundColor:'rgb(244, 246, 248)'}}>
             
-            <EstadisticasCabecera cargarestadisticas={cargarestadisticas}
-            setCargarestadisticas={setCargarestadisticas} setSpindato={setSpindato}
+            <EstadisticasCabecera 
+            cargarestadisticas={cargarestadisticas}
+            setCargarestadisticas={setCargarestadisticas} 
+            setSpindato={setSpindato}
+            titulocabecera={titulocabecera}
+
             ></EstadisticasCabecera>
 
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 

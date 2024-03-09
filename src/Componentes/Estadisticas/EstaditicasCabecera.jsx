@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import Handelstorage from '../../Storage/handelstorage';
 import {Button,InputNumber,Select } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
+import { RiseOutlined,FallOutlined  } from '@ant-design/icons';
 import './estadisticacabecera.css'
-function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpindato}){
+function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpindato,titulocabecera}){
     const[anno,Setanno]=useState(0)
     const[anno_seleccion,setAnno_selecion]=useState(0)
     const[terminacarga,setTerminacarga]=useState(false)
@@ -27,15 +28,13 @@ function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpind
         
   
         
-  
+      if(anno_seleccion>0){
+
         if(anno_seleccion !==anno_storage){
         dataanno=anno_seleccion
-        }
-        
-      
-        
-        
+        }  
         Handelstorage('actualizarstats','dataanno',dataanno)
+      }
         
         
         setCargarestadisticas(!cargarestadisticas)
@@ -60,29 +59,32 @@ function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpind
 
     if(terminacarga){return(
         <div>
+            <div className='contenedor-titulo'> 
 
-          <div className='contenedor-flex-cabecera'>
+              {titulocabecera==='ESTADISTICAS DE GASTOS' &&(
+                  <h5 style={{paddingLeft:'10px',paddingTop:'10px'}}> <FallOutlined style={{color:'red'}} /> {titulocabecera}</h5>
+              )
+              }  
 
-              <FormItem label="Año" style={{marginBottom:'0px'}}>
 
-                <InputNumber
-                        
-                        defaultValue={anno}
-                        onChange={seleccionaranno}
-                        style={{
-                        width: '100%',
-                        marginBottom:'0px'
-                        }}
-                    />
-              </FormItem>
+                <div className='contenedor-flex-cabecera'>
+                    <FormItem label="Año" style={{marginBottom:'0px'}}>
 
-              
-              
-              <Button type="primary" onClick={procesar} style={{marginBottom:'0px'}}>Cargar Datos</Button>    
-                  
-              
-          
-          </div>
+                      <InputNumber
+                              
+                              defaultValue={anno}
+                              onChange={seleccionaranno}
+                              style={{
+                              width: '100%',
+                              marginBottom:'0px'
+                              }}
+                          />
+                    </FormItem>
+                    <Button type="primary" onClick={procesar} style={{marginBottom:'0px'}}>Cargar Datos</Button>    
+                </div>
+            </div>
+                <div className="linea-vertical"></div>
+
 
           
 
