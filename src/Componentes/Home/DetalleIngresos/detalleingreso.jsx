@@ -7,6 +7,7 @@ import ModalEliminarIngreso from './Modales/modal_eliminar_ingreso';
 import ModalRegistroIngreso from './Modales/modal_registro_ingreso';
 import GraficoIngresos from './Grafico/graficoingresos';
 import './detalleingreso.css'
+import '../../../Componentes/estilosgenerales.css'
 
 const { Text } = Typography;
 
@@ -203,7 +204,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
               {contextHolder}
               <Table rowSelection={rowSelection} 
                 scroll={{y: 400,}}
-                style={{height:'450px'}}
+                className='tabla_general'
                 size="small"
                 columns={columns} 
                 dataSource={detalle} 
@@ -230,6 +231,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
 
                   <Button type="primary" 
                           icon={<CheckOutlined /> } 
+                          className='botonera'
                           onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
                           > Detalle
                   </Button>
@@ -237,7 +239,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
                   <Button type="primary" 
                           icon={<DeleteOutlined/>} 
                           danger 
-                          
+                          className='botonera'
                           onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
                           > 
                           Eliminar 
@@ -246,11 +248,12 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
                   <Button type="primary" 
                           icon={<RetweetOutlined/> }  
                           onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
+                          className='botonera'
                           >
                             Actualizar
                   </Button>
 
-                  <Button type="primary" icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
+                  <Button type="primary"  className='botonera' icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
 
                   
                   {openeliminaringreso &&( <ModalEliminarIngreso 

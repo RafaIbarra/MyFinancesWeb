@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
  
 import { CheckOutlined  } from '@ant-design/icons';
 import './saldosperiodos.css'
-function SaldosPeriodos({datosperiodosaldos}){
+function SaldosPeriodos({datosperiodosaldos,imagenperiodosaldos}){
     const [imagensaldoperiodo, setImagensaldoperiodo] = useState(null);
     const [mayorsaldomes,setMayorsaldomes]=useState('')
     const [mayorssaldoingreso,setmayorssaldoingreso]=useState('')
@@ -15,16 +15,16 @@ function SaldosPeriodos({datosperiodosaldos}){
         const cargardatos =  () => {
             
             
-            console.log(datosperiodosaldos)
+            
             // console.log(datosperiodosaldos[2])
         
-            setImagensaldoperiodo(datosperiodosaldos[2].grafico)
+            setImagensaldoperiodo(imagenperiodosaldos)
 
-            setMayorsaldomes(datosperiodosaldos[0]['MayorSaldo'][0].MesOperacion)
-            setmayorssaldoingreso(datosperiodosaldos[0]['MayorSaldo'][0].MontoIngreso)
-            setMayorsaldoegreso(datosperiodosaldos[0]['MayorSaldo'][0].MontoEgreso)
-            setMayorsaldoporcentajesaldo(datosperiodosaldos[0]['MayorSaldo'][0].PorcentajeSaldo)
-            setMayorsaldoporcentajeegreso(datosperiodosaldos[0]['MayorSaldo'][0].PorcentajeEgreso)
+            setMayorsaldomes(datosperiodosaldos.MesOperacion)
+            setmayorssaldoingreso(datosperiodosaldos.MontoIngreso)
+            setMayorsaldoegreso(datosperiodosaldos.MontoEgreso)
+            setMayorsaldoporcentajesaldo(datosperiodosaldos.PorcentajeSaldo)
+            setMayorsaldoporcentajeegreso(datosperiodosaldos.PorcentajeEgreso)
                
 
   

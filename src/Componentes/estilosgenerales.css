@@ -1,0 +1,11 @@
+.botonera{
+    background-color:rgb(182, 212, 212) ;
+    width: 180px;
+    height: 37px;
+    color: black;
+    font-size: 16px;
+    
+}
+.tabla_general{
+    height: calc(93vh - 250px)
+}

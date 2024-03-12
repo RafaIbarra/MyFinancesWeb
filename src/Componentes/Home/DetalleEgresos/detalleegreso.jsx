@@ -9,7 +9,7 @@ import ModalEliminarEgreso from './Modales/modal_eliminar_egreso'
 import ModalRegistroEgreso from './Modales/modal_registro_egreso';
 import GraficoEgresoso from './Grafico/graficoegresos';
 
-
+import '../../../Componentes/estilosgenerales.css'
 const { Text } = Typography;
 function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                         setImgresumen,setImgegresos,imgegresos}){
@@ -292,7 +292,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
 
               <Table rowSelection={rowSelection} 
                   scroll={{y: 400,}}
-                  style={{height:'450px'}}
+                  className='tabla_general'
                   columns={columns} 
                   size="small"
                   dataSource={detalle} 
@@ -313,13 +313,13 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                   </div>
                  
 
-                  <FormItem style={{marginLeft:'25%',position: 'absolute'}}>
+                  <FormItem style={{marginLeft:'20%',position: 'absolute'}}>
                     <Text strong>CANTIDAD REGISTROS: </Text>
                     <Text strong>   {Number(canttotalegreso).toLocaleString('es-ES')}</Text>
                       
                   </FormItem>
 
-                  <FormItem style={{marginLeft:'35%',position: 'absolute'}}>
+                  <FormItem style={{marginLeft:'33%',position: 'absolute'}}>
                       <Text strong>TOTAL EGRESOS: </Text>
                       <Text strong>GS. {Number(montototalegreso).toLocaleString('es-ES')}</Text>
                       
@@ -328,6 +328,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
               </div>
               <div className='contenedor-flex-botonera'>
                 <Button type="primary" 
+                          className='botonera'
                           icon={<CheckOutlined /> } 
                           onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
                           > 
@@ -338,12 +339,14 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                   <Button type="primary" 
                       icon={<DeleteOutlined/>} 
                       danger 
+                      className='botonera'
                       onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
                       > 
                       Eliminar 
                   </Button>
                       
                   <Button type="primary" 
+                          className='botonera'
                           icon={<RetweetOutlined/> } 
                           onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
                           > 
@@ -351,7 +354,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                           Actualizar
                   </Button>
 
-                  <Button type="primary" icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
+                  <Button type="primary" className='botonera' icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
                   
                   
                   {openeliminaregreso &&( <ModalEliminarEgreso openeliminaregreso={openeliminaregreso} 

@@ -11,7 +11,7 @@ import FormItem from 'antd/es/form/FormItem';
 import { Navigate, useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
-
+import '../../Componentes/estilosgenerales.css'
 function CategoriaGasto(){
     const navigate=useNavigate()
     const [api, contextHolder] = notification.useNotification();
@@ -226,6 +226,7 @@ function CategoriaGasto(){
                     rowSelection={rowSelection} 
                     scroll={{x: 300,y: 400,}}
                     size="small"
+                    
                     columns={columns} 
                     dataSource={categorias} 
                     pagination={false}
@@ -236,6 +237,7 @@ function CategoriaGasto(){
     
                     <Button type="primary" 
                             icon={<CheckOutlined /> } 
+                            className='botonera'
                             onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
                             > Detalle
                     </Button>
@@ -243,7 +245,7 @@ function CategoriaGasto(){
                     <Button type="primary" 
                             icon={<DeleteOutlined/>} 
                             danger 
-                            
+                            className='botonera'
                             onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
                             > 
                             Eliminar 
@@ -252,6 +254,7 @@ function CategoriaGasto(){
                     <Button type="primary" 
                             icon={<RetweetOutlined/> }  
                             onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
+                            className='botonera'
                             >
                             Actualizar
                     </Button>
@@ -259,6 +262,7 @@ function CategoriaGasto(){
                     <Button type="primary" 
                             icon={<PlusCircleTwoTone/>} 
                             onClick={nuevo} 
+                            className='botonera'
                             >Agregar
                     </Button>
                     {/* {openeliminargasto &&( <ModalEliminarGastos 

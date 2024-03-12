@@ -7,6 +7,7 @@ import Generarpeticion from '../../peticiones/apipeticiones';
 import './productos.css'
 import FormItem from 'antd/es/form/FormItem';
 import { Navigate, useNavigate } from "react-router-dom";
+import '../../Componentes/estilosgenerales.css'
 
 const { Text } = Typography;
 function Productosfinancieros(){
@@ -238,13 +239,14 @@ function Productosfinancieros(){
                           <Button type="primary" 
                                   icon={<CheckOutlined /> } 
                                   onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
+                                  className='botonera'
                                   > Detalle
                           </Button>
     
                           <Button type="primary" 
                                   icon={<DeleteOutlined/>} 
                                   danger 
-                                  
+                                  className='botonera'
                                   onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
                                   > 
                                   Eliminar 
@@ -253,6 +255,7 @@ function Productosfinancieros(){
                           <Button type="primary" 
                                   icon={<RetweetOutlined/> }  
                                   onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
+                                  className='botonera'
                                   >
                                   Actualizar
                           </Button>
@@ -260,6 +263,7 @@ function Productosfinancieros(){
                           <Button type="primary" 
                                   icon={<PlusCircleTwoTone/>} 
                                   onClick={nuevo} 
+                                  className='botonera'
                                   >Agregar
                           </Button>
                           {openeliminarproducto &&( <ModalEliminarProducto 
