@@ -35,6 +35,7 @@ const navegaciones={
   'EstadisticasIngreso':'/EstadisticasIngreso',
   'CategoriaEgresos':'/CategoriaGastos',
   'MovimientosEgresos':'/HistorialEgresos',
+  'Actualizacion':'/ActualizacionDatosPersonales',
   
 
 }
@@ -50,11 +51,20 @@ function NavBar({sesionname}){
       Handelstorage('borrar')
       navigate('/')
     }
+    const datospersonales=(event)=>{
+      setKeysel('')
+      navigate('/ActualizacionDatosPersonales')
+    }
     const items = [
       {
-        label: <a href="https://www.antgroup.com">Datos Personales</a>,
-        key: '0000',
+        // label: (
+        //   <Button style={{width:'100%',height:'100%',borderColor:'white'}} onClick={datospersonales} > Datos Personales </Button>
+        // ),
+        label: 'Datos personales',
+        key: 'Actualizacion',
+        onClick:datospersonales,
         icon:<SolutionOutlined style={{fontSize:'20px'}} />
+        
       },
       {
         label: <a href="https://www.aliyun.com">Configuracion</a>,

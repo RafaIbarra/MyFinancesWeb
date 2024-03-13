@@ -1,0 +1,43 @@
+.contenedor-principal-act{
+    background-color: rgb(244, 246, 248);
+    width: 100%;  
+    height: calc(93vh - 10px);
+    padding-left: 33%;
+    padding-top: 20px;
+  }
+
+.contenedor-registro-box {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    /* padding: 50px; */
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 0px;
+    padding-top: 20px;
+    
+  }
+
+
+
+.contenedor-flex {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+    justify-content: center;
+    /* align-items: center;  */
+    width: '100%';
+  }
+
+.linea-vertical {
+  
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px; /* Altura de la línea */
+    background-color:rgb(182, 212, 212);
+    transform: translateY(-50%);
+}
