@@ -203,7 +203,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
 
               {contextHolder}
               <Table rowSelection={rowSelection} 
-                scroll={{y: 400,}}
+                scroll={{y: 'calc(93vh - 300px)',}}
                 className='tabla_general'
                 size="small"
                 columns={columns} 

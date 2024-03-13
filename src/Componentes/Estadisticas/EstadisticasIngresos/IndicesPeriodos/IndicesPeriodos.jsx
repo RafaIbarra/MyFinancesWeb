@@ -3,8 +3,8 @@ import React, {useEffect, useState} from 'react';
 import { CheckOutlined  } from '@ant-design/icons';
 import './indicesperiodos.css'
 
-function IndicesPeriodos({datosperiodoindices}){
-    // const [imagensaldoperiodo, setImagensaldoperiodo] = useState(null);
+function IndicesPeriodos({datosperiodoindices,imagenperiodoindice}){
+    const [imagenindice, setImagenindice] = useState(null);
     const [mayorsindicemes,setMayorsindicemes]=useState('')
     const [mayorsindiceingreso,setMayorsindiceingreso]=useState('')
     const [mayorindiceegreso,setMayorindiceegreso]=useState('')
@@ -17,6 +17,7 @@ function IndicesPeriodos({datosperiodoindices}){
             
             
             console.log(datosperiodoindices)
+            setImagenindice(imagenperiodoindice)
             setMayorsindicemes(datosperiodoindices.MesOperacion)
             setMayorsindiceingreso(datosperiodoindices.MontoIngreso)
             setMayorindiceegreso(datosperiodoindices.MontoEgreso)
@@ -45,14 +46,14 @@ function IndicesPeriodos({datosperiodoindices}){
                 
                 </div>
             </div>
-            {/* <div className='contenedor-imagen-indice'>
+            <div className='contenedor-imagen-indice'>
 
                 <img 
-                    src={`data:image/png;base64,${imagensaldoperiodo}`}
+                    src={`data:image/png;base64,${imagenindice}`}
                     alt="Descripción de la imagen"
                     className='imagen-saldos'
                 />
-            </div> */}
+            </div>
         </div>
     )
 

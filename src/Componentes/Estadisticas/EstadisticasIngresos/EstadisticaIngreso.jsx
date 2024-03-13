@@ -15,7 +15,7 @@ function EstadisticasIngreso(){
     const [datosperiodosaldos,setDatosperiodosaldos]=useState([])
     const [imagenperiodosaldos,setImagenperiodosaldos]=useState([])
     const [datosperiodoindices,setDatosperiodoindices]=useState([])
-
+    const [imagenperiodoindice,setImagenperiodoindice]=useState([])
     const [cargarestadisticasingreso,setCargarestadisticasingreso]=useState(false)
     const [cargacompleta,setCargacompleta]=useState(false)
     const [spindatos,setSpindato]=useState(false)
@@ -37,11 +37,12 @@ function EstadisticasIngreso(){
                 // -----DATOS PARA PERIODOS MAXIMOS---
                 
                 
-                // console.log(result['data'])
+                console.log(result['data'])
                 // console.log('fdfdf')
                 setDatosperiodosaldos(result['data']['DatosPeriodoSaldo'][0]['MayorSaldo'][0])
                 setDatosperiodoindices(result['data']['DatosPeriodoSaldo'][1]['MayorIndice'][0])
                 setImagenperiodosaldos(result['data']['DatosPeriodoSaldo'][2]['grafico'])
+                setImagenperiodoindice(result['data']['DatosPeriodoSaldo'][3]['graficoindice'])
                 
                 setCargarestadisticasingreso(true)
                 setCargacompleta(true)
@@ -88,7 +89,7 @@ function EstadisticasIngreso(){
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Indices por periodos</Divider>
 
-            {!spindatos && cargacompleta &&(<IndicesPeriodos datosperiodoindices={datosperiodoindices}  ></IndicesPeriodos>
+            {!spindatos && cargacompleta &&(<IndicesPeriodos datosperiodoindices={datosperiodoindices} imagenperiodoindice={imagenperiodoindice}  ></IndicesPeriodos>
             )}
 
            
