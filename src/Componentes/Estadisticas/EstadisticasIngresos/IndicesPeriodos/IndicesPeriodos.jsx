@@ -11,6 +11,7 @@ function IndicesPeriodos({datosperiodoindices,imagenperiodoindice}){
     const [mayorindiceporcentajesaldo,setMayorindiceporcentajesaldo]=useState('')
     const [mayorindiceporcentajeegreso,setMayorindiceporcentajeegreso]=useState('')
     const [mayorindicemontosaldo,setMayorindicemontosaldo]=useState('')
+    const [mayorindicesaldopromedio,setMayorindicesaldopromedio]=useState('')
     useEffect(() => {
         
         const cargardatos =  () => {
@@ -25,6 +26,7 @@ function IndicesPeriodos({datosperiodoindices,imagenperiodoindice}){
             setMayorindiceporcentajesaldo(datosperiodoindices.PorcentajeSaldo)
             setMayorindiceporcentajeegreso(datosperiodoindices.PorcentajeEgreso)
             setMayorindicemontosaldo(datosperiodoindices.Saldo)
+            setMayorindicesaldopromedio(datosperiodoindices.PromedioInidice)
   
             
           };
@@ -44,7 +46,8 @@ function IndicesPeriodos({datosperiodoindices,imagenperiodoindice}){
                     <p className="item"> <CheckOutlined></CheckOutlined> Monto Egreso: <strong><em>{` Gs. ${Number(mayorindiceegreso).toLocaleString('es-ES')}`}. </em></strong> </p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Monto Saldo:  <strong><em>{` Gs. ${Number(mayorindicemontosaldo).toLocaleString('es-ES')}`}. </em></strong> </p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Indice del porcentaje NO utilizado del ingreso: <strong><em>{`  ${(mayorindiceporcentajesaldo)}% `}. </em></strong></p>
-                    <p className="item"> <CheckOutlined></CheckOutlined> Indice utilizado del Ingresog: <strong><em>{`  ${(mayorindiceporcentajeegreso)}%`}. </em></strong></p>
+                    <p className="item"> <CheckOutlined></CheckOutlined> Indice utilizado del Ingreso: <strong><em>{`  ${(mayorindiceporcentajeegreso)}%`}. </em></strong></p>
+                    <p className="item"> <CheckOutlined></CheckOutlined> Promedio: <strong><em>{`  ${(mayorindicesaldopromedio)}%`}. </em></strong></p>
                 
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import { Navigate, useNavigate } from "react-router-dom"
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input,DatePicker } from 'antd'
+import { WarningOutlined} from '@ant-design/icons';
+import { Button, Form, Input,DatePicker,Typography,notification } from 'antd'
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import './registrousuario.css'
@@ -32,6 +32,8 @@ const onFinish = (values) => {
     console.log(values);
   };
 
+const { Text } = Typography;
+
 function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
     const navigate=useNavigate()
     const { MonthPicker, RangePicker } = DatePicker;
@@ -44,6 +46,7 @@ function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
     const [username,setUsername]=useState('')
     const [correo,setCorreo]=useState('')
     const [password,setPassword]=useState('')
+    const [erroresregistro,setErroresregistro]=useState('')
 
     const cargarnombre=(event)=>{
         setNombre(event.target.value)
@@ -91,7 +94,7 @@ function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
 
         };
 
-        console.log(datosregistrar)
+        
         const datos =await ApiRegistroUsuario(datosregistrar)
         
         if(datos['resp']===200){
@@ -112,13 +115,33 @@ function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
             setSesionname(sesioncapitalize)
             navigate('/Home')
         }else{
-            console.log(datos['data']['error'])
+            
+            const errores=datos['data']['error']
+            let mensajeerror = 'Errores: ';
+            for (let clave in errores) {
+                mensajeerror += `${clave}: ${errores[clave]}. `;
+            }
+
+            setErroresregistro(mensajeerror)
+            mostrarmensajeerror('top',mensajeerror)
         }
     }
+
+    const mostrarmensajeerror = (placement,mensaje) => {
+        api.open({
+            message: 'ERROR',
+            description: ` ${mensaje}`,
+            placement,
+            icon: (<WarningOutlined style={{color: 'red',}}/>
+            ),
+          });
+        };
+
+    const [api, contextHolder] = notification.useNotification();
     return(
 
         <div className="login-registro-container">
-
+            {contextHolder}
             <div className="login-registro-box">
 
                 <Form 
@@ -249,7 +272,7 @@ function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
                        > Registrarse</Button>
                     </div>
                         
-
+                    {/* <p>{erroresregistro}</p> */}
                     
                     
                 </Form>
