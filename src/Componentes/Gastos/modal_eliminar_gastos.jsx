@@ -46,7 +46,7 @@ function ModalEliminarGastos(
             
         const respuesta=result['resp']
         if (respuesta === 200) {
-            await new Promise(resolve => setTimeout(resolve, 2000))
+            
             setCargarcomponentesgasto(!cargarcomponentesgasto)
             setOpeneliminargasto(false)
             

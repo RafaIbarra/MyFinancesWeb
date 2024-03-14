@@ -9,6 +9,7 @@ function SaldosPeriodos({datosperiodosaldos,imagenperiodosaldos}){
     const [mayorsaldoegreso,setMayorsaldoegreso]=useState('')
     const [mayorsaldoporcentajesaldo,setMayorsaldoporcentajesaldo]=useState('')
     const [mayorsaldoporcentajeegreso,setMayorsaldoporcentajeegreso]=useState('')
+    const [mayosaldomontosaldo,setMayosaldomontosaldo]=useState('')
 
     useEffect(() => {
         
@@ -25,7 +26,7 @@ function SaldosPeriodos({datosperiodosaldos,imagenperiodosaldos}){
             setMayorsaldoegreso(datosperiodosaldos.MontoEgreso)
             setMayorsaldoporcentajesaldo(datosperiodosaldos.PorcentajeSaldo)
             setMayorsaldoporcentajeegreso(datosperiodosaldos.PorcentajeEgreso)
-               
+            setMayosaldomontosaldo(datosperiodosaldos.Saldo)
 
   
             
@@ -44,7 +45,7 @@ function SaldosPeriodos({datosperiodosaldos,imagenperiodosaldos}){
                     <p className="item"> <CheckOutlined></CheckOutlined> Mes: <strong><em>{`  ${(mayorsaldomes)}`}. </em></strong> </p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Monto Ingreso: <strong><em>{` Gs. ${Number(mayorssaldoingreso).toLocaleString('es-ES')}`}. </em></strong> </p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Monto Egreso: <strong><em>{` Gs. ${Number(mayorsaldoegreso).toLocaleString('es-ES')}`}. </em></strong> </p>
-                    <p className="item"> <CheckOutlined></CheckOutlined> Monto Saldo:  </p>
+                    <p className="item"> <CheckOutlined></CheckOutlined> Monto Saldo:  <strong><em>{` Gs. ${Number(mayosaldomontosaldo).toLocaleString('es-ES')}`}. </em></strong> </p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Porcentaje del saldo sobre el ingreso: <strong><em>{`  ${(mayorsaldoporcentajesaldo)}% `}. </em></strong></p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Porcentaje del egreso sobre el ingreso: <strong><em>{`  ${(mayorsaldoporcentajeegreso)}%`}. </em></strong></p>
                 

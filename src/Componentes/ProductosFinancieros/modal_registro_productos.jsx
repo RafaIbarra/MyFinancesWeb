@@ -128,7 +128,7 @@ function ModalRegistroProducto({
         
         const respuesta=result['resp']
         if (respuesta === 200) {
-          await new Promise(resolve => setTimeout(resolve, 2000))
+          
           const registros=result['data']
           setProductos(registros)
           setCargarcomponentesproductos(!cargarcomponentesproductos)

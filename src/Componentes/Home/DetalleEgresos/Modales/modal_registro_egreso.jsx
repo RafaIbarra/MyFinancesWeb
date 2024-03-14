@@ -216,7 +216,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
             const año = registros['Egresos'][0].AnnoEgreso;
 
             
-            await new Promise(resolve => setTimeout(resolve, 2000))
+            
             
             if(mes===mesprincipal && annoprincipal===año ){
               

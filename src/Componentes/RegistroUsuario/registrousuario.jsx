@@ -66,7 +66,7 @@ function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
 
     
     }
-    const cargarcorreo=(valeventue)=>{
+    const cargarcorreo=(event)=>{
 
         setCorreo(event.target.value)
 

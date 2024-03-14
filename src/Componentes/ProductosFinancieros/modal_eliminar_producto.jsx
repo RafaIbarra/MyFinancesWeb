@@ -45,7 +45,7 @@ function ModalEliminarProducto(
               
             const respuesta=result['resp']
             if (respuesta === 200) {
-                await new Promise(resolve => setTimeout(resolve, 2000))
+                
                 setCargarcomponentesproductos(!cargarcomponentesproductos)
                 setOpeneliminarproducto(false)
                 

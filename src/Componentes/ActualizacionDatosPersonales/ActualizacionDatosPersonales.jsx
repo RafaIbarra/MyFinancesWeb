@@ -1,12 +1,14 @@
 import React, {useEffect, useState } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
-import { Button, Checkbox, Form, Input,DatePicker } from 'antd'
+import { Button, Form, Input,DatePicker,message  } from 'antd'
 import { FileSyncOutlined   } from '@ant-design/icons';
+
 import Generarpeticion from '../../peticiones/apipeticiones';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import './actualizaciondatospersonales.css'
 import '../../Componentes/estilosgenerales.css'
+import Cargadatos from '../Home/Cargadatos';
 const layout = {
     labelCol: {
       span: 8,
@@ -28,10 +30,12 @@ const validateMessages = {
   }
 
 const tamañoobjeto=250
-const onFinish = (values) => {
-    console.log(values);
-  };
+// const onFinish = (values) => {
+//     console.log(values);
+//   };
+
 function ActualizacionDatosPersonales(){
+    const [messageApi, contextHolder] = message.useMessage();
     const navigate=useNavigate()
     const { MonthPicker, RangePicker } = DatePicker;
     dayjs.extend(customParseFormat);
@@ -41,12 +45,37 @@ function ActualizacionDatosPersonales(){
     const [fechanac,setFechanac]=useState('')
     const [username,setUsername]=useState('')
     const [correo,setCorreo]=useState('')
-    const [password,setPassword]=useState('')
+    
     const[valoresdefaultdatos,setValoresdefaultdatos]=useState([])
     const [cargacompleta,setCargacompleta]=useState(false)
-    const ver=()=>{
-        console.log(valoresdefaultdatos.id)
-
+    const[spindatos,setSpindato]=useState(false)
+    
+    const success = () => {
+        messageApi.open({
+          type: 'success',
+          content: 'Registro de usuario Actualizado',
+          className: 'custom-class',
+          style: {
+            marginTop: '20vh',
+          },
+          duration: 5,
+        });
+      };
+    
+    const error = () => {
+        messageApi.open({
+          type: 'error',
+          content: 'No se actualizaron los datos, verificar los campos.',
+          className: 'custom-class',
+          style: {
+            marginTop: '20vh',
+            
+          },
+          duration: 5,
+        });
+      };
+    const cancelar=()=>{
+        navigate('/Home')
     }
     const cargarnombre=(event)=>{
         setNombre(event.target.value)
@@ -69,14 +98,41 @@ function ActualizacionDatosPersonales(){
 
     
     }
-    const cargarcorreo=(valeventue)=>{
+    const cargarcorreo=(event)=>{
 
         setCorreo(event.target.value)
 
         }
-    const cargarcontrasena = (event) => {
-            setPassword(event.target.value);
+    const registrar = async()=>{
+        setSpindato(true)
+        const body = {
+            nombre:nombre,
+            apellido:apellido,
+            fechanacimiento:fechanac,
+            correo:correo,
+        
         };
+
+        const endpoint='ActualizarDatosUsuario/'
+        const result = await Generarpeticion(endpoint, 'POST', body);
+        const respuesta=result['resp']
+        if(respuesta===200){
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            setSpindato(false)
+            success()
+            console.log(result['data'])
+        }else if(respuesta === 403 || respuesta === 401){
+                  
+                  
+            navigate('/Closesesion')
+
+        }else{
+
+        }
+    }    
+
+    
+   
 
 
     useEffect(() => {
@@ -95,6 +151,11 @@ function ActualizacionDatosPersonales(){
                     
                    console.log(result['data'][0])
                    setValoresdefaultdatos(result['data'][0])
+                   setNombre(result['data'][0].nombre_usuario)
+                   setApellido(result['data'][0].apellido_usuario)
+                   setFechanac(result['data'][0].fecha_nacimiento)
+                   setUsername(result['data'][0].user_name)
+                   setCorreo(result['data'][0].correo)
                    setCargacompleta(true)
                     
                     
@@ -120,12 +181,15 @@ function ActualizacionDatosPersonales(){
 
         return(
             <div className='contenedor-principal-act'>
+                {contextHolder}
                 <div className='contenedor-registro-box '>
-                <Form 
+                   
+
+                    <Form 
                         {...layout}
                         name="nest-messages"
                         variant="filled"
-                        onFinish={onFinish}
+                        
                         style={{
                         Width: 400,
                         padding:'0px'
@@ -169,7 +233,9 @@ function ActualizacionDatosPersonales(){
                                 },
                             ]}
                         >
-                            <Input placeholder="Apellido" onChange={cargarapellido} style={{width:tamañoobjeto}} />
+                            <Input placeholder="Apellido"
+                            defaultValue={valoresdefaultdatos.apellido_usuario} 
+                            onChange={cargarapellido} style={{width:tamañoobjeto}} />
     
                         </Form.Item>
     
@@ -187,8 +253,10 @@ function ActualizacionDatosPersonales(){
                                     placeholder='Fecha Nacimiento' 
                                     dateFormat="yyyy-MM-dd"
                                     onChange={seleccionfecha}
-                                    // disabled={modoedicion}
-                                    // defaultValue={ modoactualizacion ?  dayjs(valoresdefault[0]['fecha_gasto'], dateFormat) : ''} 
+                                     
+                                    defaultValue={dayjs(valoresdefaultdatos.fecha_nacimiento, dateFormat)} 
+                                    
+                                    
                                     format={dateFormat} 
                                     style={{width:tamañoobjeto}}
                                     
@@ -206,7 +274,10 @@ function ActualizacionDatosPersonales(){
                                 },
                             ]}
                         >
-                            <Input placeholder="User Name" onChange={cargaruser} style={{width:tamañoobjeto}}/>
+                            <Input placeholder="User Name"
+                             defaultValue={valoresdefaultdatos.user_name} 
+                             disabled
+                             onChange={cargaruser} style={{width:tamañoobjeto}}/>
     
                         </Form.Item>
     
@@ -219,7 +290,9 @@ function ActualizacionDatosPersonales(){
                                 },
                             ]}
                         >
-                            <Input placeholder="nombre@correo.com" onChange={cargarcorreo} style={{width:tamañoobjeto}}/>
+                            <Input placeholder="nombre@correo.com" 
+                            defaultValue={valoresdefaultdatos.correo} 
+                            onChange={cargarcorreo} style={{width:tamañoobjeto}}/>
                         </Form.Item>
     
                         
@@ -230,11 +303,13 @@ function ActualizacionDatosPersonales(){
     
                            <Button type="primary" 
                            className='botonera'
+                           onClick={registrar}
                            > Actualizar Datos</Button>
     
                             <Button type="primary" 
                            className='botonera'
-                           onClick={ver}
+                           onClick={cancelar}
+                           
                            > Cancelar</Button>
                         </div>
                             
@@ -242,8 +317,18 @@ function ActualizacionDatosPersonales(){
                         
                         
                     </Form>
+                
     
+
+
+
                 </div>
+
+                {spindatos &&(
+                    <Cargadatos setSpindato={setSpindato}></Cargadatos>
+                )
+
+                }
     
             </div>
         )

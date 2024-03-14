@@ -4,6 +4,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Resumen from './Resumen/resumen';
 import DetalleEgreso from './DetalleEgresos/detalleegreso';
 import DetalleIngreso from './DetalleIngresos/detalleingreso';
+import SaldosPeriodo from './SaldosPeriodo/SaldosPeriodo';
 import Generarpeticion from '../../peticiones/apipeticiones';
 import './home.css'
 import HomeCabecera from './CabeceraHome/cabecera';
@@ -19,6 +20,7 @@ function Home (){
     const[dataresumen,setDataresumen]=useState(null)
     const[dataingresos,setDataingresos]=useState(null)
     const[dataegresos,setDataegresos]=useState(null)
+    const[datasaldos,setDatasaldos]=useState(null)
 
     const[imgresumen,setImgresumen]=useState('')
     const[imgegresos,setImgegresos]=useState('')
@@ -46,11 +48,12 @@ function Home (){
         if (respuesta === 200) {
             
             const registros=result['data']['datos']
-           
+            console.log(registros)
 
             setDataresumen(registros['Resumen'])
             setDataingresos(registros['Ingresos'])
             setDataegresos(registros['Egresos'])
+            setDatasaldos(registros['Saldos'])
             
             const registros_imagenes=result['data']['graficos']
             setImgresumen(registros_imagenes['imgResumen'])
@@ -92,11 +95,11 @@ function Home (){
                   className="mb-3"
                   // onClick={tab_resumen}
                 >
-                  <Tab eventKey="homeresumen" title="Resumen Movimientos" >
+                  <Tab eventKey="homeresumen" title="Resumen Del Mes" >
 
                     {cargaconfirmada &&(<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>)}
                   </Tab>
-                  <Tab eventKey="homeingresos" title="Detalle de Ingresos">
+                  <Tab eventKey="homeingresos" title="Detalle de Ingresos del Mes">
                     {cargaconfirmada &&(<DetalleIngreso 
                                                         dataingresos={dataingresos} 
                                                         setDataingresos={setDataingresos} 
@@ -110,7 +113,7 @@ function Home (){
                                         )
                     }
                   </Tab>
-                  <Tab eventKey="homeegresos" title="Detalle de Egresos" >
+                  <Tab eventKey="homeegresos" title="Detalle de Egresos del Mes" >
                     {cargaconfirmada &&( <DetalleEgreso 
                                                       dataegresos={dataegresos} 
                                                       setDataegresos={setDataegresos} 
@@ -120,6 +123,12 @@ function Home (){
                                                       imgegresos={imgegresos}>
 
                                         </DetalleEgreso>)}
+                  </Tab>
+                  <Tab eventKey="homesaldos" title="Saldos del Año" >
+                    {cargaconfirmada &&( <SaldosPeriodo datasaldos={datasaldos} 
+                                                      >
+
+                                        </SaldosPeriodo>)}
                   </Tab>
               </Tabs>
               

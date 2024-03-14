@@ -10,6 +10,7 @@ function IndicesPeriodos({datosperiodoindices,imagenperiodoindice}){
     const [mayorindiceegreso,setMayorindiceegreso]=useState('')
     const [mayorindiceporcentajesaldo,setMayorindiceporcentajesaldo]=useState('')
     const [mayorindiceporcentajeegreso,setMayorindiceporcentajeegreso]=useState('')
+    const [mayorindicemontosaldo,setMayorindicemontosaldo]=useState('')
     useEffect(() => {
         
         const cargardatos =  () => {
@@ -23,6 +24,7 @@ function IndicesPeriodos({datosperiodoindices,imagenperiodoindice}){
             setMayorindiceegreso(datosperiodoindices.MontoEgreso)
             setMayorindiceporcentajesaldo(datosperiodoindices.PorcentajeSaldo)
             setMayorindiceporcentajeegreso(datosperiodoindices.PorcentajeEgreso)
+            setMayorindicemontosaldo(datosperiodoindices.Saldo)
   
             
           };
@@ -40,7 +42,7 @@ function IndicesPeriodos({datosperiodoindices,imagenperiodoindice}){
                     <p className="item"> <CheckOutlined></CheckOutlined> Mes: <strong><em>{`  ${(mayorsindicemes)}`}. </em></strong> </p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Monto Ingreso: <strong><em>{` Gs. ${Number(mayorsindiceingreso).toLocaleString('es-ES')}`}. </em></strong> </p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Monto Egreso: <strong><em>{` Gs. ${Number(mayorindiceegreso).toLocaleString('es-ES')}`}. </em></strong> </p>
-                    <p className="item"> <CheckOutlined></CheckOutlined> Monto Saldo:  </p>
+                    <p className="item"> <CheckOutlined></CheckOutlined> Monto Saldo:  <strong><em>{` Gs. ${Number(mayorindicemontosaldo).toLocaleString('es-ES')}`}. </em></strong> </p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Indice del porcentaje NO utilizado del ingreso: <strong><em>{`  ${(mayorindiceporcentajesaldo)}% `}. </em></strong></p>
                     <p className="item"> <CheckOutlined></CheckOutlined> Indice utilizado del Ingresog: <strong><em>{`  ${(mayorindiceporcentajeegreso)}%`}. </em></strong></p>
                 

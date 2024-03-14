@@ -37,7 +37,7 @@ function EstadisticasIngreso(){
                 // -----DATOS PARA PERIODOS MAXIMOS---
                 
                 
-                console.log(result['data'])
+                
                 // console.log('fdfdf')
                 setDatosperiodosaldos(result['data']['DatosPeriodoSaldo'][0]['MayorSaldo'][0])
                 setDatosperiodoindices(result['data']['DatosPeriodoSaldo'][1]['MayorIndice'][0])

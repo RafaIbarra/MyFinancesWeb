@@ -93,7 +93,7 @@ function RegistroEgreso (){
         
         const respuesta=result['resp']
         if (respuesta === 200) {
-          await new Promise(resolve => setTimeout(resolve, 2000))
+          
           
           navigate('/Home')
           
@@ -122,7 +122,7 @@ function RegistroEgreso (){
             
           } else {
             
-            await new Promise(resolve => setTimeout(resolve, 2000));
+           
             // navigate('/');
           }
         };

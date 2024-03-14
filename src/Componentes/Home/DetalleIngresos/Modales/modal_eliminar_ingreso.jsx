@@ -50,7 +50,7 @@ function ModalEliminarIngreso({
       
     const respuesta=result['resp']
     if (respuesta === 200) {
-        await new Promise(resolve => setTimeout(resolve, 2000))
+       
         const registros=result['data']['datos']
         setDataresumen(registros['Resumen'])
         setDataingresos(registros['Ingresos'])
