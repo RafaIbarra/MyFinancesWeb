@@ -1,0 +1,45 @@
+.container-pie{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    /* background-color: rgb(182, 212, 212); */
+    height: 37px;
+    text-align:left;
+  }
+
+
+.estiloimg-pie{
+    height: 1.5rem
+    
+}
+
+.estiloimg-pie-wha{
+    height: 2.1rem;
+    margin-top: -4.7px;
+    
+    
+}
+
+.enlace {
+    color: rgb(0, 0, 0); /* Color inicial */
+    padding-left: 7px;
+    font-size: small;
+  }
+  
+  .enlace:hover {
+    color: rgb(170, 148, 148); /* Color al pasar el mouse por encima */
+  }
+
+
+.cuadro-contactos{
+    display: flex;
+    padding-left: 30px;
+    padding-top: 0.5%;
+}
+.letra-contacto{
+    /* font-style: italic;
+    font-weight: bold; */
+    font-size: small;
+}

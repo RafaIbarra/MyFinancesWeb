@@ -16,6 +16,7 @@ import EstadisticasIngreso from "../Componentes/Estadisticas/EstadisticasIngreso
 import CategoriaGasto from "../Componentes/CategoriaGastos/CategoriaGastos";
 import ActualizacionDatosPersonales from "../Componentes/ActualizacionDatosPersonales/ActualizacionDatosPersonales";
 import CambioPassword from "../Componentes/CambioPassword/CambioPassword";
+import PiePagina from "../Componentes/PiePagina/PiePagina";
 import ComprobarStorage from "./verificarstorage";
 
 function App (){
@@ -77,6 +78,7 @@ return(
                     <Route path="/Closesesion" element={<CloseSesion />} />
                     
                 </Routes>
+                <PiePagina></PiePagina>
             </div>
         </div>
     </HashRouter>

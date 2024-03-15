@@ -207,12 +207,13 @@ function Productosfinancieros(){
     if (cargarcomponentesproductos){
 
         return(
-            <div>
+            <div className='principal-productos'>
                   {contextHolder}
                   <h4 className='tituloform' > Conceptos de Ingresos </h4>
                   <Table 
                     rowSelection={rowSelection} 
-                    scroll={{x: 300,y: 400,}}
+                    // scroll={{x: 300,y: 400,}}
+                    scroll={{y: 'calc(93vh -  250px)',}}
                     size="small"
                     columns={columns} 
                     dataSource={productos} 

@@ -1,0 +1,6 @@
+.principal-estadistica-ingreso{
+    height: calc(89vh - 9px);
+    overflow-y: auto;
+    width: 100%;
+    background-color: rgb(244, 246, 248);
+}

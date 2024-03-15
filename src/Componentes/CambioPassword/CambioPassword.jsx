@@ -2,6 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { Button, message, Steps, theme,Input, } from 'antd';
 import { Navigate, useNavigate } from "react-router-dom";
 import Generarpeticion from '../../peticiones/apipeticiones';
+
+import EnvioCorreo from './enviocorreo';
+
+import '../../Componentes/estilosgenerales.css'
 import './cambiopassword.css'
 function CambioPassword(){
   const navigate=useNavigate()
@@ -9,6 +13,7 @@ function CambioPassword(){
   const [current, setCurrent] = useState(0);
   const [correouser,setCorreouser]=useState('')
   const [cargacompleta,setCargacompleta]=useState(false)
+  const [textoboton,setTextoboton]=useState('Enviar Correo')
 
   const contentStyle = {
     // lineHeight: '260px',
@@ -20,22 +25,21 @@ function CambioPassword(){
     marginTop: 16,
   };
   
+  
 
   const steps = [
     {
       title: 'Envio Correo',
       content: (
         
-        <p style={{height:'260px'}}  className='elementop' >Se enviara un correo a {correouser} el codigo de seguridad.</p>
-
-            
+        <EnvioCorreo correouser={correouser}></EnvioCorreo>
        
       ),
     },
     {
       title: 'Carga Codigo',
       content: (
-                <div style={{height:'260px'}}>
+                <div className='content-codigo'>
                     <Input 
                         placeholder="Codigo Seguridad"
                         name='CodigoSeguridad'
@@ -43,7 +47,7 @@ function CambioPassword(){
                             
                     />
 
-<Input 
+                    <Input 
                         placeholder="Codigo Seguridad"
                         name='CodigoSeguridad'
                         key='CodigoSeguridad'
@@ -63,9 +67,29 @@ function CambioPassword(){
   ];
 
   const next = () => {
+    
+    if((current + 1)===1){
+      setTextoboton('Comprobar Codigo')
+    }
+    if((current + 1)===2){
+      console.log('Cambiar contraseña')
+      setTextoboton('Cambiar contraseña')
+    }
+
     setCurrent(current + 1);
   };
   const prev = () => {
+    if((current - 1)===0){
+      setTextoboton('Enviar Correo')
+    }
+
+    if((current - 1)===1){
+      setTextoboton('Comprobar Codigo')
+    }
+    if((current - 1)===2){
+      
+      setTextoboton('Cambiar contraseña')
+    }
     setCurrent(current - 1);
   };
   const items = steps.map((item) => ({
@@ -110,7 +134,7 @@ function CambioPassword(){
 
   if(cargacompleta){
   return (
-    <div style={{width:'75%'}}>
+    <div className='principal-cambio-password'>
 
       <Steps current={current} items={items} />
       <div style={contentStyle}>{steps[current].content}</div>
@@ -119,26 +143,32 @@ function CambioPassword(){
           marginTop: 24,
         }}
       >
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Next
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => message.success('Processing complete!')}>
-            Done
-          </Button>
-        )}
-        {current > 0 && (
-          <Button
-            style={{
-              margin: '0 8px',
-            }}
-            onClick={() => prev()}
-          >
-            Previous
-          </Button>
-        )}
+        <div style={{paddingLeft:'33%'}}>
+
+            {current < steps.length - 1 && (
+              <Button className='botonera' type="primary" onClick={() => next()}>
+                {textoboton}
+              </Button>
+            )}
+            {current === steps.length - 1 && (
+              <Button className='botonera' type="primary" onClick={() => message.success('Processing complete!')}>
+                {textoboton}
+              </Button>
+            )}
+            {current > 0 && (
+              <Button className='botonera'
+                style={{
+                  margin: '0 8px',
+                }}
+                onClick={() => prev()}
+              >
+                Anterior
+              </Button>
+            )}
+        </div>
+
+
+
       </div>
     </div>
 

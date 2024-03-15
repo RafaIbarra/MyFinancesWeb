@@ -4,3 +4,11 @@
     margin-left: 50px;
     margin-bottom: 10px;
   }
+
+
+.principal-gastos{
+  height: calc(89vh - 9px);
+  overflow-y: auto;
+  width: 100%;
+    
+}

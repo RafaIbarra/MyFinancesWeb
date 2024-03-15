@@ -7,7 +7,7 @@ import SaldosPeriodos from './SaldosPeriodos/SaldosPeriodos';
 import IndicesPeriodos from './IndicesPeriodos/IndicesPeriodos';
 import Cargadatos from '../../Home/Cargadatos';
 import {  Divider } from 'antd'
-
+import './estadisticaingreso.css'
 function EstadisticasIngreso(){
     const navigate=useNavigate()
     const [imagen, setImagen] = useState(null);
@@ -69,7 +69,7 @@ function EstadisticasIngreso(){
             //     style={{marginLeft:'100px'}}
             //     />
 
-          <div style={{width:'100%',backgroundColor:'rgb(244, 246, 248)'}}>
+          <div className='principal-estadistica-ingreso'>
             
             <EstadisticasCabecera 
             cargarestadisticas={cargarestadisticasingreso}

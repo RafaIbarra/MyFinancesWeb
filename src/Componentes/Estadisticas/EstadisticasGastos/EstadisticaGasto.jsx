@@ -7,8 +7,8 @@ import EstadisticasCabecera from '../EstaditicasCabecera';
 import ConceptosMaximos from './ConceptosMaximos/ConceptosMaximos';
 import CategoriaMaxima from './CategoriaMaxima/CategoriaMaxima';
 import Handelstorage from '../../../Storage/handelstorage';
-import Cargadatos
- from '../../Home/Cargadatos';
+import Cargadatos from '../../Home/Cargadatos';
+import './estadisticagasto.css'
 import {  Space,Divider,Button } from 'antd'
 function EstadisticasGasto(){
     const navigate=useNavigate()
@@ -115,7 +115,7 @@ function EstadisticasGasto(){
 
 
 
-        <div style={{width:'100%',backgroundColor:'rgb(244, 246, 248)'}}>
+        <div className='principal-estadistica-egreso'>
             
             <EstadisticasCabecera 
             cargarestadisticas={cargarestadisticas}

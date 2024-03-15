@@ -291,7 +291,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
             <div className='contenedor-tabla-egresos'>
 
               <Table rowSelection={rowSelection} 
-                  scroll={{y: 'calc(93vh - 300px)',}}
+                  scroll={{y: 'calc(93vh -  320px)',}}
                   className='tabla_general'
                   columns={columns} 
                   size="small"

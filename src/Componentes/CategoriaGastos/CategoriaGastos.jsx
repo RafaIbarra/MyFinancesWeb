@@ -7,6 +7,7 @@ import ModalRegistroCategoria from './modal_registro_categoria';
 
 import Generarpeticion from '../../peticiones/apipeticiones';
 // import './gastos.css'
+import './categoriagasto.css'
 import FormItem from 'antd/es/form/FormItem';
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -219,12 +220,12 @@ function CategoriaGasto(){
 
     if(cargarcomponentecategoria){
         return(
-            <div>
+            <div className='principal-categorias'>
                 {contextHolder}
                 <h4 className='tituloform' > Categorias Definidas </h4>
                 <Table 
                     rowSelection={rowSelection} 
-                    scroll={{x: 300,y: 400,}}
+                    scroll={{y: 'calc(93vh -  250px)',}}
                     size="small"
                     
                     columns={columns} 
