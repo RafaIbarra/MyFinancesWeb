@@ -15,6 +15,7 @@ import EstadisticasGasto from "../Componentes/Estadisticas/EstadisticasGastos/Es
 import EstadisticasIngreso from "../Componentes/Estadisticas/EstadisticasIngresos/EstadisticaIngreso";
 import CategoriaGasto from "../Componentes/CategoriaGastos/CategoriaGastos";
 import ActualizacionDatosPersonales from "../Componentes/ActualizacionDatosPersonales/ActualizacionDatosPersonales";
+import CambioPassword from "../Componentes/CambioPassword/CambioPassword";
 import ComprobarStorage from "./verificarstorage";
 
 function App (){
@@ -69,7 +70,8 @@ return(
                     <Route path="/EstadisticasGasto" element={<EstadisticasGasto />} />
                     <Route path="/EstadisticasIngreso" element={<EstadisticasIngreso />} />
                     <Route path="/ActualizacionDatosPersonales" element={<ActualizacionDatosPersonales />} />
-
+                    <Route path="/CambioPassword" element={<CambioPassword />} />
+                    
                     
                     
                     <Route path="/Closesesion" element={<CloseSesion />} />

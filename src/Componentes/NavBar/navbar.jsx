@@ -36,6 +36,7 @@ const navegaciones={
   'CategoriaEgresos':'/CategoriaGastos',
   'MovimientosEgresos':'/HistorialEgresos',
   'Actualizacion':'/ActualizacionDatosPersonales',
+  'CambioPassword':'/CambioPassword'
   
 
 }
@@ -55,6 +56,10 @@ function NavBar({sesionname}){
       setKeysel('')
       navigate('/ActualizacionDatosPersonales')
     }
+    const cambiopassword=(event)=>{
+      setKeysel('')
+      navigate('/CambioPassword')
+    }
     const items = [
       {
         // label: (
@@ -67,8 +72,9 @@ function NavBar({sesionname}){
         
       },
       {
-        label: <a href="https://www.aliyun.com">Configuracion</a>,
-        key: '11111',
+        label: 'Configuracion',
+        key: 'CambioPassword',
+        onClick:cambiopassword,
         icon:<SettingOutlined style={{fontSize:'20px'}}/>
       },
       {
