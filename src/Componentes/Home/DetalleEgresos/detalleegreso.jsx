@@ -292,7 +292,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
 
               <Table rowSelection={rowSelection} 
                   scroll={{y: 'calc(93vh -  320px)',}}
-                  className='tabla_general'
+                  className='tamaño-tabla'
                   columns={columns} 
                   size="small"
                   dataSource={detalle} 

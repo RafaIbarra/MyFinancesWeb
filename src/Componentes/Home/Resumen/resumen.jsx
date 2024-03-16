@@ -80,10 +80,7 @@ function Resumen({dataresumen,imgresumen}){
               setSaldo(0)
             }
           }
-          
-           
-        
-    
+
         cargardatos();
       }, [dataresumen]);
 

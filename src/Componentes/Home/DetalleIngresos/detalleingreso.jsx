@@ -204,7 +204,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
               {contextHolder}
               <Table rowSelection={rowSelection} 
                 scroll={{y: 'calc(93vh -  320px)',}}
-                className='tabla_general'
+                className='tamaño-tabla-ingreso'
                 size="small"
                 columns={columns} 
                 dataSource={detalle} 

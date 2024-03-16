@@ -6,6 +6,7 @@ import Generarpeticion from '../../peticiones/apipeticiones';
 import EnvioCorreo from './EnvioCorreo';
 import DatosCodigo from './DatosCodigo';
 import ProcesarCambio from './ProcesarCambio';
+import Cargadatos from '../Home/Cargadatos';
 
 import '../../Componentes/estilosgenerales.css'
 import './cambiopassword.css'
@@ -19,8 +20,12 @@ function CambioPassword(){
   const [codigoseguridad,setCodigoseguridad]=useState(0)
   const [errorcodigo,setErrorcodigo]=useState(false)
   const [mensajecodigo,setMensajecodigo]=useState('')
+  const [errorcambio,setErrorcambio]=useState(false)
+  const [mensajecambio,setMensajecambio]=useState('')
+  const [passconfirm,setPassconfirm]=useState(false)
   const [pass1,setPass1]=useState(0)
   const [pass2,setPass2]=useState(0)
+  const [spindatos,setSpindato]=useState(false)
   
 
   const contentStyle = {
@@ -89,12 +94,17 @@ function CambioPassword(){
     
     const respuesta=result['resp']
     if (respuesta === 200) {
-      
+      setSpindato(false)
+      setPassconfirm(true)
+      setMensajecambio(result['data']['mensaje'])
       
     } else if(respuesta === 403 || respuesta === 401){
       
       navigate('/Closesesion')
   
+    }else{
+      setErrorcambio(true)
+      setMensajecambio(result['data']['error'])
     }
     return respuesta
     };
@@ -121,7 +131,12 @@ function CambioPassword(){
     {
       title: 'Cambiar Contraseña',
       content: (
-        <ProcesarCambio setPass1={setPass1} setPass2={setPass2}></ProcesarCambio>
+        <ProcesarCambio setPass1={setPass1} setPass2={setPass2}
+        errorcambio={errorcambio}
+        setErrorcambio={setErrorcambio}
+        mensajecambio={mensajecambio}
+        passconfirm={passconfirm}
+        ></ProcesarCambio>
       ),
     },
   ];
@@ -146,10 +161,11 @@ function CambioPassword(){
       
     }
     if((current + 1)===3){
+      setSpindato(true)
       const valor_control_pass=await cambiar_pass()
 
       if(valor_control_pass===200){
-        console.log('cambio de pass correcto')
+        
         pasar=1
       }
       
@@ -159,6 +175,15 @@ function CambioPassword(){
 
         setCurrent(current + 1);
       }
+      if((current + 1)=== 3){
+        
+        
+        // navigate('/Home')
+        
+      }
+
+
+      
     }
   };
   const prev = () => {
@@ -255,6 +280,10 @@ function CambioPassword(){
 
 
       </div>
+
+      {spindatos &&(
+            <Cargadatos setSpindato={setSpindato}></Cargadatos>
+          )}
     </div>
 
   );
