@@ -78,7 +78,7 @@ return(
                     <Route path="/Closesesion" element={<CloseSesion />} />
                     
                 </Routes>
-                <PiePagina></PiePagina>
+                {Estadologin && (<PiePagina></PiePagina>)}
             </div>
         </div>
     </HashRouter>

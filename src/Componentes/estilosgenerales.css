@@ -8,5 +8,6 @@
     
 }
 .tabla_general{
-    height: calc(93vh - 57%)
+    /* height: calc(93vh - 57%) */
+    height: calc(93vh -  37%);
 }

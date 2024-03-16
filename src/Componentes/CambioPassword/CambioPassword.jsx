@@ -3,7 +3,9 @@ import { Button, message, Steps, theme,Input, } from 'antd';
 import { Navigate, useNavigate } from "react-router-dom";
 import Generarpeticion from '../../peticiones/apipeticiones';
 
-import EnvioCorreo from './enviocorreo';
+import EnvioCorreo from './EnvioCorreo';
+import DatosCodigo from './DatosCodigo';
+import ProcesarCambio from './ProcesarCambio';
 
 import '../../Componentes/estilosgenerales.css'
 import './cambiopassword.css'
@@ -14,6 +16,12 @@ function CambioPassword(){
   const [correouser,setCorreouser]=useState('')
   const [cargacompleta,setCargacompleta]=useState(false)
   const [textoboton,setTextoboton]=useState('Enviar Correo')
+  const [codigoseguridad,setCodigoseguridad]=useState(0)
+  const [errorcodigo,setErrorcodigo]=useState(false)
+  const [mensajecodigo,setMensajecodigo]=useState('')
+  const [pass1,setPass1]=useState(0)
+  const [pass2,setPass2]=useState(0)
+  
 
   const contentStyle = {
     // lineHeight: '260px',
@@ -25,6 +33,71 @@ function CambioPassword(){
     marginTop: 16,
   };
   
+  const enviar_correo = async () => {
+        
+    const datosregistrar = {};
+    const endpoint='EnvioCorreoPassword/'
+    const result = await Generarpeticion(endpoint, 'POST', datosregistrar);
+    
+    const respuesta=result['resp']
+    if (respuesta === 200) {
+      
+      
+    } else if(respuesta === 403 || respuesta === 401){
+      
+      navigate('/Closesesion')
+
+    }
+    return respuesta
+ };
+
+ const comprobar_codigo = async () => {
+        
+  const datosregistrar = {
+    codigo:codigoseguridad
+
+  };
+  const endpoint='ComprobarCodigo/'
+  const result = await Generarpeticion(endpoint, 'POST', datosregistrar);
+  
+  const respuesta=result['resp']
+  if (respuesta === 200) {
+    
+    
+  } else if(respuesta === 403 || respuesta === 401){
+    
+    navigate('/Closesesion')
+
+  }else{
+    setErrorcodigo(true)
+    
+    setMensajecodigo(result['data']['error'])
+  }
+  return respuesta
+  };
+
+  const cambiar_pass = async () => {
+        
+    const datosregistrar = {
+      codigo:codigoseguridad,
+      password:pass1,
+      password2:pass2
+  
+    };
+    const endpoint='ActualizarPassword/'
+    const result = await Generarpeticion(endpoint, 'POST', datosregistrar);
+    
+    const respuesta=result['resp']
+    if (respuesta === 200) {
+      
+      
+    } else if(respuesta === 403 || respuesta === 401){
+      
+      navigate('/Closesesion')
+  
+    }
+    return respuesta
+    };
   
 
   const steps = [
@@ -32,51 +105,61 @@ function CambioPassword(){
       title: 'Envio Correo',
       content: (
         
-        <EnvioCorreo correouser={correouser}></EnvioCorreo>
+        <EnvioCorreo correouser={correouser} ></EnvioCorreo>
        
       ),
     },
     {
-      title: 'Carga Codigo',
+      title: 'Comprobar Codigo',
       content: (
-                <div className='content-codigo'>
-                    <Input 
-                        placeholder="Codigo Seguridad"
-                        name='CodigoSeguridad'
-                        key='CodigoSeguridad'
-                            
-                    />
-
-                    <Input 
-                        placeholder="Codigo Seguridad"
-                        name='CodigoSeguridad'
-                        key='CodigoSeguridad'
-                            
-                    />
-
-                </div>
+          <DatosCodigo setCodigoseguridad={setCodigoseguridad} errorcodigo={errorcodigo} setErrorcodigo={setErrorcodigo} mensajecodigo={mensajecodigo}></DatosCodigo>
 
 
                 
       ),
     },
     {
-      title: 'Finalizacion',
-      content: 'Last-content',
+      title: 'Cambiar Contraseña',
+      content: (
+        <ProcesarCambio setPass1={setPass1} setPass2={setPass2}></ProcesarCambio>
+      ),
     },
   ];
 
-  const next = () => {
-    
+  const next = async () => {
+    let pasar=0
     if((current + 1)===1){
-      setTextoboton('Comprobar Codigo')
+      const valor_status=await enviar_correo()
+      
+      if(valor_status===200){
+        setTextoboton('Comprobar Codigo')
+        pasar=1
+      }
     }
     if((current + 1)===2){
-      console.log('Cambiar contraseña')
-      setTextoboton('Cambiar contraseña')
-    }
+      const valor_control_cod=await comprobar_codigo()
 
-    setCurrent(current + 1);
+      if(valor_control_cod===200){
+        setTextoboton('Cambiar contraseña')
+        pasar=1
+      }
+      
+    }
+    if((current + 1)===3){
+      const valor_control_pass=await cambiar_pass()
+
+      if(valor_control_pass===200){
+        console.log('cambio de pass correcto')
+        pasar=1
+      }
+      
+    }
+    if(pasar===1){
+      if((current + 1)< 3){
+
+        setCurrent(current + 1);
+      }
+    }
   };
   const prev = () => {
     if((current - 1)===0){
@@ -151,7 +234,9 @@ function CambioPassword(){
               </Button>
             )}
             {current === steps.length - 1 && (
-              <Button className='botonera' type="primary" onClick={() => message.success('Processing complete!')}>
+              // <Button className='botonera' type="primary" onClick={() => message.success('Processing complete!')}>
+              <Button className='botonera' type="primary" onClick={() => next()}>
+              
                 {textoboton}
               </Button>
             )}
