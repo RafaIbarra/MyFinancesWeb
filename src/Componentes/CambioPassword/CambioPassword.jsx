@@ -296,7 +296,7 @@ function CambioPassword(){
               <Button className='botonera' type="primary" 
               onClick={volverhome}>
               
-                Ir Home
+                Ir Inicio
             </Button>
             )}
             {culminado &&(

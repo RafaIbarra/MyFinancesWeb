@@ -11,10 +11,9 @@ import GraficoEgresoso from './Grafico/graficoegresos';
 
 import '../../../Componentes/estilosgenerales.css'
 const { Text } = Typography;
-function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
-                        setImgresumen,setImgegresos,imgegresos}){
-   
-    
+function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
+                        setImgresumen,setImgegresos,imgegresos})
+{
     const [detalle,setDetalle]=useState(null)
     const [detalleseleccion,setDetalleseleccion]=useState([])
 
@@ -37,76 +36,76 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
     const [categoriasagrupadas,setCategoriasagrupadas]=useState([])
     const [valoresseleccion,setValoresseleccion]=useState(0)
     const [cantidadseleccion,setCantidadseleccion]=useState(0)
-    
-    
     const columns=[
       
-      { title: 'Descripcion',
-        dataIndex: 'NombreGasto',
-        key: 'DetalleEgreso_Descripcion',
-        sorter: (a, b) => a.NombreGasto.localeCompare(b.NombreGasto),
-      },
-      { title: 'Tipo',
-        dataIndex: 'TipoGasto',
-        key: 'DetalleEgreso_Tipo',
-        filters: [
-          {
-            text: 'Ocasionales',
-            value: 'Ocasionales',
-          },
-          {
-            text: 'Fijo',
-            value: 'Fijo',
-          },
+        { title: 'Descripcion',
+          dataIndex: 'NombreGasto',
+          key: 'DetalleEgreso_Descripcion',
+          sorter: (a, b) => a.NombreGasto.localeCompare(b.NombreGasto),
+          width: 230,
           
-        ],
-        onFilter: (value, record) => record.TipoGasto.indexOf(value) === 0,
-      },
-
-      { title: 'Categoria',
-        dataIndex: 'CategoriaGasto', 
-        key: 'DetalleEgreso_Categoria',
-        filters: categoriasagrupadas.map(categoria => ({
-          text: categoria,
-          value: categoria,
-        })),
-
-        onFilter: (value, record) => record.CategoriaGasto.indexOf(value) === 0,
-        sorter: (a, b) => a.CategoriaGasto.localeCompare(b.CategoriaGasto),
-
-      },
-
-      { title: 'Egreso',
-        dataIndex: 'monto_gasto',
-        key: 'DetalleEgreso_Egreso',
-        sorter: (a, b) => a.monto_gasto - b.monto_gasto,
-        render: (monto_gasto) => (
-          <span>
-            {/* Gs. {Number(monto_gasto).toLocaleString('es-ES')} */}
-            Gs. {numeral(monto_gasto).format('0,0')}
-          </span>
-        ),
-      },
-      { title: 'Fecha Gasto',
-        dataIndex: 'fecha_gasto',
-        key: 'DetalleEgreso_FechaGasto',
-        sorter: (a, b) => new Date(a.fecha_gasto) - new Date(b.fecha_gasto),
-      }
-      ,
-
-      { title: 'Fecha Registro',
-        dataIndex: 'fecha_registro',
-        key: 'DetalleEgreso_FechaRegistro',
-        width: 250,
-        sorter: (a, b) => new Date(a.fecha_registro) - new Date(b.fecha_registro),
-      },
+        },
+        { title: 'Tipo',
+          dataIndex: 'TipoGasto',
+          key: 'DetalleEgreso_Tipo',
+          filters: [
+            {
+              text: 'Ocasionales',
+              value: 'Ocasionales',
+            },
+            {
+              text: 'Fijo',
+              value: 'Fijo',
+            },
+            
+          ],
+          onFilter: (value, record) => record.TipoGasto.indexOf(value) === 0,
+        },
+  
+        { title: 'Categoria',
+          dataIndex: 'CategoriaGasto', 
+          key: 'DetalleEgreso_Categoria',
+          filters: categoriasagrupadas.map(categoria => ({
+            text: categoria,
+            value: categoria,
+          })),
+  
+          onFilter: (value, record) => record.CategoriaGasto.indexOf(value) === 0,
+          sorter: (a, b) => a.CategoriaGasto.localeCompare(b.CategoriaGasto),
+  
+        },
+  
+        { title: 'Egreso',
+          dataIndex: 'monto_gasto',
+          key: 'DetalleEgreso_Egreso',
+          sorter: (a, b) => a.monto_gasto - b.monto_gasto,
+          render: (monto_gasto) => (
+            <span>
+              {/* Gs. {Number(monto_gasto).toLocaleString('es-ES')} */}
+              Gs. {numeral(monto_gasto).format('0,0')}
+            </span>
+          ),
+        },
+        { title: 'Fecha Gasto',
+          dataIndex: 'fecha_gasto',
+          key: 'DetalleEgreso_FechaGasto',
+          sorter: (a, b) => new Date(a.fecha_gasto) - new Date(b.fecha_gasto),
+        }
+        ,
+  
+        { title: 'Fecha Registro',
+          dataIndex: 'fecha_registro',
+          key: 'DetalleEgreso_FechaRegistro',
+        //   width: 250,
+          sorter: (a, b) => new Date(a.fecha_registro) - new Date(b.fecha_registro),
+        },
+        
+      ]
       
-    ]
-    
-
-    
+  
+      
     useEffect(() => {
-       
+        
         const cargardatos =  () => {
             setSelectedRowKeys([])
             
@@ -118,48 +117,48 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
 
             if(Object.keys(registros).length>0){
 
-              registros.forEach((elemento) => {
+            registros.forEach((elemento) => {
                 
                 elemento.key = elemento.id;
-              })
-              let totalgasto=0
-              let cantgasto=0
-              registros.forEach(({ monto_gasto }) => {totalgasto += monto_gasto,cantgasto+=1})
-              setMontototalegreso(totalgasto)
-              setcanttotalegreso(cantgasto)
-              
-              setDetalle(registros)
-              const datos_categorias=[]
-              const lista_categorias = registros.map(item => item.CategoriaGasto);
-              lista_categorias.forEach(item => {
-              
+            })
+            let totalgasto=0
+            let cantgasto=0
+            registros.forEach(({ monto_gasto }) => {totalgasto += monto_gasto,cantgasto+=1})
+            setMontototalegreso(totalgasto)
+            setcanttotalegreso(cantgasto)
+            
+            setDetalle(registros)
+            const datos_categorias=[]
+            const lista_categorias = registros.map(item => item.CategoriaGasto);
+            lista_categorias.forEach(item => {
+            
                 if(lista_categorias.length===0){
-                  datos_categorias.push(item);
+                datos_categorias.push(item);
 
                 }else {
-                  const existeValor = datos_categorias.some(elemento => elemento === item)
-                  if(!existeValor){
+                const existeValor = datos_categorias.some(elemento => elemento === item)
+                if(!existeValor){
                     datos_categorias.push(item);
-                  }
                 }
-              })
-              setCategoriasagrupadas(datos_categorias)
+                }
+            })
+            setCategoriasagrupadas(datos_categorias)
 
             }else{
-              setDetalle([])
-              setMontototalegreso(0)
-              setcanttotalegreso(0)
-              setCategoriasagrupadas([])
-              
+            setDetalle([])
+            setMontototalegreso(0)
+            setcanttotalegreso(0)
+            setCategoriasagrupadas([])
+            
             }
             setSelectedRowKeys([])
-          
+        
 
-          
+        
         };
     
         cargardatos();
-      }, [dataegresos]);
+    }, [dataegresos]);
 
 
 
@@ -167,29 +166,29 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
         setLoading(true);
         
         setTimeout(() => {setSelectedRowKeys([]);setLoading(false);}, 1000);
-      };
+    };
 
     const onSelectChange = (newSelectedRowKeys) => {
         
         if(newSelectedRowKeys.length>0){
-          setErroreliminacion(false)
+        setErroreliminacion(false)
         }else{
-          setErroreliminacion(true)
+        setErroreliminacion(true)
         }
 
         if(newSelectedRowKeys.length ===1){
-          
-          setErrorcantidadunica(false)
+        
+        setErrorcantidadunica(false)
         }else{
-          
+        
             setErrorcantidadunica(true)
             if(newSelectedRowKeys.length > 1){
-              setMesajecantidadunica('solo debe seleccionar un registro.')
+            setMesajecantidadunica('solo debe seleccionar un registro.')
             }
             else{
-              setMesajecantidadunica('seleccionar el registro')
+            setMesajecantidadunica('seleccionar el registro')
             }
-         }
+        }
         const resultadoFiltrado = detalle.filter(item => newSelectedRowKeys.includes(item.id))
         
         let totalgastosel=0
@@ -200,41 +199,41 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
         setValoresseleccion(totalgastosel)
         setCantidadseleccion(cantgastosel)
         
-      };
+    };
 
     const rowSelection = { selectedRowKeys, onChange: onSelectChange,};
     
     const [api, contextHolder] = notification.useNotification();
 
     const mensajeControlEliminacion = (placement) => {
-      api.open({
-          message: 'ERROR',
-          
-          description:
+    api.open({
+        message: 'ERROR',
+        
+        description:
             'Debe seleccionar uno o mas registros de egresos para eliminar!!.',
             placement,
-          icon: (<WarningOutlined style={{color: 'red',}}/>
-          ),
+        icon: (<WarningOutlined style={{color: 'red',}}/>
+        ),
         });
     };
-      
+    
 
     const mensajeregistrounico = (placement,accion) => {
-      
-      api.open({
-          message: 'ERROR',
-          
-          description:
-          `Para la ${accion}  ${mesajecantidadunica}`,
-          placement,
-          icon: (<WarningOutlined style={{color: 'red',}}/>
-          ),
+    
+    api.open({
+        message: 'ERROR',
+        
+        description:
+        `Para la ${accion}  ${mesajecantidadunica}`,
+        placement,
+        icon: (<WarningOutlined style={{color: 'red',}}/>
+        ),
         });
-      };
+    };
 
     const eliminar=()=>{
         setOpeneliminaregreso(true)
-      }
+    }
 
     const actualizar=()=>{
         
@@ -248,7 +247,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
 
         // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
 
-      }
+    }
 
     const detalleregistro=()=>{
         
@@ -262,107 +261,114 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
 
         // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
 
-      }
+    }
 
     const nuevo=()=>{
-      setDetalleseleccion([])
-      setOpenregistroegreso(true)
-      setModoedicion(false)
-      }
+    setDetalleseleccion([])
+    setOpenregistroegreso(true)
+    setModoedicion(false)
+    }
 
     const handleOk = () => {
         setConfirmLoading(true);
         setTimeout(() => {
-          setOpen(false);
-          setConfirmLoading(false);
+        setOpen(false);
+        setConfirmLoading(false);
         }, 2000);
-      };
+    };
 
     
     
     const handleCancel = () => {
         
         setOpen(false);
-      };
-      
+    };
     return(
-        <div className='contenedor-tab-egresos'>
+        <div className='principal-container-detalle-egreso'>
             {contextHolder}
-            <div className='contenedor-tabla-egresos'>
+            <div className='container-detalle-egreso-datos'>
 
-              <Table rowSelection={rowSelection} 
-                  scroll={{y: 'calc(93vh -  320px)',}}
-                  className='tamaño-tabla'
-                  columns={columns} 
-                  size="small"
-                  dataSource={detalle} 
-                  pagination={false}
-                  bordered 
-              />
-          
-              <div className='contenedor-resumen-egreso'>
-                  <div>
-                    <p style={{fontSize:'12px',fontStyle:'italic', fontWeight:'bold',marginBottom:'0px' }}>
-                    {valoresseleccion > 0 ? `Total valor seleccionado Gs. ${Number(valoresseleccion).toLocaleString('es-ES')}` : ""}
-                    </p>
+                <div className='contenedor-tabla-detalle-egreso'>
+                        <Table rowSelection={rowSelection} 
+                        // scroll={{y: 'calc(60vh - 55px)',}}
+                        columns={columns} 
+                        size="small"
+                        dataSource={detalle} 
+                        pagination={false}
+                        bordered
+                        className='contenido-tabla-detalle-egreso'
+                        
+                        
+                        
+                        
+                        
+                    />
+                </div>
 
-                    <p style={{fontSize:'12px',fontStyle:'italic', fontWeight:'bold' }}>
-                    {valoresseleccion > 0 ? `Cant Registros: ${Number(cantidadseleccion).toLocaleString('es-ES')}` : ""}
-                    </p>
+                <div className='contenedor-resumen-detalle-egreso'>
+                    <div>
+                        <p style={{fontSize:'12px',fontStyle:'italic', fontWeight:'bold',marginBottom:'0px' }}>
+                        {valoresseleccion > 0 ? `Total valor seleccionado Gs. ${Number(valoresseleccion).toLocaleString('es-ES')}` : ""}
+                        </p>
 
-                  </div>
-                  
+                        <p style={{fontSize:'12px',fontStyle:'italic', fontWeight:'bold' }}>
+                        {valoresseleccion > 0 ? `Cant Registros: ${Number(cantidadseleccion).toLocaleString('es-ES')}` : ""}
+                        </p>
 
-                  <FormItem style={{marginLeft:'20%',position: 'absolute'}}>
-                    <Text strong>CANTIDAD REGISTROS: </Text>
-                    <Text strong>   {Number(canttotalegreso).toLocaleString('es-ES')}</Text>
-                      
-                  </FormItem>
+                    </div>
+                    <FormItem style={{paddingTop:'5px'}}>
+                        <Text strong>CANTIDAD REGISTROS: </Text>
+                        <Text strong>   {Number(canttotalegreso).toLocaleString('es-ES')}</Text>
+                        
+                    </FormItem>
 
-                  <FormItem style={{marginLeft:'33%',position: 'absolute'}}>
-                      <Text strong>TOTAL EGRESOS: </Text>
-                      <Text strong>GS. {Number(montototalegreso).toLocaleString('es-ES')}</Text>
-                      
-                  </FormItem>
+                    <FormItem style={{paddingTop:'5px'}}>
+                        <Text strong>TOTAL EGRESOS: </Text>
+                        <Text strong>GS. {Number(montototalegreso).toLocaleString('es-ES')}</Text>
+                        
+                    </FormItem>
+                    
+                </div>
+                    
+                <div className='contenedor-flex-botonera-detalle-egreso'>
+                    <Button type="primary" 
+                                className='botonera'
+                                icon={<CheckOutlined /> } 
+                                onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
+                                > 
+                                
+                                Detalle
+                        </Button>
 
-              </div>
-              <div className='contenedor-flex-botonera'>
-                <Button type="primary" 
-                          className='botonera'
-                          icon={<CheckOutlined /> } 
-                          onClick={ errorcantidadunica ? () => mensajeregistrounico('top','vista detalle') : detalleregistro}
-                          > 
-                          
-                        Detalle
-                </Button>
+                        <Button type="primary" 
+                            icon={<DeleteOutlined/>} 
+                            danger 
+                            className='botonera'
+                            onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
+                            > 
+                            Eliminar 
+                        </Button>
+                            
+                        <Button type="primary" 
+                                className='botonera'
+                                icon={<RetweetOutlined/> } 
+                                onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
+                                > 
+                                
+                                Actualizar
+                        </Button>
 
-                  <Button type="primary" 
-                      icon={<DeleteOutlined/>} 
-                      danger 
-                      className='botonera'
-                      onClick={ erroreliminarcion ? () => mensajeControlEliminacion('top') : eliminar}
-                      > 
-                      Eliminar 
-                  </Button>
-                      
-                  <Button type="primary" 
-                          className='botonera'
-                          icon={<RetweetOutlined/> } 
-                          onClick={ errorcantidadunica ? () => mensajeregistrounico('top','actualizacion') : actualizar}
-                          > 
-                          
-                          Actualizar
-                  </Button>
-
-                  <Button type="primary" className='botonera' icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
-              </div>
-
-              
+                        <Button type="primary" className='botonera' icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
+                </div>
+            </div>
+            <div className='container-detalle-egreso-imagen'>
+                <GraficoEgresoso dataegresos={dataegresos} imgegresos={imgegresos}></GraficoEgresoso>
             </div>
             {openeliminaregreso &&( <ModalEliminarEgreso openeliminaregreso={openeliminaregreso} 
                                                       setOpeneliminaregreso={setOpeneliminaregreso} 
                                                       setDataegresos={setDataegresos} 
-                                                      setDataresumen={setDataresumen} 
+                                                      setDataresumen={setDataresumen}
+                                                      setDatasaldos={setDatasaldos} 
                                                       selectedRowKeys={selectedRowKeys}
                                                       setImgresumen={setImgresumen}
                                                       setImgegresos={setImgegresos}
@@ -372,15 +378,16 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                                         setOpenregistroegreso={setOpenregistroegreso} 
                                         setDataegresos={setDataegresos} 
                                         setDataresumen={setDataresumen}
+                                        setDatasaldos={setDatasaldos} 
                                         detalleseleccion={detalleseleccion}
                                         modoedicion={modoedicion}
                                         setImgresumen={setImgresumen}
                                         setImgegresos={setImgegresos}
                                       ></ModalRegistroEgreso>)}
-            <GraficoEgresoso dataegresos={dataegresos} imgegresos={imgegresos}></GraficoEgresoso>
         </div>
     )
 
 
 }
+
 export default DetalleEgreso

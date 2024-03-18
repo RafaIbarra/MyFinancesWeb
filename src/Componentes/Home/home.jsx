@@ -3,7 +3,6 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Resumen from './Resumen/resumen';
 import DetalleEgreso from './DetalleEgresos/detalleegreso';
-import DetalleEgresov2 from './DetalleEgresos/detalleegresov2';
 import DetalleIngreso from './DetalleIngresos/detalleingreso';
 import SaldosPeriodo from './SaldosPeriodo/SaldosPeriodo';
 import Generarpeticion from '../../peticiones/apipeticiones';
@@ -115,7 +114,7 @@ function Home (){
                     }
                   </Tab>
                   <Tab eventKey="homeegresos" title="Detalle de Egresos del Mes" >
-                    {cargaconfirmada &&( <DetalleEgresov2 
+                    {cargaconfirmada &&( <DetalleEgreso 
                                                       dataegresos={dataegresos} 
                                                       setDataegresos={setDataegresos} 
                                                       setDataresumen={setDataresumen}
@@ -124,7 +123,7 @@ function Home (){
                                                       setImgegresos={setImgegresos}
                                                       imgegresos={imgegresos}>
 
-                                        </DetalleEgresov2>)}
+                                        </DetalleEgreso>)}
                   </Tab>
                   <Tab eventKey="homesaldos" title="Saldos del Año" >
                     {cargaconfirmada &&( <SaldosPeriodo datasaldos={datasaldos} 
