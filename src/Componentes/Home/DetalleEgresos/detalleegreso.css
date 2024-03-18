@@ -15,8 +15,8 @@
   
 }
 .tamaño-tabla{
-  /* height: calc(93vh -  280px); */
-  height: calc(93vh -  75%);
+  height: calc(93vh -  280px);
+  /* height: calc(93vh -  75%); */
 }
 
 .contenedor-resumen-egreso {
@@ -51,8 +51,3 @@
     /* align-items: center;  */
     width: '100%';
   }
-
-
-
-
-

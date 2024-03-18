@@ -311,7 +311,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                     </p>
 
                   </div>
-                 
+                  
 
                   <FormItem style={{marginLeft:'20%',position: 'absolute'}}>
                     <Text strong>CANTIDAD REGISTROS: </Text>
@@ -334,7 +334,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                           > 
                           
                         Detalle
-                  </Button>
+                </Button>
 
                   <Button type="primary" 
                       icon={<DeleteOutlined/>} 
@@ -355,9 +355,11 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                   </Button>
 
                   <Button type="primary" className='botonera' icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
-                  
-                  
-                  {openeliminaregreso &&( <ModalEliminarEgreso openeliminaregreso={openeliminaregreso} 
+              </div>
+
+              
+            </div>
+            {openeliminaregreso &&( <ModalEliminarEgreso openeliminaregreso={openeliminaregreso} 
                                                       setOpeneliminaregreso={setOpeneliminaregreso} 
                                                       setDataegresos={setDataegresos} 
                                                       setDataresumen={setDataresumen} 
@@ -366,19 +368,15 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,
                                                       setImgegresos={setImgegresos}
                                         ></ModalEliminarEgreso>)}
 
-                  {openregistroegreso &&( <ModalRegistroEgreso openregistroegreso={openregistroegreso} 
-                                              setOpenregistroegreso={setOpenregistroegreso} 
-                                              setDataegresos={setDataegresos} 
-                                              setDataresumen={setDataresumen}
-                                              detalleseleccion={detalleseleccion}
-                                              modoedicion={modoedicion}
-                                              setImgresumen={setImgresumen}
-                                              setImgegresos={setImgegresos}
-                                            ></ModalRegistroEgreso>)}
-                  
-              </div>
-            </div>
-           
+            {openregistroegreso &&( <ModalRegistroEgreso openregistroegreso={openregistroegreso} 
+                                        setOpenregistroegreso={setOpenregistroegreso} 
+                                        setDataegresos={setDataegresos} 
+                                        setDataresumen={setDataresumen}
+                                        detalleseleccion={detalleseleccion}
+                                        modoedicion={modoedicion}
+                                        setImgresumen={setImgresumen}
+                                        setImgegresos={setImgegresos}
+                                      ></ModalRegistroEgreso>)}
             <GraficoEgresoso dataegresos={dataegresos} imgegresos={imgegresos}></GraficoEgresoso>
         </div>
     )

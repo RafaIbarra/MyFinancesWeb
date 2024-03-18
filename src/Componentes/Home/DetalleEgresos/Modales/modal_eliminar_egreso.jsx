@@ -7,7 +7,7 @@ import Generarpeticion from '../../../../peticiones/apipeticiones'
 
 
 function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,
-  setDataegresos,setDataresumen,selectedRowKeys,setImgresumen,setImgegresos})
+  setDataegresos,setDataresumen,setDatasaldos,selectedRowKeys,setImgresumen,setImgegresos})
   {
   const navigate=useNavigate()
   const [titulo,setTitulo]=useState('')
@@ -45,6 +45,7 @@ function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,
         
         const registros=result['data']['datos']
         setDataresumen(registros['Resumen'])
+        setDatasaldos(registros['Saldos'])
         setDataegresos(registros['Egresos'])
 
         const registros_imagenes=result['data']['graficos']

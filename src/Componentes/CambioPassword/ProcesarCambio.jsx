@@ -22,17 +22,19 @@ const formItemLayout = {
   };
 const { Text } = Typography;
 
-function ProcesarCambio({setPass1,setPass2,errorcambio,setErrorcambio,mensajecambio,passconfirm}){
+function ProcesarCambio({setPass1,setPass2,accioncambio,setAccioncambio,respuestacambio,mensajecambio,passconfirm}){
 
   const [mostrarerrorpass,setMostrarerrorpass]=useState(false)
   const [mensajemostrarpass,setMensajemostrarpass]=useState('')
+  const [mostrarconfirmacion,setMostrarconfirmacion]=useState(false)
 
   const contra1=(event)=>{
     const valor= event.target.value;
     
     setPass1(valor)
     setMostrarerrorpass(false)
-    setErrorcambio(false)
+    setMostrarconfirmacion(false)
+    setAccioncambio(false)
     setMensajemostrarpass('')
     
     
@@ -43,27 +45,38 @@ function ProcesarCambio({setPass1,setPass2,errorcambio,setErrorcambio,mensajecam
     
     setPass2(valor2)
     setMostrarerrorpass(false)
-    setErrorcambio(false)
+    setMostrarconfirmacion(false)
+    setAccioncambio(false)
     setMensajemostrarpass('')
     
   }
   useEffect(() => {
         
     const cargardatos = () => {
-      console.log(mensajecambio)
-      setMostrarerrorpass(errorcambio)
-      setMensajemostrarpass(mensajecambio)
+      
+      if(respuestacambio===200){
+
+        setMostrarerrorpass(false)
+        setMostrarconfirmacion(true)
+
+      }else{
+
+        setMostrarerrorpass(true)
+        setMostrarconfirmacion(false)
+        setMensajemostrarpass(mensajecambio)
+      }
       };
       
 
     cargardatos();
-  }, [errorcambio,passconfirm]);
+  }, [accioncambio]);
 
   return(
       <div className='content-procesar'>
            
  
                       
+        {!mostrarconfirmacion &&(
           <FormItem style={{paddingLeft:'33%'}} label="Ingrese Password"name="Ingrese Password">
               
               <div style={{width:'300px'}}>
@@ -77,6 +90,10 @@ function ProcesarCambio({setPass1,setPass2,errorcambio,setErrorcambio,mensajecam
               
           </FormItem>
 
+        )
+        }
+
+        {!mostrarconfirmacion &&(
           <FormItem style={{paddingLeft:'33%'}} label="Repita Password"name="Repita Password">
               
               <div style={{width:'300px'}}>
@@ -89,12 +106,17 @@ function ProcesarCambio({setPass1,setPass2,errorcambio,setErrorcambio,mensajecam
               </div>
               
           </FormItem>
+        )
+        }
+
+
           {mostrarerrorpass &&(  <p style={{color:'red',fontWeight:'bold',fontStyle:'italic'}}> {mensajemostrarpass} </p>)}
-          {passconfirm &&(
+          {mostrarconfirmacion &&(
               <Result
               status="success"
               title="Cambio Contraseña!"
               subTitle="Se ha realizado correctamente el cambio de contraseña."
+              style={{padding:'0px'}}
              
             />
           )}
