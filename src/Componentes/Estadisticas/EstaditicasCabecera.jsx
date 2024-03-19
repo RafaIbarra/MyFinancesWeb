@@ -42,7 +42,7 @@ function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpind
       }
     
     useEffect(() => {
-        console.log(titulocabecera)
+        
         const datestorage=Handelstorage('obtenerstats');
         
         const anno_control=datestorage['dataanno']

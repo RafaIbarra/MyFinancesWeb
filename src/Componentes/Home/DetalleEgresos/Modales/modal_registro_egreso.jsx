@@ -174,12 +174,12 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
       }
 
   const formatearValor = (value) => {
-    // Formatear el valor con separadores de miles
+  
     return value ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '';
     };
 
   const parsearValor = (value) => {
-      // Eliminar separadores de miles al convertir el valor
+      
       return value ? parseInt(value.replace(/,/g, ''), 10) : undefined;
     };
   const seleccionaranotacion=(event)=>{

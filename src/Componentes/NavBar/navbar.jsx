@@ -13,13 +13,12 @@ import { Avatar } from 'antd';
 import './NavBar.css'
 import Handelstorage
  from '../../Storage/handelstorage';
-// import logoCoop from '../../assets/logoCoop.png';
-// import ConsultaDatosUser from '../Usuario/ConsultaDatosUser';
 
-const tamañoletra='15px'
+
+const tamañoletra='14px'
 const margenleft='30px'
-const margentop='-50px'
-const tamañoicono='25px'
+const margentop='-47px'
+const tamañoicono='22px'
 const tamañosubicono='15px'
 const margentopicono='12px'
 
@@ -62,9 +61,7 @@ function NavBar({sesionname}){
     }
     const items = [
       {
-        // label: (
-        //   <Button style={{width:'100%',height:'100%',borderColor:'white'}} onClick={datospersonales} > Datos Personales </Button>
-        // ),
+       
         label: 'Datos personales',
         key: 'Actualizacion',
         onClick:datospersonales,
@@ -95,7 +92,7 @@ function NavBar({sesionname}){
     
       {
         label: (<p key='p_inicio' style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'Inicio' ? colorsel : colordefault} } >Inicio</p>),
-        // label:'Inicio',
+       
         
         key: 'Inicio',
         icon:<HomeOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono,   color: keysel === 'Inicio' ? colorsel: colordefault }}/>,      
@@ -104,7 +101,7 @@ function NavBar({sesionname}){
       
       {
         label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'ConceptosIngresos' ? colorsel : colordefault }} >Conceptos Ingresos</p>),
-        // label:'Inicio',
+      
         
         key: 'ConceptosIngresos',
         icon:<RiseOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono , color: keysel === 'ConceptosIngresos' ? colorsel : colordefault }}/>,      
@@ -113,7 +110,7 @@ function NavBar({sesionname}){
       
       {
         label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'CategoriaEgresos' ? colorsel : colordefault }} >Categoria Egresos</p>),
-        // label:'Inicio',
+       
         
         key: 'CategoriaEgresos',
         icon:<AlignLeftOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono , color: keysel === 'CategoriaEgresos' ? colorsel : colordefault }}/>,      
@@ -121,7 +118,7 @@ function NavBar({sesionname}){
       },
       {
         label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'ConceptosEgresos' ? colorsel : colordefault}} >Conceptos Egresos</p>),
-        // label:'Inicio',
+        
         
         key: 'ConceptosEgresos',
         icon:<FallOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono, color: keysel === 'ConceptosEgresos' ? colorsel : colordefault }}/>,      

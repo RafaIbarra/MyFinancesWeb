@@ -33,7 +33,7 @@ function EnvioCorreo({correouser,enviandocorreo}){
                      <SyncOutlined
                        style={{
                          fontSize: 50,
-                        //  color:'rgb(182, 212, 212)',
+        
                         color:'Highlight',
                          fontWeight:'bold'
                          ,

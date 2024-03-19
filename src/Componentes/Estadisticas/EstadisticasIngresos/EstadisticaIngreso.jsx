@@ -36,9 +36,7 @@ function EstadisticasIngreso(){
             if (respuesta === 200) {
                 // -----DATOS PARA PERIODOS MAXIMOS---
                 
-                
-                
-                // console.log('fdfdf')
+      
                 setDatosperiodosaldos(result['data']['DatosPeriodoSaldo'][0]['MayorSaldo'][0])
                 setDatosperiodoindices(result['data']['DatosPeriodoSaldo'][1]['MayorIndice'][0])
                 setImagenperiodosaldos(result['data']['DatosPeriodoSaldo'][2]['grafico'])
@@ -62,12 +60,7 @@ function EstadisticasIngreso(){
       }, [cargarestadisticasingreso]);
 
     return(
-        
-            // <img 
-            //     src={`data:image/png;base64,${imagen}`}
-            //     alt="Descripción de la imagen"
-            //     style={{marginLeft:'100px'}}
-            //     />
+
 
           <div className='principal-estadistica-ingreso'>
             

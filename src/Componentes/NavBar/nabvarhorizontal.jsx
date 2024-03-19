@@ -42,9 +42,9 @@ const items = [
 const NabarHor = () => {
   const navigate=useNavigate()
   const onClick = (e) => {
-    console.log('click ', e);
+    
     if(e['key']==='14'){
-      console.log('cerrar')
+      
       Handelstorage('borrar')
       navigate('/')
       

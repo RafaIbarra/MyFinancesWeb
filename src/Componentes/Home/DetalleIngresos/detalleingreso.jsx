@@ -68,7 +68,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
       setOpenregistroingreso(true)
       setModoedicioningreso(true)
 
-      // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+  
 
     }
   const actualizar=()=>{
@@ -80,7 +80,7 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
       setOpenregistroingreso(true)
       setModoedicioningreso(false)
 
-      // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+
 
     }
 
@@ -198,36 +198,42 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
       }, 2000);
     };
     return(
-        <div className='contenedor-tab-ingresos'>
-          <div className='contenedor-tabla-ingresos'>
+        <div className='principal-container-detalle-ingreso'>
+          {contextHolder}
+          <div className='container-detalle-ingreso-datos'>
 
-              {contextHolder}
-              <Table rowSelection={rowSelection} 
-                scroll={{y: 'calc(93vh -  320px)',}}
-                className='tamaño-tabla-ingreso'
-                size="small"
-                columns={columns} 
-                dataSource={detalle} 
-                pagination={false}
-                bordered
-              />
-
-              <div className='contenedor-resumen'>
-                  <FormItem >
-                    <Text strong>CANTIDAD REGISTROS: </Text>
-                    <Text strong>   {Number(canttotalingreso).toLocaleString('es-ES')}</Text>
-                      
-                  </FormItem>
-
-                  <FormItem >
-                      <Text strong>TOTAL INGRESOS: </Text>
-                      <Text strong>GS. {Number(montototalingreso).toLocaleString('es-ES')}</Text>
-                      
-                  </FormItem>
+              <div className='contenedor-tabla-detalle-ingreso'>
+                  <Table rowSelection={rowSelection} 
+                    
+                    className='contenido-tabla-detalle-ingreso'
+                    size="small"
+                    columns={columns} 
+                    dataSource={detalle} 
+                    pagination={false}
+                    bordered
+                  />
 
               </div>
 
-              <div className='contenedor-flex-botonera'>
+
+              <div className='contenedor-resumen-detalle-ingreso'>
+
+                <FormItem style={{paddingTop:'5px',paddingLeft:'50%'}}>
+                      <Text strong>CANTIDAD REGISTROS: </Text>
+                      <Text strong>   {Number(canttotalingreso).toLocaleString('es-ES')}</Text>
+                        
+                    </FormItem>
+
+                    <FormItem style={{paddingTop:'5px'}}>
+                        <Text strong>TOTAL INGRESOS: </Text>
+                        <Text strong>GS. {Number(montototalingreso).toLocaleString('es-ES')}</Text>
+                        
+                    </FormItem>
+
+              </div>
+
+
+              <div className='contenedor-flex-botonera-detalle-ingreso'>
 
                   <Button type="primary" 
                           icon={<CheckOutlined /> } 
@@ -255,31 +261,33 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
 
                   <Button type="primary"  className='botonera' icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
 
-                  
-                  {openeliminaringreso &&( <ModalEliminarIngreso 
-                                          openeliminaringreso={openeliminaringreso}
-                                          setOpeneliminaringreso={setOpeneliminaringreso}
-                                          setDataingresos={setDataingresos}
-                                          selectedRowKeys={selectedRowKeys}
-                                          setDataresumen={setDataresumen}
-                                          setImgresumen={setImgresumen}
-                                          setImgingresos={setImgingresos}
-                                        ></ModalEliminarIngreso>)}
-
-                  {openregistroingreso &&( <ModalRegistroIngreso 
-                                            openregistroingreso={openregistroingreso} 
-                                            setOpenregistroingreso={setOpenregistroingreso} 
-                                            setDataingresos={setDataingresos}
-                                            setDataresumen={setDataresumen}
-                                            detalleseleccioningreso={detalleseleccioningreso}
-                                            modoedicioningreso={modoedicioningreso}
-                                            setImgresumen={setImgresumen}
-                                            setImgingresos={setImgingresos}
-                                            ></ModalRegistroIngreso>)}
-                  
               </div>
+
+
           </div>
+          <div className='container-detalle-ingreso-imagen'>
               <GraficoIngresos dataingresos={dataingresos} imgingresos={imgingresos}></GraficoIngresos>
+          </div>
+          {openeliminaringreso &&( <ModalEliminarIngreso 
+                                      openeliminaringreso={openeliminaringreso}
+                                      setOpeneliminaringreso={setOpeneliminaringreso}
+                                      setDataingresos={setDataingresos}
+                                      selectedRowKeys={selectedRowKeys}
+                                      setDataresumen={setDataresumen}
+                                      setImgresumen={setImgresumen}
+                                      setImgingresos={setImgingresos}
+                                    ></ModalEliminarIngreso>)}
+
+              {openregistroingreso &&( <ModalRegistroIngreso 
+                                        openregistroingreso={openregistroingreso} 
+                                        setOpenregistroingreso={setOpenregistroingreso} 
+                                        setDataingresos={setDataingresos}
+                                        setDataresumen={setDataresumen}
+                                        detalleseleccioningreso={detalleseleccioningreso}
+                                        modoedicioningreso={modoedicioningreso}
+                                        setImgresumen={setImgresumen}
+                                        setImgingresos={setImgingresos}
+                                        ></ModalRegistroIngreso>)}
         </div>
     )
 

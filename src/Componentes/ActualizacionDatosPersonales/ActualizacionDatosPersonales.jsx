@@ -30,9 +30,7 @@ const validateMessages = {
   }
 
 const tamañoobjeto=250
-// const onFinish = (values) => {
-//     console.log(values);
-//   };
+
 
 function ActualizacionDatosPersonales(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -120,7 +118,7 @@ function ActualizacionDatosPersonales(){
             await new Promise(resolve => setTimeout(resolve, 1000))
             setSpindato(false)
             success()
-            console.log(result['data'])
+            
         }else if(respuesta === 403 || respuesta === 401){
                   
                   
@@ -149,7 +147,7 @@ function ActualizacionDatosPersonales(){
     
                     const registros=result['data']
                     
-                   console.log(result['data'][0])
+                   
                    setValoresdefaultdatos(result['data'][0])
                    setNombre(result['data'][0].nombre_usuario)
                    setApellido(result['data'][0].apellido_usuario)
@@ -193,7 +191,7 @@ function ActualizacionDatosPersonales(){
                         style={{
                         Width: 400,
                         padding:'0px'
-                        // ,backgroundColor:'rgb(0,0,0)'
+                        
                         
                         }}
                         validateMessages={validateMessages}

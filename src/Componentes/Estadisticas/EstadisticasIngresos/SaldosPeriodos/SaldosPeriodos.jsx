@@ -16,8 +16,7 @@ function SaldosPeriodos({datosperiodosaldos,imagenperiodosaldos}){
         const cargardatos =  () => {
             
             
-            
-            // console.log(datosperiodosaldos[2])
+        
         
             setImagensaldoperiodo(imagenperiodosaldos)
 

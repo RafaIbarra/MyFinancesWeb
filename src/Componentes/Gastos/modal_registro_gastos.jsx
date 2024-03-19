@@ -238,7 +238,7 @@ function ModalRegistroGasto({
                        >
                            <Select 
                                 name="listacategoria" 
-                                // value={categoriasel}
+                                
                                 disabled={modoediciongasto}
                                 defaultValue={modoactualizaciongasto ? valoresdefaultgasto[0]['DescripcionCategoriaGasto'] : ''} 
                                 onChange={seleccioncategoria}

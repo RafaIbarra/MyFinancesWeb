@@ -21,7 +21,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
     const [openregistroegreso, setOpenregistroegreso] = useState(false);
     
     const [loading, setLoading] = useState(false);
-    // const [open, setOpen] = useState(false);
+  
     const [confirmLoading, setConfirmLoading] = useState(false);
 
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -96,7 +96,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
         { title: 'Fecha Registro',
           dataIndex: 'fecha_registro',
           key: 'DetalleEgreso_FechaRegistro',
-        //   width: 250,
+  
           sorter: (a, b) => new Date(a.fecha_registro) - new Date(b.fecha_registro),
         },
         
@@ -245,8 +245,6 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
         setOpenregistroegreso(true)
         setModoedicion(false)
 
-        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
-
     }
 
     const detalleregistro=()=>{
@@ -254,12 +252,12 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
         const ultimoElemento = selectedRowKeys[selectedRowKeys.length - 1];
         
         const detallesel=detalle.filter((item) => item.id ===ultimoElemento)
-        console.log(detallesel)
+        
         setDetalleseleccion(detallesel)
         setOpenregistroegreso(true)
         setModoedicion(true)
 
-        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+
 
     }
 
@@ -290,18 +288,13 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
 
                 <div className='contenedor-tabla-detalle-egreso'>
                         <Table rowSelection={rowSelection} 
-                        // scroll={{y: 'calc(60vh - 55px)',}}
+                     
                         columns={columns} 
                         size="small"
                         dataSource={detalle} 
                         pagination={false}
                         bordered
                         className='contenido-tabla-detalle-egreso'
-                        
-                        
-                        
-                        
-                        
                     />
                 </div>
 

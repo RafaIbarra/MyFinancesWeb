@@ -2,11 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { Button, Table, Typography,notification } from 'antd';
 import { DeleteOutlined,RetweetOutlined,PlusCircleTwoTone,CheckOutlined,WarningOutlined} from '@ant-design/icons';
 import ModalRegistroCategoria from './modal_registro_categoria';
-// import ModalRegistroGasto from './modal_registro_gastos';
-// import ModalEliminarGastos from './modal_eliminar_gastos';
-
 import Generarpeticion from '../../peticiones/apipeticiones';
-// import './gastos.css'
+
 import './categoriagasto.css'
 import FormItem from 'antd/es/form/FormItem';
 import { Navigate, useNavigate } from "react-router-dom";
@@ -51,9 +48,6 @@ function CategoriaGasto(){
         setDetalleseleccioncategoria(detallesel)
         setOpenregistrocategoria(true)
         setModoedicioncategoria(true)
-  
-        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
-  
       }
 
     const actualizar=()=>{
@@ -64,9 +58,6 @@ function CategoriaGasto(){
         setDetalleseleccioncategoria(detallesel)
         setOpenregistrocategoria(true)
         setModoedicioncategoria(false)
-  
-        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
-  
       }
 
 
@@ -87,18 +78,9 @@ function CategoriaGasto(){
         },
 
 
-        // { title: 'Monto Total Registrado',
-        //   dataIndex: 'TotalEgresos',
-        //   key: 'TotalEgresos',
-        //   render: (TotalEgresos) => (
-        //     <span>
-        //       Gs. {Number(TotalEgresos).toLocaleString('es-ES')}
-        //     </span>
-        //   ),
-        // },
-        // { title: 'Cantidad Registros',dataIndex: 'CantidadRegistros',key: 'CantidadRegistros'},
+       
         { title: 'Fecha Registro',dataIndex: 'fecha_registro',key: 'FechaRegistro_i'}
-        // ,
+        
         
       ]
 
@@ -150,12 +132,7 @@ function CategoriaGasto(){
                         
                         elemento.key = elemento.id;
                     })
-                    // let totalprod=0
-                    // let cantprod=0
-                    // registros.forEach(({ TotalEgresos }) => {totalprod += TotalEgresos,cantprod+=1})
-                    // setTotalgastos(totalprod)
-                    // setCantidadgastos(cantprod)
-                    console.log(registros)
+                    
                     setCategorias(registros)
                     
                     
@@ -232,7 +209,7 @@ function CategoriaGasto(){
                     dataSource={categorias} 
                     pagination={false}
                     bordered
-                    // onChange={onChange}
+                    
                   />
                 <div className='contenedor-flex'>
     

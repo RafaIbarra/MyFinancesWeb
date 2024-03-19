@@ -13,7 +13,6 @@ import {  Space,Divider,Button } from 'antd'
 function EstadisticasGasto(){
     const navigate=useNavigate()
     const [imagen, setImagen] = useState(null);
-    // const [imagen15, setImagen15] = useState(null);
     const [datosperiodomaximos,setDatosperiodomaximos]=useState([])
     const [datos15dias,setDatos15dias]=useState([])
     const [datosconceptos,setDatosconceptos]=useState([])
@@ -36,7 +35,7 @@ function EstadisticasGasto(){
             const respuesta=result['resp']
             
             if (respuesta === 200) {
-                console.log(result['data'])
+                
                 // -----DATOS PARA PERIODOS MAXIMOS---
                 const datosperiodo=result['data']['DatosPeriodoGasto']
                 const img=datosperiodo[0]['DatosMaximoGasto'][0]['grafico']
@@ -47,15 +46,11 @@ function EstadisticasGasto(){
                 const cantidadper=datosperiodo[0]['DatosMaximoGasto'][0]['CantidadPeriodos']
                 const datos={periodo:periodo,promedio:promedio,monto:monto,cantidad:cantidad,cantidadper:cantidadper,imagen:img}
                 setDatosperiodomaximos(datos)
-                // setImagen(img)
-                // console.log(datos.imagen)
+               
 
                 // -----DATOS PARA 15 dias---
 
-                // console.log(result['data'])
-                // console.log(result['data']['DataComportamientoGasto'][2]['grafico'])
-                // console.log(result['data']['DataComportamientoGasto'])
-                // console.log(result['data']['DataComportamientoGasto'][0]['DatosMayoCategoria'][0])
+               
                 const datosmayoria=result['data']['DataComportamientoGasto'][0]['DatosMayoCategoria'][0]
                 const detalles=result['data']['DataComportamientoGasto'][1]['DetallePeriodo']
                 const grafico=result['data']['DataComportamientoGasto'][2]['grafico']
@@ -75,11 +70,11 @@ function EstadisticasGasto(){
                     imagenconceptomaximo:result['data']['DatosConceptoGasto'][2].grafico
                 }
                 setDatosconceptos(dataconceptosmaximo)
-                // setImagen(result['data']['DatosConceptoGasto'][2].grafico)
+                
                 
 
                 //---- DATOS POR CATEGORIAS MAXIMAS----
-                // console.log(result['data']['DatosCategoriaGasto'])
+            
                 setImagen(result['data']['DatosCategoriaGasto'][2].grafico)
 
                 const datacategoriamaximo={
@@ -106,15 +101,7 @@ function EstadisticasGasto(){
       }, [cargarestadisticas]);
 
     return(
-        // <img 
-        // src={`data:image/png;base64,${imagen}`}
-        // alt="Descripción de la imagen"
-        // style={{marginLeft:'100px'}}
-        // />
-
-
-
-
+        
         <div className='principal-estadistica-egreso'>
             
             <EstadisticasCabecera 

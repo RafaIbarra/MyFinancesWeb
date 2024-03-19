@@ -29,14 +29,7 @@ function ConceptosMaximos({datosconceptos}){
             setDetalleperiodo(datosconceptos.detalleconceptomaximo[0]['Periodo'])
             setDetallefecha(datosconceptos.detalleconceptomaximo[0]['fecha_gasto'])
             setDetallefecharegistro(datosconceptos.detalleconceptomaximo[0]['fecha_registro'])
-            // setCantregistromax()
-            // setMontomaximo()
-
-            // setDetallemonto()
-            // setDetalleperiodo()
-            // setDetallefecha()
-            // setDetallefecharegistro()
-
+            
   
             
           };
@@ -45,7 +38,7 @@ function ConceptosMaximos({datosconceptos}){
         cargardatos();
       }, []);
     return(
-        // conceptomax
+        
         <div className='contenedor-flex-estadistica-concepto'>
             
             <div className='contenedor-estadistica-concepto-texto'>

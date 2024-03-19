@@ -71,10 +71,7 @@ function HomeCabecera ({cargarresumen,setCargarresumen,setSpindato}){
         
         setCargarresumen(!cargarresumen)
         setSpindato(true)
-        
-        // setCargaringresos(!cargaringresos)
-        // setCargarEgresos(!cargaregresos)
-  
+      
         
         
       }

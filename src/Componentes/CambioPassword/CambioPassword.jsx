@@ -34,7 +34,6 @@ function CambioPassword(){
   const [culminado,setCulminado]=useState(false)
 
   const contentStyle = {
-    // lineHeight: '260px',
     textAlign: 'center',
     color: token.colorTextTertiary,
     backgroundColor: token.colorFillAlter,
@@ -276,7 +275,6 @@ function CambioPassword(){
               </Button>
             )}
             {current === steps.length - 1 && !culminado &&(
-              // <Button className='botonera' type="primary" onClick={() => message.success('Processing complete!')}>
               <Button className='botonera' type="primary" onClick={() => next()}>
               
                 {textoboton}

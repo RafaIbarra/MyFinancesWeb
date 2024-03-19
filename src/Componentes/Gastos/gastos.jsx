@@ -52,8 +52,7 @@ function Gastos(){
         { title: 'Nombre Gasto',
           dataIndex: 'nombre_gasto',
           key: 'nombre_gasto',
-          // defaultSortOrder: 'descend',
-          // sorter: (a, b) => a.nombre_gasto.length - b.nombre_gasto.length,
+        
           sorter: (a, b) => a.nombre_gasto.localeCompare(b.nombre_gasto),
         },
 
@@ -104,9 +103,6 @@ function Gastos(){
         
       ]
 
-      // const onChange = (pagination, filters, sorter, extra) => {
-      //   console.log('params', pagination, filters, sorter, extra);
-      // };
     const nuevo=()=>{
         setDetalleselecciongasto([])
         setOpenregistrogasto(true)
@@ -128,7 +124,7 @@ function Gastos(){
         setOpenregistrogasto(true)
         setModoediciongasto(true)
   
-        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+        
   
       }
     const actualizar=()=>{
@@ -140,7 +136,7 @@ function Gastos(){
         setOpenregistrogasto(true)
         setModoediciongasto(false)
   
-        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+       
   
       }
 
@@ -281,14 +277,14 @@ function Gastos(){
                   <h4 className='tituloform' > Conceptos de Egresos </h4>
                   <Table 
                     rowSelection={rowSelection} 
-                    // scroll={{x: 300,y: 400,}}
+                    
                     scroll={{y: 'calc(93vh -  250px)',}}
                     size="small"
                     columns={columns} 
                     dataSource={gastos} 
                     pagination={false}
                     bordered
-                    // onChange={onChange}
+                  
                   />
                   <div className='contenedor-resumen'>
                       <FormItem >

@@ -18,7 +18,7 @@ function IndicesPeriodos({datosperiodoindices,imagenperiodoindice}){
             
             
             
-            console.log(datosperiodoindices)
+            
             setImagenindice(imagenperiodoindice)
             setMayorsindicemes(datosperiodoindices.MesOperacion)
             setMayorsindiceingreso(datosperiodoindices.MontoIngreso)

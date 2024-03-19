@@ -11,7 +11,7 @@ function PiePagina(){
                                             
                     src= "/gmail2.svg"
                     alt="login-icon"
-                    // style="height: 7rem"
+                   
                 />
                 <a  className='enlace'  style={{paddingLeft:'7px'}} href="mailto:blasrafael1986@gmail.com" target="_blank">blasrafael1986@gmail.com</a>
 
@@ -19,7 +19,7 @@ function PiePagina(){
                                             
                     src= "/github1.svg"
                     alt="login-icon"
-                    // style="height: 7rem"
+                    
                 />
                 <a className='enlace' href="https://github.com/RafaIbarra" target="_blank">RafaIbarra</a>
 

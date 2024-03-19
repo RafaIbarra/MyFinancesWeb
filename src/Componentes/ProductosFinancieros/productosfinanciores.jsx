@@ -21,7 +21,7 @@ function Productosfinancieros(){
     const [productos,setProductos]=useState([])
     const [totalproductos,setTotalproductos]=useState(0)
     const [cantidadproductos,setCantidadproductos]=useState(0)
-    // const [cargaconfirmada,setCargaconfirmada]=useState(false)
+  
 
     const [detalleseleccionproducto,setDetalleseleccionproducto]=useState([])
 
@@ -75,8 +75,7 @@ function Productosfinancieros(){
         setDetalleseleccionproducto(detallesel)
         setOpenregistroproducto(true)
         setModoedicionproducto(true)
-  
-        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+
   
       }
     const actualizar=()=>{
@@ -88,7 +87,7 @@ function Productosfinancieros(){
         setOpenregistroproducto(true)
         setModoedicionproducto(false)
   
-        // const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
+
   
       }
 
@@ -212,7 +211,7 @@ function Productosfinancieros(){
                   <h4 className='tituloform' > Conceptos de Ingresos </h4>
                   <Table 
                     rowSelection={rowSelection} 
-                    // scroll={{x: 300,y: 400,}}
+          
                     scroll={{y: 'calc(93vh -  250px)',}}
                     size="small"
                     columns={columns} 

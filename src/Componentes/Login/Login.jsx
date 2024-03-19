@@ -16,7 +16,7 @@ import './login.css'
 function Login({activarsesion,desactivarsesion,setSesionname}){
     
     const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+        
       };
 
 
@@ -67,7 +67,7 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
             Handelstorage('agregar',userdata,'')
             navegar()
         }else{
-            console.log(datos['data']['error'])
+            
             setErrorinicio(true)
             setMensajeerror(datos['data']['error'])
         }
@@ -111,7 +111,7 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
                                         
                                         src= "/icono.svg"
                                         alt="login-icon"
-                                        // style="height: 7rem"
+                                        
                                     />
                                 </div>
                     </Form.Item>

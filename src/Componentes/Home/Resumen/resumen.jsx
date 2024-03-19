@@ -6,8 +6,7 @@ const { Text } = Typography;
 
 import './resumen.css'
 function Resumen({dataresumen,imgresumen}){
-    
-    // const[datos,setDatos]=useState(null)
+  
     const[detalle,setDetalle]=useState(null)
     const[totalingreso,setTotalingreso]=useState(null)
     const[totalegreso,setTotalegreso]=useState(null)
@@ -84,7 +83,7 @@ function Resumen({dataresumen,imgresumen}){
         cargardatos();
       }, [dataresumen]);
 
-      // className='contenedor-resumen-flex'
+      
       return(
         <div className='contenedor-resumen-flex'>
             

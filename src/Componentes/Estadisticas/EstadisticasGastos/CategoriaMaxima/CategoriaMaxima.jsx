@@ -31,13 +31,7 @@ function CategoriaMaxima({datoscategoriamaximo}){
             setCategoriadetalleperiodo(datoscategoriamaximo.detallecategoriamaximo[0]['Periodo'])
             setCategoriadetallefecha(datoscategoriamaximo.detallecategoriamaximo[0]['fecha_gasto'])
             setCategoriadetallefecharegistro(datoscategoriamaximo.detallecategoriamaximo[0]['fecha_registro'])
-            // setCantregistromax()
-            // setMontomaximo()
-
-            // setDetallemonto()
-            // setDetalleperiodo()
-            // setDetallefecha()
-            // setDetallefecharegistro()
+           
 
   
             

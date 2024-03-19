@@ -29,7 +29,7 @@ const validateMessages = {
 
 const tamañoobjeto=250
 const onFinish = (values) => {
-    console.log(values);
+   
   };
 
 const { Text } = Typography;
@@ -152,7 +152,7 @@ function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
                     style={{
                     Width: 400,
                     padding:'0px'
-                    // ,backgroundColor:'rgb(0,0,0)'
+                  
                     
                     }}
                     validateMessages={validateMessages}
@@ -164,7 +164,7 @@ function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
                                     
                                     src= "/icono.svg"
                                     alt="login-icon"
-                                    // style="height: 7rem"
+                                 
                                 />
                          </div>
                     </Form.Item>
@@ -211,8 +211,7 @@ function RegistroUsuario ({activarsesion,desactivarsesion,setSesionname}){
                                 placeholder='Fecha Nacimiento' 
                                 dateFormat="yyyy-MM-dd"
                                 onChange={seleccionfecha}
-                                // disabled={modoedicion}
-                                // defaultValue={ modoactualizacion ?  dayjs(valoresdefault[0]['fecha_gasto'], dateFormat) : ''} 
+                                
                                 format={dateFormat} 
                                 style={{width:tamañoobjeto}}
                                 

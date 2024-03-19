@@ -59,14 +59,7 @@ function HistorialEgresos(){
         { title: 'Categoria',
           dataIndex: 'CategoriaGasto', 
           key: 'DetalleEgreso_Categoria',
-        //   filters: categoriasagrupadas.map(categoria => ({
-        //     text: categoria,
-        //     value: categoria,
-        //   })),
-  
-        //   onFilter: (value, record) => record.CategoriaGasto.indexOf(value) === 0,
-        //   sorter: (a, b) => a.CategoriaGasto.localeCompare(b.CategoriaGasto),
-  
+      
         },
   
         { title: 'Egreso',
@@ -110,8 +103,6 @@ function HistorialEgresos(){
         setCantidadresultado(arrayencontrado.length)
         
         setBusquedaactiva(true)
-
-        // const valordatos=`La cantidad de coincidencias: {cantidadresultado} con un valor de Gs. ${Number(montoresultado).toLocaleString('es-ES')}`}
         const valordatos=`La cantidad de coincidencias: ${arrayencontrado.length} con un valor de Gs. ${Number(totalgasto).toLocaleString('es-ES')}`
         setTextop(valordatos)
 

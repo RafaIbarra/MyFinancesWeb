@@ -48,11 +48,11 @@ function Comportamiento({datos15dias}){
             setCategoria(datos15dias['DatosMayorCategoria'].Categoria)
             setPorcentaje(datos15dias['DatosMayorCategoria'].Porcentaje)
 
-            // console.log(datos15dias['detalles'][0])
+            
             let valores=[]
             const data=datos15dias['detalles']
             data.forEach((detalle) => {
-                // Aquí puedes realizar cualquier procesamiento necesario con cada detalle
+                
               
                 const valor = {
                   Periodo: detalle[0].Periodo,

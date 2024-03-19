@@ -71,7 +71,7 @@ function HistorialIngresos(){
       
       setBusquedaactiva(true)
 
-      // const valordatos=`La cantidad de coincidencias: {cantidadresultado} con un valor de Gs. ${Number(montoresultado).toLocaleString('es-ES')}`}
+     
       const valordatos=`La cantidad de coincidencias: ${arrayencontrado.length} con un valor de Gs. ${Number(totalingreso).toLocaleString('es-ES')}`
       setTextop(valordatos)
 
@@ -213,7 +213,7 @@ function HistorialIngresos(){
                 <div className='contenedor-principal-datos' >
 
                   {dataagrupacion && dataagrupacion.map((x, index) => {
-                      // Filtrar detalles de ingresos
+                     
                       const lista = dataingresos.filter((pro) => pro.AnnoIngreso === x.AnnoIngreso && pro.MesIngreso === x.MesIngreso);
                       if(lista.length>0){
 

@@ -136,7 +136,7 @@ function ModalRegistroIngreso({
           
           const respuesta=result['resp']
           if (respuesta === 200) {
-            // setDatosgastos(result['data'])
+     
             const lista=result['data']
             
             const listafijos = lista.filter((fij) => fij.tipoproducto === 1);
@@ -248,12 +248,12 @@ function ModalRegistroIngreso({
           };
     const [api, contextHolder] = notification.useNotification();
     const formatearValor = (value) => {
-      // Formatear el valor con separadores de miles
+    
       return value ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '';
       };
 
     const parsearValor = (value) => {
-        // Eliminar separadores de miles al convertir el valor
+       
         return value ? parseInt(value.replace(/,/g, ''), 10) : undefined;
       };
 

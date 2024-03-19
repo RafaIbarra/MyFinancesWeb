@@ -85,15 +85,11 @@ function SaldosPeriodo({datasaldos}){
                 setTotalegresosaldo(totalgasto)
                 setTotalsaldos(totalsaldo)
                 setDetallesaldos(registros)
-                // setTotalingreso(registroresumen[0]['MontoIngreso'])
-                // setTotalegreso(registroresumen[0]['MontoEgreso'])
-                // setSaldo(registroresumen[0]['Saldo'])
+               
             }
             else{
                 setDetallesaldos(null)
-            //   setTotalingreso(0)
-            //   setTotalegreso(0)
-            //   setSaldo(0)
+        
             }
           }
           

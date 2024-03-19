@@ -1,6 +1,6 @@
 .contenedor-principal-ingreso{
-    width: 600px;
-    height: 450px; 
+    height: 100%;
+    width: 100%;
     overflow: hidden;
 
     /* background-color: aquamarine;
