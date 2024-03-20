@@ -5,17 +5,17 @@
   /* border-width: 2px;
   border-color: black;
   border-style: dotted; */
-  height: calc(81vh - 40px);
+  height: calc(75vh);
 }
 
 .container-detalle-ingreso-datos{
 
-  height: calc(81vh - 90px);
+  height: calc(57vh);
   width: 100%;
 }
 .contenedor-tabla-detalle-ingreso{
   width: 100%;
-  height: 83%; 
+  height: 100%; 
   overflow: auto
 }
 .contenido-tabla-detalle-ingreso .ant-table-cell{
