@@ -10,7 +10,8 @@
 }
 
 .container-detalle-egreso-datos{
-  height: calc(81vh - 15%);
+  /* height: calc(81vh - 15%); */
+  height: calc(75vh);
   width: 100%;
   
 }
