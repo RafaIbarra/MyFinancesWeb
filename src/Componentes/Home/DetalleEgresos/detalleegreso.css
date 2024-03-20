@@ -11,7 +11,7 @@
 
 .container-detalle-egreso-datos{
   /* height: calc(81vh - 15%); */
-  height: calc(75vh);
+  height: calc(81vh - 90px);
   width: 100%;
   
 }
