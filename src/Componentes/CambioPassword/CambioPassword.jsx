@@ -3,7 +3,7 @@ import { Button, message, Steps, theme,Input, } from 'antd';
 import { Navigate, useNavigate } from "react-router-dom";
 import Generarpeticion from '../../peticiones/apipeticiones';
 
-import EnvioCorreo from './EnvioCorreo';
+import EnvioCorreo from './enviocorreo';
 import DatosCodigo from './DatosCodigo';
 import ProcesarCambio from './ProcesarCambio';
 import Cargadatos from '../Home/Cargadatos';
