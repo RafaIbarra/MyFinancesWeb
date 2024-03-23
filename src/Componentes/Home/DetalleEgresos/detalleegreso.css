@@ -1,11 +1,23 @@
 .principal-container-detalle-egreso{
   display: grid;
-  grid-template-columns: 65% 35%; /* Dos columnas de igual tamaño */
+  grid-template-columns: 65% 35%; 
   
   /* border-width: 2px;
   border-color: black;
   border-style: dotted; */
-  height: calc(75vh);
+  /* height: calc(75vh); */
+
+  @media (min-height: 20px) and (max-height: 607px) {
+    height: calc(65vh); 
+  }
+
+  @media (min-height: 608) and (max-height: 739px){
+    height: calc(55vh); 
+  }
+
+  @media (min-height: 740px) {
+    height: calc(75vh); 
+  }
   
 }
 
@@ -15,7 +27,7 @@
   
 
   @media (min-height: 20px) and (max-height: 607px) {
-    height: calc(50vh); 
+    height: calc(45vh); 
   }
 
   @media (min-height: 608) and (max-height: 739px){
@@ -51,7 +63,7 @@
 
 .contenedor-resumen-detalle-egreso {
   display: grid;
-  grid-template-columns: 34% 20% 20%;
+  grid-template-columns: 33% 25% 33%;
 
   border: 1px solid rgb(240, 244, 236);
   background-color: rgb(248, 251, 250);
@@ -68,7 +80,7 @@
   margin-top: 5px;
   justify-content: center;
   
-  width: '100%';
+  width: 100%;
 }
 
 .container-detalle-egreso-imagen{

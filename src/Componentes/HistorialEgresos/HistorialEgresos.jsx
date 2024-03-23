@@ -419,7 +419,7 @@ function HistorialEgresos(){
 
             
 
-            <p>
+            <p style={{paddingLeft:'10px',fontSize:'small',fontStyle:'italic'}}>
                 {textop}
             </p>
 

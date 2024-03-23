@@ -208,14 +208,8 @@ function NavBar({sesionname}){
         setCurrent(e.key);
         
     };
-    const onhome=()=>{
-      navigate('/my-resumenCuentas')
-    }
     
-
     
-
-        
 
     return(
         <div style={{ display: 'flex', alignItems: 'center', padding: '0px', borderBottom: '1px solid #ccc' }}>

@@ -419,24 +419,24 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
 
                 <div className='contenedor-resumen-detalle-egreso'>
                     <div>
-                        <p style={{fontSize:'12px',fontStyle:'italic', fontWeight:'bold',marginBottom:'0px' }}>
+                        <p style={{fontSize:'11px',fontStyle:'italic',paddingTop:'3px', fontWeight:'bold',marginBottom:'0px' }}>
                         {valoresseleccion > 0 ? `Total valor seleccionado Gs. ${Number(valoresseleccion).toLocaleString('es-ES')}` : ""}
                         </p>
 
-                        <p style={{fontSize:'12px',fontStyle:'italic', fontWeight:'bold' }}>
+                        <p style={{fontSize:'11px',fontStyle:'italic', fontWeight:'bold' }}>
                         {valoresseleccion > 0 ? `Cant Registros: ${Number(cantidadseleccion).toLocaleString('es-ES')}` : ""}
                         </p>
 
                     </div>
                     <FormItem style={{paddingTop:'5px'}}>
-                        <Text strong>CANTIDAD REGISTROS: </Text>
-                        <Text strong>   {Number(canttotalegreso).toLocaleString('es-ES')}</Text>
+                        <Text style={{fontSize:'small'}} strong>CANTIDAD REGISTROS: </Text>
+                        <Text style={{fontSize:'small'}}  strong>   {Number(canttotalegreso).toLocaleString('es-ES')}</Text>
                         
                     </FormItem>
 
                     <FormItem style={{paddingTop:'5px'}}>
-                        <Text strong>TOTAL EGRESOS: </Text>
-                        <Text strong>GS. {Number(montototalegreso).toLocaleString('es-ES')}</Text>
+                        <Text style={{fontSize:'small'}}  strong>TOTAL EGRESOS: </Text>
+                        <Text style={{fontSize:'small'}}  strong>GS. {Number(montototalegreso).toLocaleString('es-ES')}</Text>
                         
                     </FormItem>
                     

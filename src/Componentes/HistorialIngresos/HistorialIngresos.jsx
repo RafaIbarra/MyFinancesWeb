@@ -347,7 +347,7 @@ function HistorialIngresos(){
                           onClick={reestablecer_busqueda}
                           icon={<RetweetOutlined style={{fontSize:'30px'}} />} />
                   </Tooltip>
-                  <p>
+                  <p style={{paddingLeft:'10px',fontSize:'small',fontStyle:'italic'}}>
                     {textop}
                   </p>
               </div>
