@@ -36,10 +36,7 @@ function App (){
     
     useEffect(() => {
         const datosstarage = ComprobarStorage();
-        const alto = window.innerHeight;
-        const ancho = window.innerWidth;
-        console.log('Ancho de la pantalla:', ancho, 'px');
-        console.log('Alto de la pantalla:', alto, 'px');
+        
         setSesionname(datosstarage['user_name'])
         const credenciales=datosstarage['datosesion']
         if (credenciales) {

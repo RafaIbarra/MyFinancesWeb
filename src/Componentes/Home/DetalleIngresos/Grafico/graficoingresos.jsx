@@ -18,7 +18,7 @@ function GraficoIngresos({dataingresos,imgingresos}){
     
     return(
     <div className='contenedor-principal-ingreso'>
-        <h4 className='titulo-grafico-ingreso' > Distribucion de ingresos </h4> 
+        <h4 className='titulo-grafico-ingreso' > Distribucion de Ingresos </h4> 
         
         <div className='contenedor-imagen-ingreso'>
 

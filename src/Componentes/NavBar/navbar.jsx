@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { HomeOutlined,SwapOutlined,DiffOutlined,SoundOutlined,InteractionOutlined,BarChartOutlined,
-        FileUnknownOutlined,CheckOutlined,RightOutlined,UserOutlined,DownOutlined,FallOutlined,RiseOutlined,
+import { HomeOutlined,SwapOutlined,BarChartOutlined,
+        RightOutlined,UserOutlined,FallOutlined,RiseOutlined,
         AlignLeftOutlined,SettingOutlined,SolutionOutlined 
       } from '@ant-design/icons';
 
@@ -109,7 +109,7 @@ function NavBar({sesionname}){
       },
       
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'CategoriaEgresos' ? colorsel : colordefault }} >Categoria Egresos</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'CategoriaEgresos' ? colorsel : colordefault }} >Categoria de Gastos</p>),
        
         
         key: 'CategoriaEgresos',
@@ -117,7 +117,7 @@ function NavBar({sesionname}){
        
       },
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'ConceptosEgresos' ? colorsel : colordefault}} >Conceptos Egresos</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: keysel === 'ConceptosEgresos' ? colorsel : colordefault}} >Conceptos de Gastos</p>),
         
         
         key: 'ConceptosEgresos',
@@ -127,7 +127,7 @@ function NavBar({sesionname}){
 
 
       {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Movimientos', 'MovimientosIngresos','MovimientosEgresos'].includes(keysel) ? colorsel : colordefault}} >Movimientos</p>),
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Movimientos', 'MovimientosIngresos','MovimientosEgresos'].includes(keysel) ? colorsel : colordefault}} >Historico Movimientos</p>),
         key:"Movimientos",
         icon:<SwapOutlined style={{ fontSize: tamañoicono,marginTop:margentopicono, color: ['Movimientos', 'MovimientosIngresos','MovimientosEgresos'].includes(keysel) ? colorsel : colordefault }}/>,  
         children:[

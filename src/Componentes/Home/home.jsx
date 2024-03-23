@@ -99,7 +99,7 @@ function Home (){
 
                     {cargaconfirmada &&(<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>)}
                   </Tab>
-                  <Tab eventKey="homeingresos" title="Detalle de Ingresos del Mes">
+                  <Tab eventKey="homeingresos" title="Registro de Ingresos">
                     {cargaconfirmada &&(<DetalleIngreso 
                                                         dataingresos={dataingresos} 
                                                         setDataingresos={setDataingresos} 
@@ -113,7 +113,7 @@ function Home (){
                                         )
                     }
                   </Tab>
-                  <Tab eventKey="homeegresos" title="Detalle de Egresos del Mes" >
+                  <Tab eventKey="homeegresos" title="Registros de Gastos" >
                     {cargaconfirmada &&( <DetalleEgreso 
                                                       dataegresos={dataegresos} 
                                                       setDataegresos={setDataegresos} 

@@ -19,7 +19,7 @@ function GraficoEgresoso({dataegresos,imgegresos}){
 
     return(
     <div className='contenedor_principal-egreso'>
-        <h4 className='titulo-grafico-egreso' > Distribucion de Egresos </h4> 
+        <h4 className='titulo-grafico-egreso' > Distribucion de Gastos </h4> 
         
 
         <div className='contenedor-imagen-egreso'>
