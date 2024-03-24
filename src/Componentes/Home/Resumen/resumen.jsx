@@ -85,56 +85,64 @@ function Resumen({dataresumen,imgresumen}){
 
       
       return(
-        <div className='contenedor-resumen-flex'>
-            
-          <div className='contenedor-tabla'>
+        <div className='principal-container-home-resumen'>
 
-            <Table
-                columns={columns}
-                dataSource={detalle}
-                pagination={false}
-                size="small"
-                bordered
-                summary={(pageData) => {
-                    let totalBorrow = 0;
-                    let totalRepayment = 0;
-                    pageData.forEach(({ MontoIngreso, MontoEgreso }) => {
-                    totalBorrow += MontoIngreso;
-                    totalRepayment += MontoEgreso;
-                    });
-                    return (
-                    <>
-                        <Table.Summary.Row>
-                            <Table.Summary.Cell index={0} colSpan={2} >
-                                <Text type="danger" strong>TOTALES </Text>
-                            </Table.Summary.Cell>
+          <div className='container-home-resumen-datos'>
 
-                            <Table.Summary.Cell index={1}>
-                                <Text strong>GS. {Number(totalingreso).toLocaleString('es-ES')}</Text>
-                            </Table.Summary.Cell>
+            <div className='contenedor-tabla-home-resumen'>
 
-                            <Table.Summary.Cell index={2}>
-                                <Text strong>GS. {Number(totalegreso).toLocaleString('es-ES')}</Text>
-                            </Table.Summary.Cell>
+              <Table
+                  columns={columns}
+                  dataSource={detalle}
+                  pagination={false}
+                  size="small"
+                  bordered
+                  className='contenido-tabla-home-resumen'
+                  summary={(pageData) => {
+                      let totalBorrow = 0;
+                      let totalRepayment = 0;
+                      pageData.forEach(({ MontoIngreso, MontoEgreso }) => {
+                      totalBorrow += MontoIngreso;
+                      totalRepayment += MontoEgreso;
+                      });
+                      return (
+                      <>
+                          <Table.Summary.Row>
+                              <Table.Summary.Cell index={0} colSpan={2} >
+                                  <Text type="danger" strong>TOTALES </Text>
+                              </Table.Summary.Cell>
 
-                        </Table.Summary.Row>
+                              <Table.Summary.Cell index={1}>
+                                  <Text strong>GS. {Number(totalingreso).toLocaleString('es-ES')}</Text>
+                              </Table.Summary.Cell>
 
-                            <Table.Summary.Row>
-                            <Table.Summary.Cell index={0}>
-                                <Text type="danger" strong>SALDO </Text>
-                            </Table.Summary.Cell>
-                            <Table.Summary.Cell index={1} colSpan={3}>
-                                <Text type="danger"strong>GS. {Number(saldo).toLocaleString('es-ES')}</Text>
-                            </Table.Summary.Cell>
-                        </Table.Summary.Row>
-                    </>
-                    );
-                }}
-                />
+                              <Table.Summary.Cell index={2}>
+                                  <Text strong>GS. {Number(totalegreso).toLocaleString('es-ES')}</Text>
+                              </Table.Summary.Cell>
+
+                          </Table.Summary.Row>
+
+                          <Table.Summary.Row>
+                              <Table.Summary.Cell index={0}>
+                                  <Text type="danger" strong>SALDO </Text>
+                              </Table.Summary.Cell>
+                              <Table.Summary.Cell index={1} colSpan={3}>
+                                  <Text type="danger"strong>GS. {Number(saldo).toLocaleString('es-ES')}</Text>
+                              </Table.Summary.Cell>
+                          </Table.Summary.Row>
+                      </>
+                      );
+                  }}
+                  />
+            </div>
+
           </div>
+            
 
-                
-          <Resumengrafico dataresumen={dataresumen}  imgresumen={imgresumen}></Resumengrafico>
+          <div className='container-home-resumen-imagen'>
+
+            <Resumengrafico dataresumen={dataresumen}  imgresumen={imgresumen}></Resumengrafico>
+          </div>
 
                 
 

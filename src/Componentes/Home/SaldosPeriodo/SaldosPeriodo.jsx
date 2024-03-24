@@ -100,52 +100,55 @@ function SaldosPeriodo({datasaldos}){
       }, [datasaldos]);
 
     return(
-        <div className='contenedor-resumen-saldos-flex'>
-            
-        <div className='contenedor-tabla-saldos'>
+        <div className='principal-container-periodo'>
+            <div className='container-home-periodo-datos'>
 
-          <Table
-              columns={columns}
-              dataSource={detallesaldos}
-              pagination={false}
-              size="small"
-              bordered
-              summary={(pageData) => {
-                  let totalBorrow = 0;
-                  let totalRepayment = 0;
-                  pageData.forEach(({ TotalIngreso, TotalEgreso }) => {
-                  totalBorrow += TotalIngreso;
-                  totalRepayment += TotalEgreso;
-                  });
-                  return (
-                  <>
-                      <Table.Summary.Row>
-                          <Table.Summary.Cell index={0} colSpan={2} >
-                              <Text type="danger" strong>TOTALES </Text>
-                          </Table.Summary.Cell>
+                <div className='contenedor-tabla-periodo'>
 
-                          <Table.Summary.Cell index={1}>
-                              <Text strong>GS. {Number(totalingresosaldo).toLocaleString('es-ES')}</Text>
-                          </Table.Summary.Cell>
+                  <Table
+                      columns={columns}
+                      dataSource={detallesaldos}
+                      pagination={false}
+                      size="small"
+                      bordered
+                      className='contenido-tabla-periodo'
+                      summary={(pageData) => {
+                          let totalBorrow = 0;
+                          let totalRepayment = 0;
+                          pageData.forEach(({ TotalIngreso, TotalEgreso }) => {
+                          totalBorrow += TotalIngreso;
+                          totalRepayment += TotalEgreso;
+                          });
+                          return (
+                          <>
+                              <Table.Summary.Row>
+                                  <Table.Summary.Cell index={0} colSpan={2} >
+                                      <Text type="danger" strong>TOTALES </Text>
+                                  </Table.Summary.Cell>
 
-                          <Table.Summary.Cell index={2}>
-                              <Text strong>GS. {Number(totalegresosaldo).toLocaleString('es-ES')}</Text>
-                          </Table.Summary.Cell>
-                          <Table.Summary.Cell index={3}>
-                              <Text  type="danger"strong>GS. {Number(totalsaldos).toLocaleString('es-ES')}</Text>
-                          </Table.Summary.Cell>
-                          <Table.Summary.Cell index={4}>
-                              <Text  strong>{porcentajetotal} %</Text>
-                          </Table.Summary.Cell>
+                                  <Table.Summary.Cell index={1}>
+                                      <Text strong>GS. {Number(totalingresosaldo).toLocaleString('es-ES')}</Text>
+                                  </Table.Summary.Cell>
 
-                      </Table.Summary.Row>
+                                  <Table.Summary.Cell index={2}>
+                                      <Text strong>GS. {Number(totalegresosaldo).toLocaleString('es-ES')}</Text>
+                                  </Table.Summary.Cell>
+                                  <Table.Summary.Cell index={3}>
+                                      <Text  type="danger"strong>GS. {Number(totalsaldos).toLocaleString('es-ES')}</Text>
+                                  </Table.Summary.Cell>
+                                  <Table.Summary.Cell index={4}>
+                                      <Text  strong>{porcentajetotal} %</Text>
+                                  </Table.Summary.Cell>
 
-                         
-                  </>
-                  );
-              }}
-              />
-        </div>
+                              </Table.Summary.Row>
+
+                                
+                          </>
+                          );
+                      }}
+                      />
+                </div>
+            </div>
 
               
         

@@ -6,6 +6,7 @@ import EstadisticasCabecera from '../EstaditicasCabecera';
 import SaldosPeriodos from './SaldosPeriodos/SaldosPeriodos';
 import IndicesPeriodos from './IndicesPeriodos/IndicesPeriodos';
 import Cargadatos from '../../Home/Cargadatos';
+import AguardandoRespuesta from '../../AguardandoRespuesta/AguardandoRespuesta';
 import {  Divider } from 'antd'
 import './estadisticaingreso.css'
 function EstadisticasIngreso(){
@@ -20,13 +21,14 @@ function EstadisticasIngreso(){
     const [cargacompleta,setCargacompleta]=useState(false)
     const [spindatos,setSpindato]=useState(false)
     const [titulocabecera,setTitulocabecera]=useState('ESTADISTICAS DE SALDOS E INGRESOS')
+    const [peticionresuelta,setPeticionresuelta]=useState(false)
     useEffect(() => {
         
         const cargardatos = async () => {
             const datestorage=Handelstorage('obtenerstats');
             
             const anno_stats=datestorage['dataanno']
-            
+            setPeticionresuelta(true)
             const body = {};
             const endpoint='EstadisticasIngresos/'+anno_stats+'/0/'
             const result = await Generarpeticion(endpoint, 'POST', body);
@@ -44,6 +46,7 @@ function EstadisticasIngreso(){
                 
                 setCargarestadisticasingreso(true)
                 setCargacompleta(true)
+                setPeticionresuelta(false)
                 
             }else if(respuesta === 403 || respuesta === 401){
               
@@ -85,17 +88,18 @@ function EstadisticasIngreso(){
             {!spindatos && cargacompleta &&(<IndicesPeriodos datosperiodoindices={datosperiodoindices} imagenperiodoindice={imagenperiodoindice}  ></IndicesPeriodos>
             )}
 
-           
-
-           
-
-
-
+          
             {spindatos &&(
                 <Cargadatos setSpindato={setSpindato}></Cargadatos>
               )
     
               }
+
+            {peticionresuelta &&(
+                <AguardandoRespuesta></AguardandoRespuesta>
+            )
+            }
+
         </div>
        
     )

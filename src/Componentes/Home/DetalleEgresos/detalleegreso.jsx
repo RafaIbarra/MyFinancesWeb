@@ -4,7 +4,7 @@ import { DeleteOutlined,    RetweetOutlined  ,PlusCircleTwoTone,WarningOutlined,
 import FormItem from 'antd/es/form/FormItem';
 import numeral from 'numeral';
 import jsPDF from 'jspdf';
-
+import * as XLSX from 'xlsx';
 import './detalleegreso.css'
 import ModalEliminarEgreso from './Modales/modal_eliminar_egreso'
 import ModalRegistroEgreso from './Modales/modal_registro_egreso';
@@ -286,8 +286,22 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
         return number.toLocaleString('es-ES');
       };
     const imprimir=()=>{
-        const titulomes =dataegresos[0]['NombreMesEgreso']
-        const tituloanno = dataegresos[0]['AnnoEgreso']
+        let valoresordenados=dataegresos
+        valoresordenados.sort((a, b) => {
+            // Primero ordenar por CategoriaGasto
+            if (a.CategoriaGasto < b.CategoriaGasto) return -1;
+            if (a.CategoriaGasto > b.CategoriaGasto) return 1;
+          
+            // Si las CategoriaGasto son iguales, ordenar por NombreGasto
+            if (a.NombreGasto < b.NombreGasto) return -1;
+            if (a.NombreGasto > b.NombreGasto) return 1;
+          
+            return 0;
+          });
+        
+
+        const titulomes =valoresordenados[0]['NombreMesEgreso']
+        const tituloanno = valoresordenados[0]['AnnoEgreso']
         const titulotext ='GATOS DEL MES DE ' + titulomes.toUpperCase() + ' DEL ' + tituloanno
         
         const doc = new jsPDF();
@@ -372,7 +386,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
 
         // Agregar valores para cada clave en la fila siguiente
         doc.setFontSize(8)
-        dataegresos.forEach((dato, index) => {
+        valoresordenados.forEach((dato, index) => {
             if(index==0){
                 doc.text(`Página ${numeroPagina}`, doc.internal.pageSize.getWidth() - 10, doc.internal.pageSize.getHeight() - 10, { align: 'right' }); 
                 doc.setLineWidth(0.5);
@@ -397,6 +411,19 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
 
       
         doc.save('archivo_gastos.pdf');
+
+        
+
+        
+        
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(valoresordenados);
+
+        // Agregar la hoja de cálculo al libro
+        XLSX.utils.book_append_sheet(wb, ws, 'Datos');
+
+        // Generar el archivo Excel
+        XLSX.writeFile(wb, 'datos.xlsx');
         
     
     }

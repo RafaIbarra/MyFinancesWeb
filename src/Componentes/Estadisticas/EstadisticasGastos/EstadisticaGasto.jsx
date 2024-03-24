@@ -8,6 +8,7 @@ import ConceptosMaximos from './ConceptosMaximos/ConceptosMaximos';
 import CategoriaMaxima from './CategoriaMaxima/CategoriaMaxima';
 import Handelstorage from '../../../Storage/handelstorage';
 import Cargadatos from '../../Home/Cargadatos';
+import AguardandoRespuesta from '../../AguardandoRespuesta/AguardandoRespuesta';
 import './estadisticagasto.css'
 import {  Space,Divider,Button } from 'antd'
 function EstadisticasGasto(){
@@ -21,13 +22,15 @@ function EstadisticasGasto(){
     const [spindatos,setSpindato]=useState(false)
     const [cargarestadisticas,setCargarestadisticas]=useState(false)
     const [titulocabecera,setTitulocabecera]=useState('ESTADISTICAS DE GASTOS')
+    const [peticionresuelta,setPeticionresuelta]=useState(false)
+    
     useEffect(() => {
         
         const cargardatos = async () => {
             const datestorage=Handelstorage('obtenerstats');
             
             const anno_stats=datestorage['dataanno']
-            
+            setPeticionresuelta(true)
             const body = {};
             const endpoint='EstadisticasEgresos/'+anno_stats+'/0/'
             const result = await Generarpeticion(endpoint, 'POST', body);
@@ -84,6 +87,7 @@ function EstadisticasGasto(){
                 }
                 setDatoscategoriamaximo(datacategoriamaximo)
                 setCargacompleta(true)
+                setPeticionresuelta(false)
 
                 
             }else if(respuesta === 403 || respuesta === 401){
@@ -135,15 +139,19 @@ function EstadisticasGasto(){
 
             {!spindatos && cargacompleta &&(<CategoriaMaxima datoscategoriamaximo={datoscategoriamaximo}></CategoriaMaxima>)}
 
-           
-
-
+        
 
             {spindatos &&(
                 <Cargadatos setSpindato={setSpindato}></Cargadatos>
               )
     
               }
+
+            {peticionresuelta &&(
+                <AguardandoRespuesta></AguardandoRespuesta>
+            )
+
+            }
         </div>
     )
 
