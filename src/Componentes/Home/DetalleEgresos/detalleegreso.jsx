@@ -416,14 +416,14 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
 
         
         
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(valoresordenados);
+        // const wb = XLSX.utils.book_new();
+        // const ws = XLSX.utils.json_to_sheet(valoresordenados);
 
-        // Agregar la hoja de cálculo al libro
-        XLSX.utils.book_append_sheet(wb, ws, 'Datos');
+        // // Agregar la hoja de cálculo al libro
+        // XLSX.utils.book_append_sheet(wb, ws, 'Datos');
 
-        // Generar el archivo Excel
-        XLSX.writeFile(wb, 'datos.xlsx');
+        // // Generar el archivo Excel
+        // XLSX.writeFile(wb, 'datos.xlsx');
         
     
     }

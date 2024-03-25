@@ -18,12 +18,16 @@ import ActualizacionDatosPersonales from "../Componentes/ActualizacionDatosPerso
 import CambioPassword from "../Componentes/CambioPassword/CambioPassword";
 import PiePagina from "../Componentes/PiePagina/PiePagina";
 import ComprobarStorage from "./verificarstorage";
+import ComprobarConexion from "../peticiones/comprobarbd";
+import Reconectar from "./Reconectar";
 
 function App (){
     
     const [Estadologin,setEstadologin]=useState(false)
     const [sesionname, setSesionname]=useState('')
+    const [conexbd,setConexbd]=useState(true)
     
+    const [intentar,setIntentar]=useState(true)
    
     const activarsesion=()=>{
         setEstadologin(true)
@@ -50,13 +54,32 @@ function App (){
         } else {
           desactivarsesion();
         }
-      }, []);
+        
+        const comprobarBD = async () => {
+        
+        
+            const conec=await ComprobarConexion();
+            
+            // const respuesta=result['resp']
+            // console.log(result)
+            console.log('la conexion es')
+            console.log(conec)
+            setConexbd(conec)
+            setIntentar(false)
+            
+          };
+          if(intentar===true){
+            console.log('intentara conexctar')
+              comprobarBD()
+          }
+      }, [intentar]);
     
 return(
     
     <HashRouter>
         
         <div style={ Estadologin ? {  display: 'flex', flexDirection: 'column' }: null}>
+        {!conexbd &&(<Reconectar intentar={intentar} setIntentar={setIntentar}  setConexbd={setConexbd} ></Reconectar>)}
         {Estadologin && (<NavBar sesionname={sesionname}/>)}
             <div style={ Estadologin ?{ display: 'flex', flexDirection: 'row' }: null}>
                 
@@ -82,6 +105,7 @@ return(
                     
                 </Routes>
                 {Estadologin && (<PiePagina></PiePagina>)}
+                
             </div>
         </div>
     </HashRouter>

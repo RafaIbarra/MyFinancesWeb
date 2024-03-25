@@ -11,8 +11,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { Avatar } from 'antd';
 
 import './NavBar.css'
-import Handelstorage
- from '../../Storage/handelstorage';
+import Handelstorage from '../../Storage/handelstorage';
+
 
 
 const tamañoletra='14px'
@@ -209,7 +209,7 @@ function NavBar({sesionname}){
         
     };
     
-    
+   
 
     return(
         <div style={{ display: 'flex', alignItems: 'center', padding: '0px', borderBottom: '1px solid #ccc' }}>

@@ -1,0 +1,11 @@
+.contenedor-reconectar{
+    background-color: red;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+    height: 30px;
+}
+.estilo-p-reconectar{
+    font-size: small;
+    padding-top: 15px;
+}
