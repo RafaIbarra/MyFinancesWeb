@@ -5,7 +5,7 @@ import Handelstorage from '../../../Storage/handelstorage';
 import EstadisticasCabecera from '../EstaditicasCabecera';
 import SaldosPeriodos from './SaldosPeriodos/SaldosPeriodos';
 import IndicesPeriodos from './IndicesPeriodos/IndicesPeriodos';
-import Cargadatos from '../../Home/Cargadatos';
+
 import AguardandoRespuesta from '../../AguardandoRespuesta/AguardandoRespuesta';
 import {  Divider } from 'antd'
 import './estadisticaingreso.css'
@@ -19,7 +19,7 @@ function EstadisticasIngreso(){
     const [imagenperiodoindice,setImagenperiodoindice]=useState([])
     const [cargarestadisticasingreso,setCargarestadisticasingreso]=useState(false)
     const [cargacompleta,setCargacompleta]=useState(false)
-    const [spindatos,setSpindato]=useState(false)
+    
     const [titulocabecera,setTitulocabecera]=useState('ESTADISTICAS DE SALDOS E INGRESOS')
     const [peticionresuelta,setPeticionresuelta]=useState(false)
     useEffect(() => {
@@ -70,7 +70,7 @@ function EstadisticasIngreso(){
             <EstadisticasCabecera 
             cargarestadisticas={cargarestadisticasingreso}
             setCargarestadisticas={setCargarestadisticasingreso} 
-            setSpindato={setSpindato}
+            
             titulocabecera={titulocabecera}
 
             ></EstadisticasCabecera>
@@ -78,22 +78,18 @@ function EstadisticasIngreso(){
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Saldos por periodos</Divider>
 
-            {!spindatos && cargacompleta &&(<SaldosPeriodos datosperiodosaldos={datosperiodosaldos} imagenperiodosaldos={imagenperiodosaldos} ></SaldosPeriodos>
+            {!peticionresuelta && cargacompleta &&(<SaldosPeriodos datosperiodosaldos={datosperiodosaldos} imagenperiodosaldos={imagenperiodosaldos} ></SaldosPeriodos>
             )}
 
 
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Indices por periodos</Divider>
 
-            {!spindatos && cargacompleta &&(<IndicesPeriodos datosperiodoindices={datosperiodoindices} imagenperiodoindice={imagenperiodoindice}  ></IndicesPeriodos>
+            {!peticionresuelta && cargacompleta &&(<IndicesPeriodos datosperiodoindices={datosperiodoindices} imagenperiodoindice={imagenperiodoindice}  ></IndicesPeriodos>
             )}
 
           
-            {spindatos &&(
-                <Cargadatos setSpindato={setSpindato}></Cargadatos>
-              )
-    
-              }
+            
 
             {peticionresuelta &&(
                 <AguardandoRespuesta></AguardandoRespuesta>

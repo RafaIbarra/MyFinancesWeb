@@ -81,8 +81,9 @@ return(
         <div style={ Estadologin ? {  display: 'flex', flexDirection: 'column' }: null}>
         {!conexbd &&(<Reconectar intentar={intentar} setIntentar={setIntentar}  setConexbd={setConexbd} ></Reconectar>)}
         {Estadologin && (<NavBar sesionname={sesionname}/>)}
-            <div style={ Estadologin ?{ display: 'flex', flexDirection: 'row' }: null}>
-                
+        {/* {Estadologin && (<NabarHor sesionname={sesionname}/>)} */}
+            {/* <div style={ Estadologin ?{ display: 'flex', flexDirection: 'row' }: null}> */}
+            <div>                
                 <Routes>
                     <Route path="/" element={<Login activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname} />} />
                     <Route path="/Registro" element={<RegistroUsuario activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname}/>} />

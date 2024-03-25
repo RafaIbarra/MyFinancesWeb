@@ -7,7 +7,6 @@ import EstadisticasCabecera from '../EstaditicasCabecera';
 import ConceptosMaximos from './ConceptosMaximos/ConceptosMaximos';
 import CategoriaMaxima from './CategoriaMaxima/CategoriaMaxima';
 import Handelstorage from '../../../Storage/handelstorage';
-import Cargadatos from '../../Home/Cargadatos';
 import AguardandoRespuesta from '../../AguardandoRespuesta/AguardandoRespuesta';
 import './estadisticagasto.css'
 import {  Space,Divider,Button } from 'antd'
@@ -19,7 +18,7 @@ function EstadisticasGasto(){
     const [datosconceptos,setDatosconceptos]=useState([])
     const [datoscategoriamaximo,setDatoscategoriamaximo]=useState([])
     const [cargacompleta,setCargacompleta]=useState(false)
-    const [spindatos,setSpindato]=useState(false)
+    
     const [cargarestadisticas,setCargarestadisticas]=useState(false)
     const [titulocabecera,setTitulocabecera]=useState('ESTADISTICAS DE GASTOS')
     const [peticionresuelta,setPeticionresuelta]=useState(false)
@@ -111,7 +110,7 @@ function EstadisticasGasto(){
             <EstadisticasCabecera 
             cargarestadisticas={cargarestadisticas}
             setCargarestadisticas={setCargarestadisticas} 
-            setSpindato={setSpindato}
+            
             titulocabecera={titulocabecera}
 
             ></EstadisticasCabecera>
@@ -119,36 +118,36 @@ function EstadisticasGasto(){
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Comportamiento Gastos cada 15 primeros dias</Divider>
 
-            {!spindatos && cargacompleta &&(<Comportamiento datos15dias={datos15dias}></Comportamiento>
+            {!peticionresuelta && cargacompleta &&(<Comportamiento datos15dias={datos15dias}></Comportamiento>
             )}
             
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Gastos por Meses</Divider>
 
-            {!spindatos && cargacompleta &&(<PeriodosMaximos datosperiodomaximos={datosperiodomaximos}></PeriodosMaximos>)}
+            {!peticionresuelta && cargacompleta &&(<PeriodosMaximos datosperiodomaximos={datosperiodomaximos}></PeriodosMaximos>)}
         
             
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Gastos por Conceptos</Divider>
 
-            {!spindatos && cargacompleta &&(<ConceptosMaximos datosconceptos={datosconceptos}></ConceptosMaximos>)}
+            {!peticionresuelta && cargacompleta &&(<ConceptosMaximos datosconceptos={datosconceptos}></ConceptosMaximos>)}
 
 
             <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
             Gastos por Categorias</Divider>
 
-            {!spindatos && cargacompleta &&(<CategoriaMaxima datoscategoriamaximo={datoscategoriamaximo}></CategoriaMaxima>)}
+            {!peticionresuelta && cargacompleta &&(<CategoriaMaxima datoscategoriamaximo={datoscategoriamaximo}></CategoriaMaxima>)}
 
         
 
-            {spindatos &&(
+            {/* {spindatos &&(
                 <Cargadatos setSpindato={setSpindato}></Cargadatos>
               )
     
-              }
+              } */}
 
             {peticionresuelta &&(
-                <AguardandoRespuesta></AguardandoRespuesta>
+                <AguardandoRespuesta ></AguardandoRespuesta>
             )
 
             }

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import { Radio, Tabs } from 'antd';
 import Resumen from './Resumen/resumen';
 import DetalleEgreso from './DetalleEgresos/detalleegreso';
 import DetalleIngreso from './DetalleIngresos/detalleingreso';
@@ -11,6 +10,7 @@ import HomeCabecera from './CabeceraHome/cabecera';
 import Handelstorage from '../../Storage/handelstorage';
 import { Navigate, useNavigate } from "react-router-dom";
 import Cargadatos from './Cargadatos';
+import NabarHor from '../NavBar/nabvarhorizontal';
 
 function Home (){
     const navigate=useNavigate()
@@ -30,6 +30,7 @@ function Home (){
     const[cargarresumen,setCargarresumen]=useState(false)
     const[spindatos,setSpindato]=useState(false)
 
+    const [mode, setMode] = useState('left')
 
     useEffect(() => {
 
@@ -76,6 +77,21 @@ function Home (){
     
     
     return(
+      // <div className="principal-home">
+      //       <HomeCabecera 
+      //       cargarresumen={cargarresumen}
+      //         setCargarresumen={setCargarresumen}
+      //         setSpindato={setSpindato}
+            
+            
+      //       ></HomeCabecera> 
+      //       <div className='principal-home-sub'>
+      //           <NabarHor></NabarHor>
+
+      //           {cargaconfirmada &&(<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>)}
+      //       </div>
+
+      // </div>
         <div style={{ width:'100%'}}>
               <HomeCabecera 
                 cargarresumen={cargarresumen}
@@ -87,18 +103,20 @@ function Home (){
 
           {!spindatos &&(
 
-            <div className='hometabs'>
+            
 
               <Tabs
                   defaultActiveKey="homeresumen"
                   id="uncontrolled-tab-example"
-                  className="mb-3"
+                  // className="mb-3"
+                  tabPosition={mode}
                   // onClick={tab_resumen}
                 >
                   <Tab eventKey="homeresumen" title="Resumen Del Mes" >
 
                     {cargaconfirmada &&(<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>)}
                   </Tab>
+
                   <Tab eventKey="homeingresos" title="Registro de Ingresos">
                     {cargaconfirmada &&(<DetalleIngreso 
                                                         dataingresos={dataingresos} 
@@ -113,6 +131,7 @@ function Home (){
                                         )
                     }
                   </Tab>
+
                   <Tab eventKey="homeegresos" title="Registros de Gastos" >
                     {cargaconfirmada &&( <DetalleEgreso 
                                                       dataegresos={dataegresos} 
@@ -125,15 +144,13 @@ function Home (){
 
                                         </DetalleEgreso>)}
                   </Tab>
-                  <Tab eventKey="homesaldos" title="Saldos del Año" >
-                    {cargaconfirmada &&( <SaldosPeriodo datasaldos={datasaldos} 
-                                                      >
 
-                                        </SaldosPeriodo>)}
+                  <Tab eventKey="homesaldos" title="Saldos del Año" >
+                    {cargaconfirmada &&( <SaldosPeriodo datasaldos={datasaldos} ></SaldosPeriodo>)}
                   </Tab>
               </Tabs>
-              
-            </div>
+             
+            
              )
           } 
 

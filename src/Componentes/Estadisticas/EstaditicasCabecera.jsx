@@ -4,7 +4,7 @@ import {Button,InputNumber,Select } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import { RiseOutlined,FallOutlined  } from '@ant-design/icons';
 import './estadisticacabecera.css'
-function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpindato,titulocabecera}){
+function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,titulocabecera}){
     const[anno,Setanno]=useState(0)
     const[anno_seleccion,setAnno_selecion]=useState(0)
     const[terminacarga,setTerminacarga]=useState(false)
@@ -38,7 +38,7 @@ function EstadisticasCabecera({cargarestadisticas,setCargarestadisticas,setSpind
         
         
         setCargarestadisticas(!cargarestadisticas)
-        setSpindato(true)
+        
       }
     
     useEffect(() => {
