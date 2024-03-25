@@ -73,7 +73,23 @@ function Home (){
       
     }, [cargarresumen]);
 
-    
+    const items = [
+      {
+        key: '1',
+        label: 'Tab 1',
+        children: (<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>),
+      },
+      {
+        key: '2',
+        label: 'Tab 2',
+        children: 'Content of Tab Pane 2',
+      },
+      {
+        key: '3',
+        label: 'Tab 3',
+        children: 'Content of Tab Pane 3',
+      },
+    ];
     
     
     return(
@@ -101,7 +117,7 @@ function Home (){
                 
               ></HomeCabecera>
 
-          {!spindatos &&(
+          {!spindatos && cargaconfirmada &&(
 
             
 
@@ -110,9 +126,10 @@ function Home (){
                   id="uncontrolled-tab-example"
                   // className="mb-3"
                   tabPosition={mode}
+                  items={items}
                   // onClick={tab_resumen}
                 >
-                  <Tab eventKey="homeresumen" title="Resumen Del Mes" >
+                  {/* <Tab eventKey="homeresumen" title="Resumen Del Mes" >
 
                     {cargaconfirmada &&(<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>)}
                   </Tab>
@@ -147,7 +164,7 @@ function Home (){
 
                   <Tab eventKey="homesaldos" title="Saldos del Año" >
                     {cargaconfirmada &&( <SaldosPeriodo datasaldos={datasaldos} ></SaldosPeriodo>)}
-                  </Tab>
+                  </Tab> */}
               </Tabs>
              
             
