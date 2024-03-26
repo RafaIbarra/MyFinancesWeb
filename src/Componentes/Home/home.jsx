@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { Radio, Tabs } from 'antd';
+import {  Tabs,Spin } from 'antd';
+import { SyncOutlined } from '@ant-design/icons';
 import Resumen from './Resumen/resumen';
 import DetalleEgreso from './DetalleEgresos/detalleegreso';
 import DetalleIngreso from './DetalleIngresos/detalleingreso';
@@ -34,6 +35,7 @@ function Home (){
 
     const [mode, setMode] = useState('left')
     const [pedidoestadistica,setpedidoestadistica]=useState(false)
+    const [cargaculminada,setCargaculminada]=useState(false)
 
     useEffect(() => {
 
@@ -41,7 +43,7 @@ function Home (){
       const mes_storage=datestorage['datames']
       const anno_storage=datestorage['dataanno']
       
-      
+      setCargaculminada(false)
       const cargardatos = async () => {
         
         const body = {};
@@ -58,7 +60,7 @@ function Home (){
             setDataingresos(registros['Ingresos'])
             setDataegresos(registros['Egresos'])
             setDatasaldos(registros['Saldos'])
-            
+            setCargaculminada(true)
             // const registros_imagenes=result['data']['graficos']
             // setImgresumen(registros_imagenes['imgResumen'])
             // setImgegresos(registros_imagenes['imgEgresos'])
@@ -134,22 +136,8 @@ function Home (){
     };
     
     return(
-      // <div className="principal-home">
-      //       <HomeCabecera 
-      //       cargarresumen={cargarresumen}
-      //         setCargarresumen={setCargarresumen}
-      //         setSpindato={setSpindato}
-            
-            
-      //       ></HomeCabecera> 
-      //       <div className='principal-home-sub'>
-      //           <NabarHor></NabarHor>
 
-      //           {cargaconfirmada &&(<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>)}
-      //       </div>
-
-      // </div>
-        <div style={{ width:'100%'}}>
+        <div className='principal-home'>
               <HomeCabecera 
                 cargarresumen={cargarresumen}
                 setCargarresumen={setCargarresumen}
@@ -158,7 +146,7 @@ function Home (){
                 
               ></HomeCabecera>
 
-          {!spindatos && cargaconfirmada &&(
+          {cargaculminada && cargaconfirmada &&(
 
             
             
@@ -182,13 +170,35 @@ function Home (){
           } 
 
           
-          
+          {!cargaculminada &&(
+                          <div className='componente-espara'> 
+                          <Spin style={{paddingLeft:'50%',paddingTop:'20%'}}
+                              
+                              indicator={
+                                <SyncOutlined
+                                  style={{
+                                    fontSize: 100,
+                    
+                                    color:'Highlight',
+                                    fontWeight:'bold'
+                                    ,
+                                  }}
+                                  spin
+                                />
+                              }
+                            />
+                            
+                        </div>
+            
+                      )
 
-        {spindatos &&(
+                      }
+
+        {/* {spindatos &&(
             <Cargadatos setSpindato={setSpindato}></Cargadatos>
           )
 
-          }
+          } */}
 
 
 

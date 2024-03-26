@@ -102,7 +102,8 @@ function SaldosPeriodo({datasaldos}){
     return(
         <div className='principal-container-periodo'>
             <div className='container-home-periodo-datos'>
-
+                <h6 style={{padding:'5px',margin:'0px'}}>SALDOS DEL AÑO</h6>
+                <div className="linea-vertical"></div>
                 <div className='contenedor-tabla-periodo'>
 
                   <Table

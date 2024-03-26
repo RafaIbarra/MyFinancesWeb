@@ -435,6 +435,8 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos}
     return(
         <div className='principal-container-detalle-egreso'>
             {contextHolder}
+            <h6 style={{padding:'5px',margin:'0px'}}>REGISTROS DE GASTOS DEL MES</h6>
+            <div className="linea-vertical"></div>
             <div className='container-detalle-egreso-datos'>
 
                 <div className='contenedor-tabla-detalle-egreso'>

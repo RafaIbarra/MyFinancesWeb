@@ -114,9 +114,9 @@ function HomeCabecera ({cargarresumen,setCargarresumen,setSpindato}){
         return(
           <div>
 
-            <div className='contenedor-flex'>
+            <div className='contenedor-flex-cabecera-home'>
   
-                <FormItem label="Año">
+                <FormItem label="Año"  style={{paddingTop:'10px'}}>
 
                   <InputNumber
                           
@@ -128,7 +128,7 @@ function HomeCabecera ({cargarresumen,setCargarresumen,setSpindato}){
                       />
                 </FormItem>
 
-                <FormItem label="Mes">
+                <FormItem label="Mes" style={{paddingLeft:'20px',paddingRight:'20px',paddingTop:'10px'}}>
 
                   <Select name='listameses'
                     style={{ width: 200 }}
@@ -144,8 +144,11 @@ function HomeCabecera ({cargarresumen,setCargarresumen,setSpindato}){
                         ))}
                   </Select>
                 </FormItem>
-                
-                <Button type="primary" onClick={procesar}>Cargar Datos</Button>    
+
+                <div style={{paddingTop:'10px'}}>
+
+                  <Button   type="primary" onClick={procesar}>Cargar Datos</Button>    
+                </div>
                     
                 
             

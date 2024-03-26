@@ -1,8 +1,11 @@
-.contenedor-flex {
+.contenedor-flex-cabecera-home{
     display: flex;
-    gap: 20px;
-    margin-top: 5px;
+    height: 50px;
+    padding: 0px;
+    margin: 0px;
+    
     justify-content: center;
     /* align-items: center;  */
-    width: '100%';
+    width: 100%;
+    background-color: rgb(238, 236, 235,0.3);
   }

@@ -319,6 +319,8 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,setDatasald
     return(
         <div className='principal-container-detalle-ingreso'>
           {contextHolder}
+          <h6 style={{padding:'5px',margin:'0px'}}>REGISTROS DE INGRESOS DEL MES</h6>
+          <div className="linea-vertical"></div>
           <div className='container-detalle-ingreso-datos'>
 
               <div className='contenedor-tabla-detalle-ingreso'>

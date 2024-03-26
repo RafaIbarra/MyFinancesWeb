@@ -1,7 +1,7 @@
 
 .principal-container-periodo{
-  display: grid;
-  grid-template-columns: 100%; 
+  /* display: grid;
+  grid-template-columns: 100%;  */
   
   /* border-width: 2px;
   border-color: black;
@@ -12,12 +12,12 @@
     height: calc(65vh); 
   }
 
-  @media (min-height: 608) and (max-height: 739px){
-    height: calc(55vh); 
+  @media (min-height: 608px) and (max-height: 739px){
+    height: calc(78vh); 
   }
 
   @media (min-height: 740px) {
-    height: calc(75vh); 
+    height: calc(83vh); 
   }
 
   
@@ -34,12 +34,12 @@
     height: calc(60vh); 
   }
 
-  @media (min-height: 608) and (max-height: 739px){
-    height: calc(65vh); 
+  @media (min-height: 608px) and (max-height: 739px){
+    height: calc(78vh); 
   }
 
   @media (min-height: 740px) {
-    height: calc(73vh); 
+    height: calc(83vh); 
   }
 
   width: 100%;
@@ -51,7 +51,8 @@
 .contenedor-tabla-periodo{
   width: 100%;
   height: 100%; 
-  overflow: auto
+  overflow: auto;
+  margin-top: 15px;
 }
 .contenido-tabla-periodo .ant-table-cell{
   font-size: 13px;
@@ -60,7 +61,7 @@
 .contenido-tabla-periodo .ant-table-thead > tr > th{
   position: sticky;
   top: 0;
-  z-index: 10000;
+  z-index: 3;
   font-size: 14px;
   
 }

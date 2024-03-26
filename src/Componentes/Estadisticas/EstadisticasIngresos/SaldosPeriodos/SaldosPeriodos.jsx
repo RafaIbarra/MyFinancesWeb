@@ -16,8 +16,7 @@ function SaldosPeriodos({datosperiodosaldos,imagenperiodosaldos}){
         const cargardatos =  () => {
             
             
-        
-        
+            
             setImagensaldoperiodo(imagenperiodosaldos)
 
             setMayorsaldomes(datosperiodosaldos.MesOperacion)

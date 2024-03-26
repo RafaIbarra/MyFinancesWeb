@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import Handelstorage from '../../../Storage/handelstorage';
 import Generarpeticion from '../../../peticiones/apipeticiones';
 import { Navigate, useNavigate } from "react-router-dom";
-import {  Space,Divider,Spin } from 'antd'
-import { LoadingOutlined,SyncOutlined } from '@ant-design/icons';
+import {  Divider,Spin } from 'antd'
+import { SyncOutlined } from '@ant-design/icons';
 import './imagenesmes.css'
 function ImagenesMes({pedidoestadistica}){
     const navigate=useNavigate()
@@ -20,7 +20,7 @@ function ImagenesMes({pedidoestadistica}){
         
         setCargaculminada(false)
         const cargardatos = async () => {
-          
+            
           const body = {};
           const endpoint='EstadisticasMes/' + anno_storage +'/' + mes_storage + '/'
           const result = await Generarpeticion(endpoint, 'POST', body);
@@ -52,9 +52,9 @@ function ImagenesMes({pedidoestadistica}){
             {cargaculminada &&(
 
                 <div>
-                    <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
+                    <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic',backgroundColor:'rgb(238, 236, 235,0.3)'}}> 
                     Relacion Ingreso - Egreso</Divider>
-                    <div style={{paddingLeft:'33%'}}>
+                    <div className='imagen-home'>
                         <img 
                                 src={`data:image/png;base64,${imgresumen}`}
                                 alt="Descripción de la imagen"
@@ -67,9 +67,9 @@ function ImagenesMes({pedidoestadistica}){
             {cargaculminada &&(
 
                 <div>
-                    <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
+                    <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic',backgroundColor:'rgb(238, 236, 235,0.3)'}}> 
                     Distribucion de Ingresos</Divider>
-                    <div style={{paddingLeft:'33%'}}>
+                    <div className='imagen-home'>
                         <img 
                                 src={`data:image/png;base64,${imgingreso}`}
                                 alt="Descripción de la imagen"
@@ -81,9 +81,9 @@ function ImagenesMes({pedidoestadistica}){
             {cargaculminada &&(
 
             <div >
-                <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic'}}> 
+                <Divider dashed  orientation="left" plain style={{fontSize:'15px',fontWeight: 'bold', fontStyle: 'italic',backgroundColor:'rgb(238, 236, 235,0.3)'}}> 
                 Distribucion de Gastos</Divider>
-                <div style={{paddingLeft:'33%'}}>
+                <div className='imagen-home'>
                     <img 
                             src={`data:image/png;base64,${imgegreso}`}
                             alt="Descripción de la imagen"

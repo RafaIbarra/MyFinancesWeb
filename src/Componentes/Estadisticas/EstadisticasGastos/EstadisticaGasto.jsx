@@ -12,7 +12,7 @@ import './estadisticagasto.css'
 import {  Space,Divider,Button } from 'antd'
 function EstadisticasGasto(){
     const navigate=useNavigate()
-    const [imagen, setImagen] = useState(null);
+    
     const [datosperiodomaximos,setDatosperiodomaximos]=useState([])
     const [datos15dias,setDatos15dias]=useState([])
     const [datosconceptos,setDatosconceptos]=useState([])
@@ -39,52 +39,100 @@ function EstadisticasGasto(){
             if (respuesta === 200) {
                 
                 // -----DATOS PARA PERIODOS MAXIMOS---
-                const datosperiodo=result['data']['DatosPeriodoGasto']
-                const img=datosperiodo[0]['DatosMaximoGasto'][0]['grafico']
-                const periodo=datosperiodo[0]['DatosMaximoGasto'][0]['Periodo']
-                const promedio=datosperiodo[0]['DatosMaximoGasto'][0]['PromedioGasto']
-                const monto=datosperiodo[0]['DatosMaximoGasto'][0]['SumaMonto']
-                const cantidad=datosperiodo[0]['DatosMaximoGasto'][0]['CantidadRegistros']
-                const cantidadper=datosperiodo[0]['DatosMaximoGasto'][0]['CantidadPeriodos']
-                const datos={periodo:periodo,promedio:promedio,monto:monto,cantidad:cantidad,cantidadper:cantidadper,imagen:img}
-                setDatosperiodomaximos(datos)
+                if(result['data']['DatosPeriodoGasto'].length >0){
+
+                    const datosperiodo=result['data']['DatosPeriodoGasto']
+                    const img=datosperiodo[0]['DatosMaximoGasto'][0]['grafico']
+                    const periodo=datosperiodo[0]['DatosMaximoGasto'][0]['Periodo']
+                    const promedio=datosperiodo[0]['DatosMaximoGasto'][0]['PromedioGasto']
+                    const monto=datosperiodo[0]['DatosMaximoGasto'][0]['SumaMonto']
+                    const cantidad=datosperiodo[0]['DatosMaximoGasto'][0]['CantidadRegistros']
+                    const cantidadper=datosperiodo[0]['DatosMaximoGasto'][0]['CantidadPeriodos']
+                    const datos={periodo:periodo,promedio:promedio,monto:monto,cantidad:cantidad,cantidadper:cantidadper,imagen:img}
+                    setDatosperiodomaximos(datos)
+                }else{
+                    const datos={periodo:0,promedio:0,monto:0,cantidad:0,cantidadper:0,imagen:''}
+                    setDatosperiodomaximos(datos)
+                }
                
 
                 // -----DATOS PARA 15 dias---
 
-               
-                const datosmayoria=result['data']['DataComportamientoGasto'][0]['DatosMayoCategoria'][0]
-                const detalles=result['data']['DataComportamientoGasto'][1]['DetallePeriodo']
-                const grafico=result['data']['DataComportamientoGasto'][2]['grafico']
-                const data15={
-                    DatosMayorCategoria:datosmayoria,
-                    detalles:detalles,
-                    grafico:grafico
+                if(result['data']['DataComportamientoGasto'].length >0){
+
+                    const datosmayoria=result['data']['DataComportamientoGasto'][0]['DatosMayoCategoria'][0]
+                    const detalles=result['data']['DataComportamientoGasto'][1]['DetallePeriodo']
+                    const grafico=result['data']['DataComportamientoGasto'][2]['grafico']
+                    const data15={
+                        DatosMayorCategoria:datosmayoria,
+                        detalles:detalles,
+                        grafico:grafico
+                    }
+                    setDatos15dias(data15)
+                }else{
+                    const data15={
+                        DatosMayorCategoria:0,
+                        detalles:[],
+                        grafico:''
+                    }
+                    setDatos15dias(data15)
                 }
-                
-                setDatos15dias(data15)
 
                 //---- DATOS POR CONCEPTOS MAXIMOS----
-             
-                const dataconceptosmaximo={
-                    datosconceptomaximo:result['data']['DatosConceptoGasto'][0].DatosConceptoGastoMaximo,
-                    detalleconceptomaximo:result['data']['DatosConceptoGasto'][1].DetalleConceptoGastoMaximo,
-                    imagenconceptomaximo:result['data']['DatosConceptoGasto'][2].grafico
+                
+                if(result['data']['DatosConceptoGasto'].length >0){
+                    
+                    const dataconceptosmaximo={
+                        datosconceptomaximo:result['data']['DatosConceptoGasto'][0].DatosConceptoGastoMaximo,
+                        detalleconceptomaximo:result['data']['DatosConceptoGasto'][1].DetalleConceptoGastoMaximo,
+                        imagenconceptomaximo:result['data']['DatosConceptoGasto'][2].grafico
+                    }
+                    setDatosconceptos(dataconceptosmaximo)
+                }else{
+                    
+                    const datosconceptomaximo=[{Concepto:'',cantidad:0,Monto:0}]
+                    const detalleconceptomaximo=[{Monto:0,Periodo:'',fecha_gasto:'',fecha_registro:''}]
+                    const dataconceptosmaximo={
+                        datosconceptomaximo,
+                        detalleconceptomaximo,
+                        imagenconceptomaximo:''
+                    }
+                    setDatosconceptos(dataconceptosmaximo)
                 }
-                setDatosconceptos(dataconceptosmaximo)
                 
                 
 
                 //---- DATOS POR CATEGORIAS MAXIMAS----
-            
-                setImagen(result['data']['DatosCategoriaGasto'][2].grafico)
+                if(result['data']['DatosCategoriaGasto'].length>0){
 
-                const datacategoriamaximo={
-                    datoscategoriamaxima:result['data']['DatosCategoriaGasto'][0].DatosCategoriaGastoMaximo,
-                    detallecategoriamaximo:result['data']['DatosCategoriaGasto'][1].DetalleCategoriaGastoMaximo,
-                    imagencategoriamaximo:result['data']['DatosCategoriaGasto'][2].grafico
+    
+                    const datacategoriamaximo={
+                        datoscategoriamaxima:result['data']['DatosCategoriaGasto'][0].DatosCategoriaGastoMaximo,
+                        detallecategoriamaximo:result['data']['DatosCategoriaGasto'][1].DetalleCategoriaGastoMaximo,
+                        imagencategoriamaximo:result['data']['DatosCategoriaGasto'][2].grafico
+                    }
+                    setDatoscategoriamaximo(datacategoriamaximo)
+                }else{
+                        const datoscategoriamaxima=[{
+                            Categoria:'',
+                            cantidad:0,
+                            Monto:0
+
+                        }]
+                        const detallecategoriamaximo=[{
+                            Monto:0,
+                            Periodo:'',
+                            fecha_gasto:'',
+                            fecha_registro:''
+                        }]
+    
+                    const datacategoriamaximo={
+                        datoscategoriamaxima,
+                        detallecategoriamaximo,
+                        imagencategoriamaximo:''
+                    }
+                    setDatoscategoriamaximo(datacategoriamaximo)
                 }
-                setDatoscategoriamaximo(datacategoriamaximo)
                 setCargacompleta(true)
                 setPeticionresuelta(false)
 
@@ -140,11 +188,7 @@ function EstadisticasGasto(){
 
         
 
-            {/* {spindatos &&(
-                <Cargadatos setSpindato={setSpindato}></Cargadatos>
-              )
-    
-              } */}
+            
 
             {peticionresuelta &&(
                 <AguardandoRespuesta ></AguardandoRespuesta>

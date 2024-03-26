@@ -221,42 +221,31 @@ function NavBar({sesionname}){
         {contextHolder}
         <Menu  onClick={onClick} selectedKeys={[current]} mode="horizontal" items={itemsmenu}  className="navbarant navbarantItem" style={{ width: '92%' }} />
        
-        <div className='contenedor-drow'>
+            <div className='contenedor-drow'>
 
-            <Dropdown
-            menu={{
-              items,
-            }}
-            placement="bottomRight"
-            trigger={['click']}
-            
-          >
-            <a onClick={(e) => e.preventDefault()} className='nombreuser' >
-              <Space>
-              {sesionname}
-                {/* <UserOutlined /> */}
-                <Space wrap size={5}>
-                    <Avatar shape="square" size="large" icon={<UserOutlined />} />
-                </Space>
-              </Space>
-            </a>
-          </Dropdown>
+                <Dropdown
+                menu={{
+                  items,
+                }}
+                placement="bottomRight"
+                trigger={['click']}
+                
+              >
+                <a onClick={(e) => e.preventDefault()} className='nombreuser' >
+                  <Space>
+                  {sesionname}
+                    
+                    <Space wrap size={5}>
+                        <Avatar shape="square" size="large" icon={<UserOutlined />} />
+                    </Space>
+                  </Space>
+                </a>
+              </Dropdown>
 
-        </div>
-
-
+            </div>
 
 
-        {/* <div>
-          {username}
-        </div> */}
-        
-        {/* <div  className="navbarant navbarantUser" style={{ width: '15%',height:'80px' }}>
-          <div  style={{width: '65%',paddingTop:'25px'}}>
-          <ConsultaDatosUser/>
-          </div>
-          
-        </div> */}
+
       </div>
     )
         

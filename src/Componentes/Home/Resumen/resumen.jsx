@@ -86,7 +86,8 @@ function Resumen({dataresumen}){
       
       return(
         <div className='principal-container-home-resumen'>
-
+          <h6 style={{padding:'5px',margin:'0px'}}>RESUMEN DEL MES</h6>
+          <div className="linea-vertical"></div>
           <div className='container-home-resumen-datos'>
 
             <div className='contenedor-tabla-home-resumen'>

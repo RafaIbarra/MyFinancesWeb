@@ -13,10 +13,10 @@ function EstadisticasIngreso(){
     const navigate=useNavigate()
     const [imagen, setImagen] = useState(null);
 
-    const [datosperiodosaldos,setDatosperiodosaldos]=useState([])
-    const [imagenperiodosaldos,setImagenperiodosaldos]=useState([])
-    const [datosperiodoindices,setDatosperiodoindices]=useState([])
-    const [imagenperiodoindice,setImagenperiodoindice]=useState([])
+    const [datosperiodosaldos,setDatosperiodosaldos]=useState(0)
+    const [imagenperiodosaldos,setImagenperiodosaldos]=useState('')
+    const [datosperiodoindices,setDatosperiodoindices]=useState(0)
+    const [imagenperiodoindice,setImagenperiodoindice]=useState('')
     const [cargarestadisticasingreso,setCargarestadisticasingreso]=useState(false)
     const [cargacompleta,setCargacompleta]=useState(false)
     
@@ -38,11 +38,37 @@ function EstadisticasIngreso(){
             if (respuesta === 200) {
                 // -----DATOS PARA PERIODOS MAXIMOS---
                 
-      
-                setDatosperiodosaldos(result['data']['DatosPeriodoSaldo'][0]['MayorSaldo'][0])
-                setDatosperiodoindices(result['data']['DatosPeriodoSaldo'][1]['MayorIndice'][0])
-                setImagenperiodosaldos(result['data']['DatosPeriodoSaldo'][2]['grafico'])
-                setImagenperiodoindice(result['data']['DatosPeriodoSaldo'][3]['graficoindice'])
+                
+                if(result['data']['DatosPeriodoSaldo'] !== null){
+                    setDatosperiodosaldos(result['data']['DatosPeriodoSaldo'][0]['MayorSaldo'][0])
+                    setDatosperiodoindices(result['data']['DatosPeriodoSaldo'][1]['MayorIndice'][0])
+                    setImagenperiodosaldos(result['data']['DatosPeriodoSaldo'][2]['grafico'])
+                    setImagenperiodoindice(result['data']['DatosPeriodoSaldo'][3]['graficoindice'])
+                }else{
+                    setDatosperiodosaldos({
+                        MesOperacion:'',
+                        MontoIngreso:0,
+                        MontoEgreso:0,
+                        PorcentajeSaldo:'0.0',
+                        PorcentajeEgreso:'0.0',
+                        Saldo:0
+
+                    })
+                    setImagenperiodosaldos('')
+
+                    setDatosperiodoindices({
+                        MesOperacion:'',
+                        MontoIngreso:0,
+                        MontoEgreso:0,
+                        PorcentajeSaldo:'0.0',
+                        PorcentajeEgreso:'0.0',
+                        Saldo:0,
+                        PromedioInidice:'0.0'
+
+                    })
+                    setImagenperiodoindice('')
+                }
+                
                 
                 setCargarestadisticasingreso(true)
                 setCargacompleta(true)
