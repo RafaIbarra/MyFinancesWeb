@@ -8,7 +8,7 @@ function Reconectar ({intentar,setIntentar,setConexbd}){
     // Función que se ejecutará cada segundo
     const contador = setInterval(() => {
     segundos++; // Incrementar el contador de segundos
-    console.log(segundos); // Mostrar el contador en la consola
+    
 
     setContadorsegundos(segundos)
 

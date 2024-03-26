@@ -12,9 +12,7 @@ function ModalEliminarIngreso({
   setOpeneliminaringreso,
   setDataingresos,
   selectedRowKeys,
-  setDataresumen,
-  setImgresumen,
-  setImgingresos
+  setDataresumen,setDatasaldos
 }
   ){
   const navigate=useNavigate()
@@ -54,9 +52,8 @@ function ModalEliminarIngreso({
         const registros=result['data']['datos']
         setDataresumen(registros['Resumen'])
         setDataingresos(registros['Ingresos'])
-        const registros_imagenes=result['data']['graficos']
-        setImgresumen(registros_imagenes['imgResumen'])
-        setImgingresos(registros_imagenes['imgIngresos'])
+        setDatasaldos(registros['Saldos'])
+        
         setOpeneliminaringreso(false)
         
     } else if(respuesta === 403 || respuesta === 401){

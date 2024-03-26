@@ -7,7 +7,7 @@ import Generarpeticion from '../../../../peticiones/apipeticiones'
 
 
 function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,
-  setDataegresos,setDataresumen,setDatasaldos,selectedRowKeys,setImgresumen,setImgegresos})
+  setDataegresos,setDataresumen,setDatasaldos,selectedRowKeys})
   {
   const navigate=useNavigate()
   const [titulo,setTitulo]=useState('')
@@ -47,11 +47,6 @@ function ModalEliminarEgreso({openeliminaregreso,setOpeneliminaregreso,
         setDataresumen(registros['Resumen'])
         setDatasaldos(registros['Saldos'])
         setDataegresos(registros['Egresos'])
-
-        const registros_imagenes=result['data']['graficos']
-        setImgresumen(registros_imagenes['imgResumen'])
-        setImgegresos(registros_imagenes['imgEgresos'])
-
         setOpeneliminaregreso(false)
         
     } else if(respuesta === 403 || respuesta === 401){

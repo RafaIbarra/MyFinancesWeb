@@ -32,7 +32,7 @@ const formItemLayout = {
 const { Text } = Typography;
 
 function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataegresos,
-  setDataresumen,setDatasaldos,detalleseleccion,modoedicion,setImgresumen,setImgegresos}){
+  setDataresumen,setDatasaldos,detalleseleccion,modoedicion}){
   
   const navigate=useNavigate()
   const [open, setOpen] = useState(openregistroegreso);
@@ -223,9 +223,8 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
               setDataresumen(registros['Resumen'])
               setDatasaldos(registros['Saldos'])
               setDataegresos(registros['Egresos'])
-              const registros_imagenes=result['data']['graficos']
-              setImgresumen(registros_imagenes['imgResumen'])
-              setImgegresos(registros_imagenes['imgEgresos'])
+              
+              
             }
         
 

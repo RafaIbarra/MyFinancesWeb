@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import Resumengrafico from './resumengrafico';
+
 
 import { Table, Typography } from 'antd';
 const { Text } = Typography;
 
 import './resumen.css'
-function Resumen({dataresumen,imgresumen}){
+function Resumen({dataresumen}){
   
     const[detalle,setDetalle]=useState(null)
     const[totalingreso,setTotalingreso]=useState(null)
@@ -139,11 +139,7 @@ function Resumen({dataresumen,imgresumen}){
           </div>
             
 
-          <div className='container-home-resumen-imagen'>
-
-            <Resumengrafico dataresumen={dataresumen}  imgresumen={imgresumen}></Resumengrafico>
-          </div>
-
+          
                 
 
 

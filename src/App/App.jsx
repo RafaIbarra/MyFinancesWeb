@@ -62,14 +62,14 @@ function App (){
             
             // const respuesta=result['resp']
             // console.log(result)
-            console.log('la conexion es')
-            console.log(conec)
+            // console.log('la conexion es')
+            // console.log(conec)
             setConexbd(conec)
             setIntentar(false)
             
           };
           if(intentar===true){
-            console.log('intentara conexctar')
+            // console.log('intentara conexctar')
               comprobarBD()
           }
       }, [intentar]);

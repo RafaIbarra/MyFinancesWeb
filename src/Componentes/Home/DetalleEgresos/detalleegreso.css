@@ -1,6 +1,6 @@
 .principal-container-detalle-egreso{
   display: grid;
-  grid-template-columns: 65% 35%; 
+  grid-template-columns:100%; 
   
   /* border-width: 2px;
   border-color: black;

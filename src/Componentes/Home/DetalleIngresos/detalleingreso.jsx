@@ -7,14 +7,12 @@ import numeral from 'numeral';
 
 import ModalEliminarIngreso from './Modales/modal_eliminar_ingreso';
 import ModalRegistroIngreso from './Modales/modal_registro_ingreso';
-import GraficoIngresos from './Grafico/graficoingresos';
 import './detalleingreso.css'
 import '../../../Componentes/estilosgenerales.css'
 
 const { Text } = Typography;
 
-function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
-  setImgresumen,setImgingresos,imgingresos}){
+function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,setDatasaldos}){
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -386,17 +384,14 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
 
 
           </div>
-          <div className='container-detalle-ingreso-imagen'>
-              <GraficoIngresos dataingresos={dataingresos} imgingresos={imgingresos}></GraficoIngresos>
-          </div>
+          
           {openeliminaringreso &&( <ModalEliminarIngreso 
                                       openeliminaringreso={openeliminaringreso}
                                       setOpeneliminaringreso={setOpeneliminaringreso}
                                       setDataingresos={setDataingresos}
                                       selectedRowKeys={selectedRowKeys}
                                       setDataresumen={setDataresumen}
-                                      setImgresumen={setImgresumen}
-                                      setImgingresos={setImgingresos}
+                                      setDatasaldos={setDatasaldos}
                                     ></ModalEliminarIngreso>)}
 
               {openregistroingreso &&( <ModalRegistroIngreso 
@@ -406,8 +401,8 @@ function DetalleIngreso({dataingresos,setDataingresos,setDataresumen,
                                         setDataresumen={setDataresumen}
                                         detalleseleccioningreso={detalleseleccioningreso}
                                         modoedicioningreso={modoedicioningreso}
-                                        setImgresumen={setImgresumen}
-                                        setImgingresos={setImgingresos}
+                                        setDatasaldos={setDatasaldos}
+                                        
                                         ></ModalRegistroIngreso>)}
         </div>
     )

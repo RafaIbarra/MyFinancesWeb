@@ -10,7 +10,9 @@ import HomeCabecera from './CabeceraHome/cabecera';
 import Handelstorage from '../../Storage/handelstorage';
 import { Navigate, useNavigate } from "react-router-dom";
 import Cargadatos from './Cargadatos';
-import NabarHor from '../NavBar/nabvarhorizontal';
+import ImagenesMes from './ImagenesMes/ImagenesMes';
+import { FallOutlined,RiseOutlined,DollarOutlined ,ProjectOutlined ,PieChartOutlined 
+} from '@ant-design/icons';
 
 function Home (){
     const navigate=useNavigate()
@@ -31,6 +33,7 @@ function Home (){
     const[spindatos,setSpindato]=useState(false)
 
     const [mode, setMode] = useState('left')
+    const [pedidoestadistica,setpedidoestadistica]=useState(false)
 
     useEffect(() => {
 
@@ -56,10 +59,10 @@ function Home (){
             setDataegresos(registros['Egresos'])
             setDatasaldos(registros['Saldos'])
             
-            const registros_imagenes=result['data']['graficos']
-            setImgresumen(registros_imagenes['imgResumen'])
-            setImgegresos(registros_imagenes['imgEgresos'])
-            setImgingresos(registros_imagenes['imgIngresos'])
+            // const registros_imagenes=result['data']['graficos']
+            // setImgresumen(registros_imagenes['imgResumen'])
+            // setImgegresos(registros_imagenes['imgEgresos'])
+            // setImgingresos(registros_imagenes['imgIngresos'])
 
             
         }else if(respuesta === 403 || respuesta === 401){
@@ -75,22 +78,60 @@ function Home (){
 
     const items = [
       {
-        key: '1',
-        label: 'Tab 1',
-        children: (<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>),
+        key: 'ResumenDelMes',
+        label: 'Resumen Del Mes',
+        icon:<ProjectOutlined style={{fontSize:'20px'}} />,
+        children: (<Resumen dataresumen={dataresumen}   ></Resumen>),
       },
       {
-        key: '2',
-        label: 'Tab 2',
-        children: 'Content of Tab Pane 2',
+        key: 'Registro de Ingresos',
+        label: 'Registro de Ingresos',
+        icon:<RiseOutlined style={{fontSize:'20px'}} />,
+        children: (<DetalleIngreso 
+                  dataingresos={dataingresos} 
+                  setDataingresos={setDataingresos} 
+                  setDataresumen={setDataresumen}
+                  setDatasaldos={setDatasaldos}
+                  
+                  >
+                </DetalleIngreso>
+                ),
       },
       {
-        key: '3',
-        label: 'Tab 3',
-        children: 'Content of Tab Pane 3',
+        key: 'RegistrosdeGastos',
+        label: 'Registros de Gastos',
+        icon:<FallOutlined style={{fontSize:'20px'}} />,
+        children: (<DetalleEgreso 
+                    dataegresos={dataegresos} 
+                    setDataegresos={setDataegresos} 
+                    setDataresumen={setDataresumen}
+                    setDatasaldos={setDatasaldos}
+                    
+                    >
+                    </DetalleEgreso>
+                  ),
+      },
+      {
+        key: 'Estadisticasdelmes',
+        label: 'Estadisticas del mes',
+        icon:<PieChartOutlined style={{fontSize:'20px'}} />,
+        children: (<ImagenesMes pedidoestadistica={pedidoestadistica}  ></ImagenesMes>),
+        
+      },
+      {
+        key: 'SaldosdelAño',
+        label: 'Saldos del Año',
+        icon:<DollarOutlined style={{fontSize:'20px'}} />,
+        children: (<SaldosPeriodo datasaldos={datasaldos} ></SaldosPeriodo>),
       },
     ];
-    
+    const onChange = (key) => {
+      
+      if(key==='Estadisticasdelmes'){
+        
+        setpedidoestadistica(!pedidoestadistica)
+      }
+    };
     
     return(
       // <div className="principal-home">
@@ -120,52 +161,21 @@ function Home (){
           {!spindatos && cargaconfirmada &&(
 
             
-
+            
               <Tabs
                   defaultActiveKey="homeresumen"
                   id="uncontrolled-tab-example"
                   // className="mb-3"
                   tabPosition={mode}
                   items={items}
-                  // onClick={tab_resumen}
+                  size="large"
+                  onChange={onChange}
+                  
+                  
                 >
-                  {/* <Tab eventKey="homeresumen" title="Resumen Del Mes" >
-
-                    {cargaconfirmada &&(<Resumen dataresumen={dataresumen} imgresumen={imgresumen}  ></Resumen>)}
-                  </Tab>
-
-                  <Tab eventKey="homeingresos" title="Registro de Ingresos">
-                    {cargaconfirmada &&(<DetalleIngreso 
-                                                        dataingresos={dataingresos} 
-                                                        setDataingresos={setDataingresos} 
-                                                        setDataresumen={setDataresumen}
-                                                        setImgresumen={setImgresumen}
-                                                        setImgingresos={setImgingresos}
-                                                        imgingresos={imgingresos}
-                                                        >
-
-                                        </DetalleIngreso>
-                                        )
-                    }
-                  </Tab>
-
-                  <Tab eventKey="homeegresos" title="Registros de Gastos" >
-                    {cargaconfirmada &&( <DetalleEgreso 
-                                                      dataegresos={dataegresos} 
-                                                      setDataegresos={setDataegresos} 
-                                                      setDataresumen={setDataresumen}
-                                                      setDatasaldos={setDatasaldos}
-                                                      setImgresumen={setImgresumen}
-                                                      setImgegresos={setImgegresos}
-                                                      imgegresos={imgegresos}>
-
-                                        </DetalleEgreso>)}
-                  </Tab>
-
-                  <Tab eventKey="homesaldos" title="Saldos del Año" >
-                    {cargaconfirmada &&( <SaldosPeriodo datasaldos={datasaldos} ></SaldosPeriodo>)}
-                  </Tab> */}
+                 
               </Tabs>
+            
              
             
              )

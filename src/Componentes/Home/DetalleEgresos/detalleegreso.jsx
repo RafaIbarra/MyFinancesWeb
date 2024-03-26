@@ -8,12 +8,10 @@ import * as XLSX from 'xlsx';
 import './detalleegreso.css'
 import ModalEliminarEgreso from './Modales/modal_eliminar_egreso'
 import ModalRegistroEgreso from './Modales/modal_registro_egreso';
-import GraficoEgresoso from './Grafico/graficoegresos';
 
 import '../../../Componentes/estilosgenerales.css'
 const { Text } = Typography;
-function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
-                        setImgresumen,setImgegresos,imgegresos})
+function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos})
 {
     const [detalle,setDetalle]=useState(null)
     const [detalleseleccion,setDetalleseleccion]=useState([])
@@ -99,6 +97,13 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
           key: 'DetalleEgreso_FechaRegistro',
   
           sorter: (a, b) => new Date(a.fecha_registro) - new Date(b.fecha_registro),
+        },
+        { title: 'Anotacion',
+          dataIndex: 'anotacion',
+          key: 'anotacion_egreso',
+          
+          
+          
         },
         
       ]
@@ -500,17 +505,14 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
                         <Button type="primary" className='botonera' icon={<PlusCircleTwoTone/>} onClick={nuevo} >Agregar</Button>
                 </div>
             </div>
-            <div className='container-detalle-egreso-imagen'>
-                <GraficoEgresoso dataegresos={dataegresos} imgegresos={imgegresos}></GraficoEgresoso>
-            </div>
+            
             {openeliminaregreso &&( <ModalEliminarEgreso openeliminaregreso={openeliminaregreso} 
                                                       setOpeneliminaregreso={setOpeneliminaregreso} 
                                                       setDataegresos={setDataegresos} 
                                                       setDataresumen={setDataresumen}
                                                       setDatasaldos={setDatasaldos} 
                                                       selectedRowKeys={selectedRowKeys}
-                                                      setImgresumen={setImgresumen}
-                                                      setImgegresos={setImgegresos}
+                                                      
                                         ></ModalEliminarEgreso>)}
 
             {openregistroegreso &&( <ModalRegistroEgreso openregistroegreso={openregistroegreso} 
@@ -520,8 +522,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos,
                                         setDatasaldos={setDatasaldos} 
                                         detalleseleccion={detalleseleccion}
                                         modoedicion={modoedicion}
-                                        setImgresumen={setImgresumen}
-                                        setImgegresos={setImgegresos}
+                                        
                                       ></ModalRegistroEgreso>)}
         </div>
     )

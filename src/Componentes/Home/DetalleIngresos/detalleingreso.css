@@ -1,6 +1,6 @@
 .principal-container-detalle-ingreso{
   display: grid;
-  grid-template-columns: 65% 35%; /* Dos columnas de igual tamaño */
+  grid-template-columns: 100%; /* Dos columnas de igual tamaño */
   
   /* border-width: 2px;
   border-color: black;
