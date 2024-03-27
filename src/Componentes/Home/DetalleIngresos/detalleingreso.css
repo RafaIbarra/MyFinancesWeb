@@ -1,11 +1,9 @@
 .principal-container-detalle-ingreso{
   
   
-  /* border-width: 2px;
-  border-color: black;
-  border-style: dotted; */
+  
   @media (min-height: 20px) and (max-height: 607px) {
-    height: calc(65vh); 
+    height: calc(75vh); 
   }
 
   @media (min-height: 608px) and (max-height: 739px){
@@ -18,11 +16,11 @@
 }
 
 .container-detalle-ingreso-datos{
-  /* border-width: 2px;
-  border-color: rgb(216, 95, 95);
-  border-style: dotted; */
+  
+
+
   @media (min-height: 20px) and (max-height: 607px) {
-    height: calc(45vh); 
+    height: calc(55vh); 
   }
 
   @media (min-height: 608px) and (max-height: 739px){
@@ -70,6 +68,7 @@
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   height: 40px;
+  
 
 }
 

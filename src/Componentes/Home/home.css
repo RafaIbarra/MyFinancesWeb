@@ -2,7 +2,7 @@
 
 .principal-home{
     @media (min-height: 20px) and (max-height: 607px) {
-        height: calc(65vh); 
+        height: calc(84.5vh); 
       }
     
       @media (min-height: 608px) and (max-height: 739px){
@@ -13,10 +13,10 @@
         height: calc(93vh); 
       }
     width: 100%;
-    /* background-color: antiquewhite; */
-    /* border-width: 2px;
+    /* background-color: antiquewhite; 
+    border-width: 2px;
     border-color: black;
-    border-style: dotted; */
+    border-style: dotted;  */
     
   }
   
