@@ -1,0 +1,47 @@
+.ventajas-landing{
+    /* height: 500px; */
+    width: 80%;
+    /* border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: rgba(225, 119, 172, 0.675); */
+}
+.ventajas-contenedor-texto-uno{
+    margin-left: 10%;
+    
+
+}
+.ventajas-contenedor-texto-dos{
+    margin-left: 40%;
+    
+}
+.ventajas-contenedor-texto-tres{
+    margin-left: 10%;
+    
+
+}
+.ventajas-contenedor-texto-uno, .ventajas-contenedor-texto-dos, .ventajas-contenedor-texto-tres{
+    width: 50%;
+    position: relative;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: rgba(230, 236, 177, 0.675);
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-top: 2%;
+    background-color:  rgba(225, 119, 172, 0.1);
+
+}
+.numero {
+    position: absolute;
+  left: -15px; /* Ajusta la posición horizontal */
+  top: -15px; /* Ajusta la posición vertical */
+  width: 30px; /* Tamaño del círculo */
+  height: 30px; /* Tamaño del círculo */
+  border-radius: 50%; /* Hace que el elemento sea un círculo */
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }

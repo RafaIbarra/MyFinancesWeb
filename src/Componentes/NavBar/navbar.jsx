@@ -40,7 +40,7 @@ const navegaciones={
 
 }
 
-function NavBar({sesionname}){
+function NavBar({sesionname,setEstadologin}){
 
     const [colorsel,setColorsel]=useState('white')
     const [colordefault,setColordefault]=useState('black')
@@ -48,8 +48,9 @@ function NavBar({sesionname}){
   
     const navigate=useNavigate()
     const cerrarsesion=(event)=>{
+      setEstadologin(false)
       Handelstorage('borrar')
-      navigate('/')
+      navigate('/Login')
     }
     const datospersonales=(event)=>{
       setKeysel('')

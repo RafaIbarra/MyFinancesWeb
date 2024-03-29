@@ -259,7 +259,7 @@ function HistorialEgresos(){
           <div style={{paddingBottom:'10px',paddingTop:'5px'}}>
 
               <h4> <FallOutlined style={{color:'red'}} /> Historial de Egresos</h4>
-              <div class="linea-vertical"></div>
+              <div className="linea-vertical"></div>
           </div>
           <div className='contenedor-principal-datos-egreso'>
 

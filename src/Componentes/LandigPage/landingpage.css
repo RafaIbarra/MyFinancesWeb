@@ -1,0 +1,28 @@
+.landing{
+    /* background-color:rgba(71, 7, 69, 0.933); */
+    background-image: linear-gradient(to bottom, #021939, #d5e3d6);
+    /* height: calc(100vh); */
+
+    /* height: 2000px; */
+    width: 100%;
+     
+}
+
+.landing-menu{
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  border-width: 1px;
+  border-style: solid;
+  background-color: rgb(91, 90, 90);
+  border-color: rgba(8, 8, 8, 0.952);
+  display:inline-block;
+}
+
+.landing-botones{
+  width: 100px;
+  height: 35px;
+  background-color: black;
+  
+}

@@ -16,7 +16,7 @@
   }
 
   @media (min-height: 740px) {
-    height: calc(87vh); 
+    height: calc(83vh); 
   }
   
 }
@@ -35,7 +35,7 @@
   }
 
   @media (min-height: 740px) {
-    height: calc(75vh); 
+    height: calc(69vh); 
   }
 
   width: 100%;

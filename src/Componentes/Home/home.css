@@ -10,14 +10,14 @@
       }
     
       @media (min-height: 740px) {
-        height: calc(93vh); 
+        height: calc(90vh); 
       }
     width: 100%;
     /* background-color: antiquewhite; 
     border-width: 2px;
     border-color: black;
-    border-style: dotted;  */
-    
+    border-style: dotted; 
+     */
   }
   
  
@@ -37,7 +37,7 @@
     }
   
     @media (min-height: 740px) {
-      height: calc(87vh); 
+      height: calc(70vh); 
     }
     
   }

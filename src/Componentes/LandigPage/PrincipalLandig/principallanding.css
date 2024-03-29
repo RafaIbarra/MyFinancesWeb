@@ -1,0 +1,22 @@
+.principal-landing{
+    height: 500px;
+    width: 500px;
+    /* border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: rgba(225, 119, 172, 0.675); */
+}
+.pricipal-texto-landing{
+    color: rgb(217, 223, 94);
+    
+}
+.principal-contenedor-imagen-landing{
+    height: 500px;
+    width: 500px;
+}
+.principal-imagen-landing{
+    height: 80%;
+    width: 100%;
+    object-fit:fill;
+    opacity: 0.7;
+}

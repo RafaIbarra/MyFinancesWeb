@@ -18,7 +18,7 @@ function CloseSesion(){
             Handelstorage('borrar')
             await new Promise(resolve => setTimeout(resolve, 5000))
             setMostrar(false)
-            navigate('/')
+            navigate('/Login')
           
         };
         cargardatos()

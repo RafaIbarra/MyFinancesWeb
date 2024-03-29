@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 
 import { Routes, Route, Navigate,useNavigate,HashRouter  } from 'react-router-dom'; 
+import LandigPage from "../Componentes/LandigPage/LandingPage";
 import Login  from "../Componentes/Login/Login";
 import Home from "../Componentes/Home/home";
 import NavBar from "../Componentes/NavBar/navbar";
@@ -80,16 +81,15 @@ return(
         
         <div style={ Estadologin ? {  display: 'flex', flexDirection: 'column' }: null}>
         {!conexbd &&(<Reconectar intentar={intentar} setIntentar={setIntentar}  setConexbd={setConexbd} ></Reconectar>)}
-        {Estadologin && (<NavBar sesionname={sesionname}/>)}
-        {/* {Estadologin && (<NabarHor sesionname={sesionname}/>)} */}
-            {/* <div style={ Estadologin ?{ display: 'flex', flexDirection: 'row' }: null}> */}
+        {Estadologin && (<NavBar sesionname={sesionname} setEstadologin={setEstadologin}/>)}
+        
             <div>                
                 <Routes>
-                    <Route path="/" element={<Login activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname} />} />
+                    <Route path="/" element={<LandigPage  />} />
+                    <Route path="/Login" element={<Login activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname} />} />
                     <Route path="/Registro" element={<RegistroUsuario activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname}/>} />
                     <Route path="/Home" element={<Home />} />
-                    {/* <Route path="/RegistroGasto" element={<RegistroGasto />} />
-                    <Route path="/RegistroEgreso" element={<RegistroEgreso />} /> */}
+                    
                     <Route path="/Productos" element={<Productosfinancieros />} />
                     <Route path="/Gastos" element={<Gastos />} />
                     <Route path="/CategoriaGastos" element={<CategoriaGasto />} />

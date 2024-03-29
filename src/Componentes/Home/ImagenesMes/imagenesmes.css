@@ -3,6 +3,7 @@
     grid-template-columns: 100%; 
     background-color:rgb(249, 248,244);
     overflow-y: auto;
+    
     /* border-width: 2px;
     border-color: black;
     border-style: dotted; */
@@ -17,7 +18,7 @@
     };
   
     @media (min-height: 740px) {
-      height: calc(90vh);
+      height: calc(83vh);
     };
 
     
