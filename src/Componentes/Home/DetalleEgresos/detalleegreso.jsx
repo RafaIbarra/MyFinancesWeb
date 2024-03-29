@@ -36,7 +36,18 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos}
     const [valoresseleccion,setValoresseleccion]=useState(0)
     const [cantidadseleccion,setCantidadseleccion]=useState(0)
     const columns=[
-      
+        { title: 'Codigo',
+          dataIndex: 'id',
+          key: 'id_Egreso',
+          width:5,
+          sorter: (a, b) => a.id - b.id,
+          render: (id) => (
+            <span>
+              {/* Gs. {Number(monto_gasto).toLocaleString('es-ES')} */}
+              {numeral(id).format('0,0')}
+            </span>
+          ),
+        },
         { title: 'Descripcion',
           dataIndex: 'NombreGasto',
           key: 'DetalleEgreso_Descripcion',
@@ -44,22 +55,7 @@ function DetalleEgreso({dataegresos,setDataegresos,setDataresumen,setDatasaldos}
           width: 230,
           
         },
-        { title: 'Tipo',
-          dataIndex: 'TipoGasto',
-          key: 'DetalleEgreso_Tipo',
-          filters: [
-            {
-              text: 'Ocasionales',
-              value: 'Ocasionales',
-            },
-            {
-              text: 'Fijo',
-              value: 'Fijo',
-            },
-            
-          ],
-          onFilter: (value, record) => record.TipoGasto.indexOf(value) === 0,
-        },
+        
   
         { title: 'Categoria',
           dataIndex: 'CategoriaGasto', 

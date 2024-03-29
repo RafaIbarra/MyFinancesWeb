@@ -13,7 +13,7 @@ import ComprobarStorage from "../../App/verificarstorage";
 import './login.css'
 
 
-function Login({activarsesion,desactivarsesion,setSesionname}){
+function Login({activarsesion,desactivarsesion,setSesionname,setLandingactive}){
     
     const onFinish = (values) => {
         
@@ -33,7 +33,13 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
         activarsesion()
         const sesionmin=username.toLowerCase()
         const sesioncapitalize = sesionmin.charAt(0).toUpperCase() + sesionmin.slice(1);
+        
         setSesionname(sesioncapitalize)
+        navigate('/Home')
+
+    }
+    const redirigir=()=>{
+        
         navigate('/Home')
 
     }
@@ -82,10 +88,12 @@ function Login({activarsesion,desactivarsesion,setSesionname}){
     useEffect(() => {
         const datosstarage = ComprobarStorage();
         const credenciales=datosstarage['datosesion']
+        setLandingactive(false)
     
         if (credenciales) {
-          
-         navegar()
+            setSesionname(datosstarage['user_name'])
+            
+            redirigir()
           
         
         } else {

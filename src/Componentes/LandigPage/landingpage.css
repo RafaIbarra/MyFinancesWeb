@@ -26,3 +26,9 @@
   background-color: black;
   
 }
+.landing-inicio{
+  display: grid;
+  grid-template-columns: 35% 65%; 
+  margin-left: 10%;
+  padding-top: 80px;
+}

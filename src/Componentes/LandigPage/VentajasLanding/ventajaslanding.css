@@ -12,6 +12,7 @@
 
 }
 .ventajas-contenedor-texto-dos{
+    
     margin-left: 40%;
     
 }
@@ -27,10 +28,10 @@
     border-style: solid;
     border-radius: 10px;
     border-color: rgba(230, 236, 177, 0.675);
-    padding-top: 10px;
+    padding-top: 5px;
     padding-left: 10px;
-    margin-top: 2%;
-    background-color:  rgba(225, 119, 172, 0.1);
+    margin-top: 3%;
+    background-color:  rgba(5, 0, 2, 0.189);
 
 }
 .numero {
@@ -45,3 +46,8 @@
   justify-content: center;
   align-items: center;
   }
+
+.formato-texto{
+    color: azure;
+    padding: 5px;
+}

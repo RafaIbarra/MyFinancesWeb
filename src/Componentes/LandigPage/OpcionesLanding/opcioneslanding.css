@@ -8,3 +8,16 @@
     object-fit:fill;
     
 }
+.contenedor-datos{
+    width: 80%;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: rgba(3, 100, 91, 0.675);
+    background-color:  rgba(5, 0, 2, 0.059);
+    
+}
+.formato-texto-opciones{
+    color: rgb(30, 15, 1);
+    padding: 5px;
+}

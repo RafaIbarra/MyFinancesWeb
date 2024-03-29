@@ -27,7 +27,7 @@ function App (){
     const [Estadologin,setEstadologin]=useState(false)
     const [sesionname, setSesionname]=useState('')
     const [conexbd,setConexbd]=useState(true)
-    
+    const [landingactive,setLandingactive]=useState(false)
     const [intentar,setIntentar]=useState(true)
    
     const activarsesion=()=>{
@@ -41,6 +41,7 @@ function App (){
     
     useEffect(() => {
         const datosstarage = ComprobarStorage();
+        
         // const alto = window.innerHeight;
         // const ancho = window.innerWidth;
         // console.log('Ancho de la pantalla:', ancho, 'px');
@@ -61,16 +62,13 @@ function App (){
         
             const conec=await ComprobarConexion();
             
-            // const respuesta=result['resp']
-            // console.log(result)
-            // console.log('la conexion es')
-            // console.log(conec)
+            
             setConexbd(conec)
             setIntentar(false)
             
           };
           if(intentar===true){
-            // console.log('intentara conexctar')
+            
               comprobarBD()
           }
       }, [intentar]);
@@ -85,8 +83,8 @@ return(
         
             <div>                
                 <Routes>
-                    <Route path="/" element={<LandigPage  />} />
-                    <Route path="/Login" element={<Login activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname} />} />
+                    <Route path="/" element={<LandigPage setLandingactive={setLandingactive}  />} />
+                    <Route path="/Login" element={<Login activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname} setLandingactive={setLandingactive}/>} />
                     <Route path="/Registro" element={<RegistroUsuario activarsesion={activarsesion} desactivarsesion={desactivarsesion} setSesionname={setSesionname}/>} />
                     <Route path="/Home" element={<Home />} />
                     
@@ -105,7 +103,7 @@ return(
                     <Route path="/Closesesion" element={<CloseSesion />} />
                     
                 </Routes>
-                {Estadologin && (<PiePagina></PiePagina>)}
+                {Estadologin && !landingactive &&(<PiePagina></PiePagina>)}
                 
             </div>
         </div>

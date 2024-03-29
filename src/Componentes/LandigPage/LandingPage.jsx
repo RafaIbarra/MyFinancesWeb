@@ -5,7 +5,7 @@ import VentajasLanding from "./VentajasLanding/VentajasLanding";
 import OpcionesLanding from "./OpcionesLanding/OpcionesLanding";
 import { Button  } from 'antd';
 import './landingpage.css'
-function LandigPage(){
+function LandigPage({setLandingactive}){
     const navigate=useNavigate()
     
     const iniciosesion=()=>{
@@ -15,6 +15,9 @@ function LandigPage(){
         
         navigate('/Registro')
     }
+    useEffect(() => {
+        setLandingactive(true)
+      }, []);
     return(
         <div className="landing">
             <div className="landing-menu" >
@@ -29,14 +32,12 @@ function LandigPage(){
                     </div>
                 </div>
             </div>
-            <div style={{marginLeft:'33%',paddingTop:'80px'}}>
+            <div className="landing-inicio">
 
                 <PrincipalLanding></PrincipalLanding>
-            </div>
-            <div style={{marginLeft:'15%'}}>
-
                 <VentajasLanding></VentajasLanding>
             </div>
+            
             <div style={{marginTop:'3%',marginLeft:'10%'}}>
 
                 <OpcionesLanding></OpcionesLanding>
