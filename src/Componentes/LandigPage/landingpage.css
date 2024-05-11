@@ -1,6 +1,7 @@
 .landing{
     /* background-color:rgba(71, 7, 69, 0.933); */
-    background-image: linear-gradient(to bottom, #021939, #d5e3d6);
+    background-image: linear-gradient(to bottom, #021939, #d5e3d6); 
+    /* background-image: linear-gradient(to bottom, #cddae8cb, #393a3a88); */
     /* height: calc(100vh); */
 
     /* height: 2000px; */

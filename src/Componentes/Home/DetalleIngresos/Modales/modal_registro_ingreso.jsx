@@ -131,7 +131,7 @@ function ModalRegistroIngreso({
           setMesprincipal(mes_storage)
           setAnnoprincipal(anno_storage)
           const body = {};
-          const endpoint='MisProductosFinancieros/'
+          const endpoint='MisProductosFinancieros/0/'
           const result = await Generarpeticion(endpoint, 'POST', body);
           
           const respuesta=result['resp']
