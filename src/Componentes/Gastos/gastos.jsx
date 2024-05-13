@@ -170,7 +170,7 @@ function Gastos(){
         const cargardatos = async () => {
         
             const body = {};
-            const endpoint='MisGastos/'
+            const endpoint='MisGastos/0/'
             const result = await Generarpeticion(endpoint, 'POST', body);
             
             const respuesta=result['resp']

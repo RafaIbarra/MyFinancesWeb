@@ -165,7 +165,7 @@ function ModalRegistroGasto({
             
             
             const body = {};
-            const endpoint='MisCategorias/'
+            const endpoint='MisCategorias/0/'
             const result = await Generarpeticion(endpoint, 'POST', body);
 
             const respuesta=result['resp']
