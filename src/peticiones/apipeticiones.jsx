@@ -1,4 +1,6 @@
-import APIBASE from './baseurls'
+// import APIBASE from './baseurls'
+
+import { APIBASE } from '../../config';
 import Handelstorage from '../Storage/handelstorage'
 
 

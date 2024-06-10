@@ -1,4 +1,5 @@
-import APIBASE from './baseurls'
+// import APIBASE from './baseurls'
+import { APIBASE } from '../../config';
 async function Iniciarsesion(usuario,password){
     
     let data={}

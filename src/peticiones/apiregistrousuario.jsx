@@ -1,6 +1,7 @@
-import APIBASE from './baseurls'
+// import APIBASE from './baseurls'
+import { APIBASE } from '../../config';
 async function ApiRegistroUsuario(datausuario){
-    // const APIBASE='http://127.0.0.1:8000/api'
+    
     
     let data={}
     let resp=0

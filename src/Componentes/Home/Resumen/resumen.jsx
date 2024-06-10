@@ -7,6 +7,7 @@ const { Text } = Typography;
 import './resumen.css'
 function Resumen({dataresumen}){
   
+
     const[detalle,setDetalle]=useState(null)
     const[totalingreso,setTotalingreso]=useState(null)
     const[totalegreso,setTotalegreso]=useState(null)
@@ -51,7 +52,7 @@ function Resumen({dataresumen}){
     
         const cargardatos =  () => {
           
-         
+            
             const registros=dataresumen
             if(Object.keys(registros).length>0){
               
@@ -66,11 +67,20 @@ function Resumen({dataresumen}){
 
                 const registrosdetalle=registros.filter((item) => item.Codigo !== 3)
                 const registroresumen=registros.filter((item) => item.Codigo === 3)
-                const datosFiltrados = registrosdetalle.filter(item => item.MontoIngreso + item.MontoEgreso > 0);
-                setDetalle(datosFiltrados)
-                setTotalingreso(registroresumen[0]['MontoIngreso'])
-                setTotalegreso(registroresumen[0]['MontoEgreso'])
-                setSaldo(registroresumen[0]['Saldo'])
+                
+                let totalgasto=0
+                let totalingreso=0
+                registrosdetalle.forEach(({ MontoIngreso, MontoEgreso}) => {totalgasto += MontoEgreso,totalingreso+=MontoIngreso})
+                setTotalingreso(totalingreso)
+                setTotalegreso(totalgasto)
+                setSaldo(totalingreso - totalgasto)
+
+                setDetalle(registrosdetalle)
+                // const datosFiltrados = registrosdetalle.filter(item => item.MontoIngreso + item.MontoEgreso > 0);
+                // setDetalle(datosFiltrados)
+                // setTotalingreso(registroresumen[0]['MontoIngreso'])
+                // setTotalegreso(registroresumen[0]['MontoEgreso'])
+                // setSaldo(registroresumen[0]['Saldo'])
             }
             else{
               setDetalle(null)
