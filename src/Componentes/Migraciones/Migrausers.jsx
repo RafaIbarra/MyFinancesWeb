@@ -114,13 +114,7 @@ function Migrausers(){
 
 
 
-                <button onClick={downloadExcel}>
-                    Descargar en Excel
-                </button>
-
-                <button style={{marginLeft:'50px'}} onClick={downloadCSV}>
-                    Descargar en CSV
-                </button>
+               
 
                 <button style={{marginLeft:'50px'}} onClick={ambos}>
                     Ambos Formatos
