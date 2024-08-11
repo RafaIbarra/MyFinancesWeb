@@ -22,6 +22,8 @@ import ComprobarStorage from "./verificarstorage";
 import ComprobarConexion from "../peticiones/comprobarbd";
 import Reconectar from "./Reconectar";
 
+import Migrausers from "../Componentes/Migraciones/Migrausers";
+
 function App (){
     
     const [Estadologin,setEstadologin]=useState(false)
@@ -93,6 +95,7 @@ return(
                     <Route path="/EstadisticasGasto" element={<EstadisticasGasto />} />
                     <Route path="/EstadisticasIngreso" element={<EstadisticasIngreso />} />
                     <Route path="/ActualizacionDatosPersonales" element={<ActualizacionDatosPersonales />} />
+                    <Route path="/Migrausers" element={<Migrausers />} />
                     <Route path="/CambioPassword" element={<CambioPassword />} />
                     
                     

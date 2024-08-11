@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { HomeOutlined,SwapOutlined,BarChartOutlined,
         RightOutlined,UserOutlined,FallOutlined,RiseOutlined,
-        AlignLeftOutlined,SettingOutlined,SolutionOutlined 
+        AlignLeftOutlined,SettingOutlined,SolutionOutlined,DatabaseOutlined
       } from '@ant-design/icons';
 
 import { Button,Menu,message, Space,Dropdown   } from 'antd';
@@ -35,7 +35,8 @@ const navegaciones={
   'CategoriaEgresos':'/CategoriaGastos',
   'MovimientosEgresos':'/HistorialEgresos',
   'Actualizacion':'/ActualizacionDatosPersonales',
-  'CambioPassword':'/CambioPassword'
+  'CambioPassword':'/CambioPassword',
+  'Migrausers':'/Migrausers'
   
 
 }
@@ -176,6 +177,29 @@ function NavBar({sesionname,setEstadologin}){
 
       }
       ,
+      {
+        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Migraciones', 'EstadisticasIngreso','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault}} >Migraciones</p>),
+        key:"Migraciones",
+        icon:<DatabaseOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono, color: ['Migraciones', 'EstadisticasIngreso','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault }}/>,  
+        children:[
+          
+          {
+            label: 'Migracion User',
+            key: 'Migrausers',
+            
+          
+          },
+          {
+            label: 'Migracion Usuarios',
+            key: 'Migracionusuarios',
+            
+          
+          }
+          ,
+
+        ]
+
+      }
       
     ]
 
