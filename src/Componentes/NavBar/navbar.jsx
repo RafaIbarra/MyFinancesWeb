@@ -184,7 +184,7 @@ function NavBar({sesionname,setEstadologin}){
         children:[
           
           {
-            label: 'Migraciones Datos',
+            label: 'Migraciones Datos de la BD',
             key: 'Migrausers',
             
           
