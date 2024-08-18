@@ -177,23 +177,23 @@ function NavBar({sesionname,setEstadologin}){
 
       }
       ,
-      {
-        label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Migraciones', 'EstadisticasIngreso','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault}} >Migraciones</p>),
-        key:"Migraciones",
-        icon:<DatabaseOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono, color: ['Migraciones', 'EstadisticasIngreso','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault }}/>,  
-        children:[
+      // {
+      //   label: (<p style={{fontSize:tamañoletra,marginTop:margentop,marginLeft:margenleft, color: ['Migraciones', 'EstadisticasIngreso','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault}} >Migraciones</p>),
+      //   key:"Migraciones",
+      //   icon:<DatabaseOutlined style={{ fontSize:tamañoicono,marginTop:margentopicono, color: ['Migraciones', 'EstadisticasIngreso','EstadisticasEgresos'].includes(keysel) ? colorsel : colordefault }}/>,  
+      //   children:[
           
-          {
-            label: 'Migraciones Base de Datos',
-            key: 'Migrausers',
+      //     {
+      //       label: 'Migraciones Base de Datos',
+      //       key: 'Migrausers',
             
           
-          },
+      //     },
          
 
-        ]
+      //   ]
 
-      }
+      // }
       
     ]
 
