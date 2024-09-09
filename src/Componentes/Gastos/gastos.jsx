@@ -166,9 +166,9 @@ function Gastos(){
         };
 
     useEffect(() => {
-        
+      
         const cargardatos = async () => {
-        
+          
             const body = {};
             const endpoint='MisGastos/0/'
             const result = await Generarpeticion(endpoint, 'POST', body);

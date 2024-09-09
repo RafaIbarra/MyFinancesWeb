@@ -1,0 +1,21 @@
+.contenedor-tabla-medios{
+   
+    height: 200px; 
+    overflow: auto;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+  .contenido-tabla-detalle-medios .ant-table-cell{
+    font-size: 13px;
+  }
+  
+  .contenido-tabla-detalle-medios .ant-table-thead > tr > th{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-size: 14px;
+    
+  }
+
+
+

@@ -160,15 +160,19 @@ function ModalRegistroGasto({
     const [api, contextHolder] = notification.useNotification();
 
     useEffect(() => {
-
+        
         const cargardatos = async () => {
             
             
             const body = {};
             const endpoint='MisCategorias/0/'
+            
             const result = await Generarpeticion(endpoint, 'POST', body);
 
             const respuesta=result['resp']
+            
+
+            
             if (respuesta === 200) {
                 
                 setListacategorias(result['data'])
@@ -224,7 +228,7 @@ function ModalRegistroGasto({
                         <Form.Item label="Tipo Gasto">
                             <Radio.Group onChange={selecciontipogasto} defaultValue={marcatipogasto}>
                             <Radio value="1" disabled={modoediciongasto}> Fijo </Radio>
-                            <Radio value="2" disabled={modoediciongasto} > Ocasionales </Radio>
+                            <Radio value="2" disabled={modoediciongasto} > Ocasionales</Radio>
                             </Radio.Group>
                         </Form.Item>
 

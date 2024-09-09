@@ -7,7 +7,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Navigate, useNavigate } from "react-router-dom";
 import Generarpeticion from '../../../../peticiones/apipeticiones';
 import Handelstorage from '../../../../Storage/handelstorage';
-
+import EditTable from './tabla_edit';
 
 const formItemLayout = {
     labelCol: {
@@ -27,7 +27,11 @@ const formItemLayout = {
       },
     },
   };
- 
+
+
+
+
+
   
 const { Text } = Typography;
 
@@ -60,7 +64,13 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
 
   const [listacategorias,setListacategorias]=useState([])
   const [listagastos,setListagastos]=useState([])
-  
+
+  const [detallemedios,setDetallemedios]=useState([])
+
+
+
+ 
+ 
   
   const cargarvaloresdefault=(lista_datos_gastos)=>{
     
@@ -73,7 +83,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
       setCategoriasel(detalleseleccion[0]['CodigoCategoriaGasto'])
       setModoactualizacion(true)     
       setValoresdefault(detalleseleccion)
-
+      
       
       const valor=detalleseleccion[0]['CodigoCategoriaGasto']
       const lista_gastos_categoria = lista_datos_gastos.filter((pro) => pro.categoria === valor)
@@ -124,7 +134,8 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
           const anno_storage=datestorage['dataanno']
           setMesprincipal(mes_storage)
           setAnnoprincipal(anno_storage)
-
+          let mediosprincipal=[]
+          let mediosutilizados=[]
           const body = {};
           const endpoint='MisDatosRegistroEgreso/'
           const result = await Generarpeticion(endpoint, 'POST', body);
@@ -137,13 +148,61 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
             const lista_datos_gastos=result['data']['datosgastos']
             
             cargarvaloresdefault(lista_datos_gastos)
-            setReady(true)
+            
+            mediosprincipal=result['data']['datosmedios']
+            
+
+            if(Object.keys(mediosprincipal).length>0){
+
+              mediosprincipal.forEach((elemento) => {
+                
+                elemento.key = elemento.id;
+                elemento.monto=0;
+            })}
+            
+            // setDetallemedios(mediosprincipal)
+            
             
           } else if(respuesta === 403 || respuesta === 401){
             
             navigate('/')
 
             }
+
+            if(Object.keys(detalleseleccion).length>0){
+
+              const idact=   detalleseleccion[0]['id']
+              const enddata='MovileDatoEgreso/' + anno_storage +'/' + mes_storage + '/'+ idact + '/'
+              const resultdata = await Generarpeticion(enddata, 'POST', body);
+              const respuesta_data=resultdata['resp']
+              if (respuesta_data === 200){
+                mediosutilizados=resultdata['data']['Distribucion']
+                
+
+                mediosutilizados.forEach((utilizado) => {
+                  const medio = mediosprincipal.find((principal) => principal.id === utilizado.mediopago_id);
+                  
+                  if (medio) {
+                    // Si encuentra el elemento correspondiente, actualiza el campo monto
+                    medio.monto = utilizado.monto;
+                  }
+                });
+
+                
+
+
+              
+                
+              }else if(respuesta === 403 || respuesta === 401){
+                
+                
+              navigate('/')
+              }
+
+            }
+
+        setDetallemedios(mediosprincipal)
+        setReady(true)
         };
     
         cargardatos();
@@ -193,14 +252,29 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
         setFechaegreso(dateString)
       }
   const registrar_egreso = async () => {
-        
+         
+          
+          const filteredData = detallemedios.filter(item => item.monto > 0);
+          const transformedData = filteredData.map(item => ({ mediopago: item.id, monto: parseFloat(item.monto) }));
+          const jsonData = JSON.stringify(transformedData);
+          
+          
+          const totalgasto = detallemedios.reduce((acc, item) => acc +  parseFloat(item.monto), 0);
+          
+          
           const datosregistrar = {
               codgasto:codigoegreso,
               gasto:gasttosel,
-              monto:monto,
+              monto:totalgasto,
               fecha:fechaegreso,
               anotacion:anotacion,
-              
+              distribucion:jsonData
+              // codgasto:codigoregistro,
+              // gasto:selectedOptiongasto,
+              // monto:parseInt(monto,10),
+              // fecha:fechaegreso,
+              // anotacion:anotacion,
+              // distribucion:jsonData
   
           };
           const endpoint='RegistroEgreso/'
@@ -256,7 +330,7 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
     return(
          <div >
  
-             <Modal
+             <Modal width={700}
 
                  open={open}
                  title={titulo}
@@ -282,7 +356,8 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
                        {...formItemLayout}
                        variant="filled"
                        style={{
-                       maxWidth: 600,
+                      //  maxWidth: 1000,
+                     
                        marginTop:'-35px'
                        }}
                    >   
@@ -370,22 +445,28 @@ function ModalRegistroEgreso({openregistroegreso,setOpenregistroegreso,setDataeg
                                 />
                        </Form.Item>
                        
-                       <Form.Item
-                           label="Monto Egreso"
+
+                          <EditTable detallemedios={detallemedios} setDetallemedios={setDetallemedios} monto={monto} ></EditTable>
+                       
+
+
+                       {/* <Form.Item
+                           label="Total Egreso"
                            name="MontoEgreso"
-                           rules={[{required: true,message: 'Favor ingrese el monto!',},]}
+                          //  rules={[{required: true,message: 'Favor ingrese el monto!',},]}
                            >
                            <InputNumber 
                               onChange={seleccionarmonto}
                                style={{
                                width: '100%',
                                }}
-                              defaultValue={modoactualizacion ? valoresdefault[0]['monto_gasto'] : 0}
-                              disabled={modoedicion}
+                              //defaultValue={modoactualizacion ? valoresdefault[0]['monto_gasto'] : monto}
+                              disabled
                               formatter={formatearValor}
                               parser={parsearValor}
+                              defaultValue={monto}
                            />
-                       </Form.Item>
+                       </Form.Item>  */}
  
                        <Form.Item
                            label="Anotacion"

@@ -52,7 +52,7 @@ function Resumen({dataresumen}){
     
         const cargardatos =  () => {
           
-            
+           
             const registros=dataresumen
             if(Object.keys(registros).length>0){
               
